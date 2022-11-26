@@ -4,19 +4,26 @@
   <div class="login-container">
     <div class="login-wrapper">
       <h1>Login page</h1>
-      <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm.value)">
-        <div>
+      <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm.value)" class="login-form">
 
-        <input type="text" class="login-data" name="username" placeholder="Username"
-               ngModel #usernameInput="ngModel" required>
+        <div class="login-data-wrapper">
+          <fa-icon [icon]="faEnvelope"></fa-icon>
+          <input type="text" class="login-data" name="username" placeholder="Username"
+                 ngModel #usernameInput="ngModel" required>
         </div>
         <span *ngIf="usernameInput.invalid && usernameInput.touched">Please enter a username</span>
-        <input type="password" class="login-data" name="password" placeholder="Password"
-               ngModel #passwordInput="ngModel" required>
-        <span *ngIf="passwordInput.invalid && passwordInput.touched">Please enter a password</span>
+
+        <div class="login-data-wrapper">
+          <fa-icon [icon]="faLock"></fa-icon>
+          <input type="password" class="login-data" name="password" placeholder="Password"
+                 ngModel #passwordInput="ngModel" required>
+          <span *ngIf="passwordInput.invalid && passwordInput.touched">Please enter a password</span>
+        </div>
+
+
         <button type="submit" [disabled]="loginForm.invalid || showLoading" name="login-button" class="btn login-btn">
-          <span *ngIf="showLoading">Loading...</span>
-          <span *ngIf="!showLoading">Login</span>
+          <span *ngIf="showLoading">LOADING...</span>
+          <span *ngIf="!showLoading">LOGIN</span>
         </button>
       </form>
       <button>Sign up</button>

@@ -8,6 +8,8 @@ import {Subscription} from "rxjs";
 import {HttpResponse} from "@angular/common/http";
 import {NotificationType} from "../enum/notification-type.enum";
 import {HeaderType} from "../enum/header-type.enum";
+import {faEnvelope} from "@fortawesome/free-regular-svg-icons";
+import {faLock} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-login',
@@ -15,6 +17,10 @@ import {HeaderType} from "../enum/header-type.enum";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy{
+
+  faEnvelope = faEnvelope;
+  faLock = faLock;
+
   showLoading = false;
   private subscriptions: Subscription[] = [];
 

@@ -18,7 +18,7 @@ import {NotificationService} from "./service/notification.service";
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AppRoutingModule } from './app-routing.module';
-
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 
 @NgModule({
@@ -37,7 +37,8 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserAnimationsModule,
     NotificationModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    FontAwesomeModule
 
   ],
   providers: [NotificationService, AuthenticationGuard, TaskService, AuthenticationService,
