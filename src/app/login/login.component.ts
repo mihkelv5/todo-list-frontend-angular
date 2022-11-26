@@ -1,15 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../service/authentication.service";
-import {NotificationService} from "../service/notification.service";
 import {User} from "../model/user";
 import {Subscription} from "rxjs";
 
 import {HttpResponse} from "@angular/common/http";
-import {NotificationType} from "../enum/notification-type.enum";
 import {HeaderType} from "../enum/header-type.enum";
-import {faEnvelope} from "@fortawesome/free-regular-svg-icons";
-import {faLock} from "@fortawesome/free-solid-svg-icons";
+import {faEnvelope} from "@fortawesome/free-solid-svg-icons";
+import {faLock, faArrowRightLong} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-login',
@@ -17,15 +15,15 @@ import {faLock} from "@fortawesome/free-solid-svg-icons";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy{
-
+  loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+  faArrowRight = faArrowRightLong;
   faEnvelope = faEnvelope;
   faLock = faLock;
   showInvalidUserDetails = false;
   showLoading = false;
   private subscriptions: Subscription[] = [];
 
-  constructor(private router: Router, private authenticationService: AuthenticationService,
-              private notificationService: NotificationService) {
+  constructor(private router: Router, private authenticationService: AuthenticationService) {
   }
 
 

@@ -2,7 +2,6 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthenticationService} from "../service/authentication.service";
 import {TaskViewComponent} from "../taskView/task-view.component";
 import {Router} from "@angular/router";
-import {LoginComponent} from "../login/login.component";
 
 
 

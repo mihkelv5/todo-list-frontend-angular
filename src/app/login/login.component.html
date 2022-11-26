@@ -1,32 +1,41 @@
-
-<div class="limiter">
-
-  <div class="login-container">
-    <div class="login-wrapper">
-      <h1>Login page</h1>
-      <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm.value)" class="login-form">
-
-        <div class="login-data-wrapper">
-          <fa-icon [icon]="faEnvelope"></fa-icon>
-          <input type="text" class="login-data" name="username" placeholder="Username"
-                 ngModel #usernameInput="ngModel" required>
-        </div>
-
-        <div class="login-data-wrapper">
-          <fa-icon [icon]="faLock"></fa-icon>
-          <input type="password" class="login-data" name="password" placeholder="Password"
-                 ngModel #passwordInput="ngModel" required>
-        </div>
-        <span *ngIf="usernameInput.invalid && usernameInput.touched" class="invalid-details">Please enter a username</span>
+<div class="background-image">
+  <div class="limiter">
+    <div class="description">
+      <span>ToDoList</span>
+      <p>{{loremIpsum}}</p>
+    </div>
+    <div class="login-container">
+      <div class="login-wrapper">
+        <span class="title">Login</span>
+        <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm.value)" class="login-form">
+          <div class="login-data-wrapper">
+            <fa-icon [icon]="faEnvelope"></fa-icon>
+            <input type="text" class="login-data" name="username" placeholder="Username"
+                   ngModel #usernameInput="ngModel" required>
+          </div>
+          <div class="login-data-wrapper">
+            <fa-icon [icon]="faLock"></fa-icon>
+            <input type="password" class="login-data" name="password" placeholder="Password"
+                   ngModel #passwordInput="ngModel" required>
+          </div>
+          <span *ngIf="usernameInput.invalid && usernameInput.touched" class="invalid-details">Please enter a username</span>
           <span *ngIf="passwordInput.invalid && passwordInput.touched" class="invalid-details">Please enter a password</span>
-        <span *ngIf="showInvalidUserDetails" class="invalid-details">Invalid username or password</span>
-
-        <button type="submit" [disabled]="loginForm.invalid || showLoading" name="login-button" class="btn login-btn">
-          <span *ngIf="showLoading">LOADING...</span>
-          <span *ngIf="!showLoading">LOGIN</span>
-        </button>
-      </form>
-      <button>Sign up</button>
+          <span *ngIf="showInvalidUserDetails" class="invalid-details">Invalid username or password</span>
+          <button type="submit" [disabled]="loginForm.invalid || showLoading" name="login-button" class="btn login-btn">
+            <span *ngIf="showLoading">LOADING...</span>
+            <span *ngIf="!showLoading">LOGIN</span>
+          </button>
+        </form>
+        <div class="create-account" routerLink="/register">
+          <span>Create an account</span>
+          <fa-icon [icon]="faArrowRight"></fa-icon>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
+
+
+
+
