@@ -3,11 +3,12 @@ import {Routes, RouterModule} from "@angular/router";
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {HomeComponent} from "./home/home.component";
+import {AuthenticationGuard} from "./guard/authentication.guard";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
-  { path: "register", component: RegisterComponent },
-  { path: "tasks", component: HomeComponent },
+  { path: "register", component: RegisterComponent, canActivate: [AuthenticationGuard] },
+  { path: "tasks", component: HomeComponent, canActivate: [AuthenticationGuard] },
   { path: "", redirectTo: "/login", pathMatch: "full" }
 ]
 

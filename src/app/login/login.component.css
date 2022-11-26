@@ -84,7 +84,6 @@ input:-webkit-autofill:active{
   padding: 50px;
 }
 .title{
-  font-family: Verdana, serif;
   margin-bottom: 50px;
   font-size: 2rem;
 }
@@ -122,18 +121,8 @@ input:-webkit-autofill:active{
   margin:auto 20px;
 }
 
-.login-warning {
-  right: 0;
-  position: absolute;
-  background: white;
-  color: rgb(154, 35, 5);
-  border: rgb(154, 35, 5) 1px solid;
-  border-radius: 20px;
-  margin-right: 10px;
-  padding: 5px;
-}
-
 .invalid-details{
+  margin-bottom: 3px;
   color: rgb(154, 35, 5);
   font-size: 1.1rem;
 }
@@ -162,6 +151,10 @@ input:-webkit-autofill:active{
   transition-duration: 0.4s;
 }
 
+.login-btn:disabled:hover {
+  background: rgba(203, 54, 17, 0.48);
+}
+
 .create-account{
   transition-duration: 0.4s;
   color: #333333;
@@ -172,6 +165,8 @@ input:-webkit-autofill:active{
   cursor:pointer;
   color: rgb(61, 171, 82);
 }
+
+
 
 .create-account > fa-icon {
   margin-left: 3px;

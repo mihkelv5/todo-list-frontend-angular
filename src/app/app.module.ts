@@ -13,8 +13,6 @@ import { TaskViewComponent } from './taskView/task-view.component';
 import { AuthenticationService} from "./service/authentication.service";
 import { AuthInterceptor} from "./interceptor/auth.interceptor";
 import {AuthenticationGuard} from "./guard/authentication.guard";
-import {NotificationModule} from "./notification.module";
-import {NotificationService} from "./service/notification.service";
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -35,13 +33,12 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     ReactiveFormsModule,
     DragDropModule,
     BrowserAnimationsModule,
-    NotificationModule,
     AppRoutingModule,
     FormsModule,
     FontAwesomeModule
 
   ],
-  providers: [NotificationService, AuthenticationGuard, TaskService, AuthenticationService,
+  providers: [AuthenticationGuard, TaskService, AuthenticationService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

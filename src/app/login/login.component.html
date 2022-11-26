@@ -6,21 +6,21 @@
     </div>
     <div class="login-container">
       <div class="login-wrapper">
-        <span class="title">Login</span>
+        <span class="title">Login to your account</span>
         <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm.value)" class="login-form">
           <div class="login-data-wrapper">
             <fa-icon [icon]="faEnvelope"></fa-icon>
             <input type="text" class="login-data" name="username" placeholder="Username"
                    ngModel #usernameInput="ngModel" required>
           </div>
+          <span *ngIf="usernameInput.invalid && usernameInput.touched" class="invalid-details">Please enter a username</span>
           <div class="login-data-wrapper">
             <fa-icon [icon]="faLock"></fa-icon>
             <input type="password" class="login-data" name="password" placeholder="Password"
                    ngModel #passwordInput="ngModel" required>
           </div>
-          <span *ngIf="usernameInput.invalid && usernameInput.touched" class="invalid-details">Please enter a username</span>
           <span *ngIf="passwordInput.invalid && passwordInput.touched" class="invalid-details">Please enter a password</span>
-          <span *ngIf="showInvalidUserDetails" class="invalid-details">Invalid username or password</span>
+          <span class="invalid-details">{{loginErrorMessage}}</span>
           <button type="submit" [disabled]="loginForm.invalid || showLoading" name="login-button" class="btn login-btn">
             <span *ngIf="showLoading">LOADING...</span>
             <span *ngIf="!showLoading">LOGIN</span>

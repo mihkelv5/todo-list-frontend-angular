@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit, OnDestroy{
   faLock = faLock;
   showInvalidUserDetails = false;
   showLoading = false;
+  loginErrorMessage = ""
   private subscriptions: Subscription[] = [];
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
@@ -43,6 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy{
         (response: HttpResponse<User>) => {
           const token = response.headers.get(HeaderType.JWT_TOKEN);
           if (token != null && response.body) {
+            this.loginErrorMessage = "";
             this.showInvalidUserDetails = false;
             this.authenticationService.saveToken(token);
             this.authenticationService.addUserToLocalCache(response.body);
@@ -50,8 +52,13 @@ export class LoginComponent implements OnInit, OnDestroy{
             this.showLoading = false;
           }
         }, (error: any) => {
+          if(error.status == "403"){
+            this.loginErrorMessage = "Invalid username or password";
+          } else {
+            this.loginErrorMessage = "Something went wrong, please try again"
+          }
           this.showLoading = false;
-          this.showInvalidUserDetails = true;
+
         }
       )
     )
