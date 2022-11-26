@@ -1,0 +1,27 @@
+
+
+.limiter {
+
+  width: 100%;
+  margin: 0 auto;
+  display: block;
+}
+
+.login-container {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100vh;
+  background-image: linear-gradient(to bottom right, #888888, #444444);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.login-wrapper {
+  background: #fff;
+  border-radius: 10px;
+  padding: 100px;
+
+}

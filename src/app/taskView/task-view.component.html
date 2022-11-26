@@ -1,0 +1,18 @@
+<button (click)="addTestTask()" >addTask</button>
+
+<div id="board">
+  <div class="task" *ngFor="let task of taskService.tasks"
+
+       [cdkDragData]="task" (cdkDragEnded)="taskDropped(task, $event)"
+       [cdkDragFreeDragPosition]="getTaskLocation(task)"
+       cdkDragBoundary="#board"
+       cdkDrag>
+    <div class="task-content">
+      <h3>{{task.title}}</h3>
+      <p>{{task.description}}</p>
+      <button (click)="deleteTask(task.id)">Delete</button>
+    </div>
+  </div>
+</div>
+
+
