@@ -1,8 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AuthenticationService} from "../service/authentication.service";
-import {TaskViewComponent} from "../taskView/task-view.component";
 import {Router} from "@angular/router";
-
+import {FormControl, FormGroup} from "@angular/forms";
+import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import {faUser} from "@fortawesome/free-regular-svg-icons";
 
 
 @Component({
@@ -14,15 +15,23 @@ import {Router} from "@angular/router";
 
 export class HomeComponent implements OnInit {
 
+  faUser = faUser;
+  faMagnifyingGlass = faMagnifyingGlass;
+  userDropDownMenuVisible = false;
+  @ViewChild("dropdownMenu") dropdownMenu!: ElementRef;
 
-  @(ViewChild("app-task-view"))
-  taskView!: TaskViewComponent;
+  searchValue = "";
+  searchForm: FormGroup = new FormGroup({
+    search: new FormControl("")
+  });
 
-  constructor(private authService: AuthenticationService, private router: Router) {}
+  constructor(private authService: AuthenticationService, private router: Router) {
+
+  }
 
 
   ngOnInit(): void {
-
+    console.log(localStorage.getItem("user"));
   }
 
 
@@ -34,5 +43,21 @@ export class HomeComponent implements OnInit {
 
   isLoggedIn(){
     return this.authService.isUserLoggedIn();
+  }
+
+  searchTasks() {
+    console.log(this.searchForm.get("search")?.value);
+    this.searchForm.setValue({"search" : ""})
+  }
+
+
+  toggleUserDropdownMenu() {
+
+    if(!this.userDropDownMenuVisible) {
+      this.dropdownMenu.nativeElement.classList.remove("dropdown-menu-hidden")
+    } else {
+      this.dropdownMenu.nativeElement.classList.add("dropdown-menu-hidden")
+    }
+    this.userDropDownMenuVisible = !this.userDropDownMenuVisible;
   }
 }

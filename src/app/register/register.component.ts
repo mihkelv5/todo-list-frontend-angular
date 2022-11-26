@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-register',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class RegisterComponent {
 
+
+  constructor(private location: Location) {
+  }
+
+  returnToLastPage() {
+    this.location.back();
+  }
 }

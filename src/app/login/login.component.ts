@@ -19,7 +19,6 @@ export class LoginComponent implements OnInit, OnDestroy{
   faArrowRight = faArrowRightLong;
   faEnvelope = faEnvelope;
   faLock = faLock;
-  showInvalidUserDetails = false;
   showLoading = false;
   loginErrorMessage = ""
   private subscriptions: Subscription[] = [];
@@ -45,10 +44,9 @@ export class LoginComponent implements OnInit, OnDestroy{
           const token = response.headers.get(HeaderType.JWT_TOKEN);
           if (token != null && response.body) {
             this.loginErrorMessage = "";
-            this.showInvalidUserDetails = false;
             this.authenticationService.saveToken(token);
             this.authenticationService.addUserToLocalCache(response.body);
-            this.router.navigateByUrl("/tasks");
+            this.router.navigateByUrl("/home");
             this.showLoading = false;
           }
         }, (error: any) => {

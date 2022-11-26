@@ -1,5 +1,79 @@
+.background-image {
+  background-image: linear-gradient(to bottom right, #a5dbe0, #528846);
+  width: 100%;
+  height: 100vh;
+}
+
+.nav {
+  background: rgba(255,244,235,0.25);
+  display: flex;
+  justify-content: space-around;
+
+}
+
+.search-bar {
+  position: relative;
+  background: #dadada;
+  border-radius: 25px;
+  padding: 10px;
+  width: 300px;
+  margin: 10px;
+
+}
+
+.search-bar > fa-icon {
+  position: absolute;
+  right: 10px;
+  font-size: 20px;
+  padding: 3px;
+}
+
+.search-bar > input {
+  background: #dadada;
+  border: none;
+  width: 275px;
+  font-size: 1.2rem;
+}
+.search-bar > input:focus {
+  outline: none;
+}
+
+fa-icon:hover {
+  cursor: pointer;
+}
 
 
+.user-logo {
+  position: relative;
+  align-self: center;
+  font-size: 2rem;
+  background: #dadada;
+  border-radius: 50%;
+  padding: 7px;
+}
+
+.user-logo >fa-icon:hover{
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  background: #dadada;
+  list-style: none;
+  font-size: 1.5rem;
+  right: -10px;
+  top: 25px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.dropdown-menu-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.dropdown-menu li:not(:last-child) {
+  padding-bottom: 15px;
+}
 
 
 
