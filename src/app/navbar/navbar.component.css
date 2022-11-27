@@ -61,6 +61,7 @@
   display: flex;
   gap: 8px;
 }
+
 .bell-icon {
   padding: 7px;
   font-size: 2rem;
@@ -119,15 +120,16 @@
 }
 
 @media (max-width: 768px) {
-  .nav {
-    justify-content: start;
-  }
-  .nav:first-child {
-    margin-left: 5px;
-  }
-  .search-bar > input {
+
+  .search-bar > input{
     font-size: 1rem;
   }
+
+  .search-bar > fa-icon {
+    font-size: 1em;
+    padding: 2px;
+  }
+
 }
 
 
