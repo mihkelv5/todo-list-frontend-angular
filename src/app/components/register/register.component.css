@@ -1,0 +1,177 @@
+* {
+  box-sizing: border-box;
+  font-family: Rockwell, sans-serif;
+}
+
+
+
+input {
+
+  outline: none;
+  border: none;
+  background: transparent;
+  border: 0;
+  height: 30px;
+  width: 100%;
+  font-size: 1.5rem;
+
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+  -webkit-box-shadow: 0 0 0 30px #dadada inset !important;
+
+} /*removes browser autofill color*/
+
+.background-image {
+  background-image: linear-gradient(to bottom right, #a5dbe0, #528846);
+}
+
+.limiter {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1000px;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  min-height: 30vh;
+  justify-content: center;
+
+}
+
+.description span {
+  font-size: 4rem;
+
+}
+
+
+.todo-list {
+  margin: 0 30px;
+}
+
+.login-container {
+
+  width: 100%;
+  min-height: 70vh;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 15px;
+}
+
+.login-wrapper {
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 50px;
+}
+.title{
+  margin-bottom: 50px;
+  font-size: 2rem;
+}
+
+
+.login-form {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-data-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
+  width: 100%;
+  background: #dadada;
+  border-radius: 25px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+
+.login-data-wrapper > fa-icon {
+  color: #666666;
+  font-size: 1.5rem;
+  margin:auto 20px;
+}
+
+.invalid-details{
+  margin-bottom: 3px;
+  color: rgb(154, 35, 5);
+  font-size: 1.1rem;
+}
+
+.valid-details{
+  margin-bottom: 3px;
+  color: rgb(10, 154, 5);
+  font-size: 1.1rem;
+}
+
+.register-btn {
+  margin: 30px 0;
+  width: 100%;
+  height: 50px;
+  border: none;
+  background: rgb(61, 171, 82);
+  padding: 5px;
+  border-radius: 25px;
+  font-weight: bold;
+  transition-duration: 0.4s;
+  color: white;
+  font-size: 1rem;
+}
+
+.register-btn:disabled {
+  background: rgba(61, 171, 82, 0.42);
+}
+
+.register-btn:hover {
+  background: #333;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+.register-btn:disabled:hover {
+  background: rgba(203, 54, 17, 0.48);
+}
+
+.redirect-login{
+  transition-duration: 0.4s;
+  color: #333333;
+}
+
+.redirect-login:hover{
+  transition-duration: 0.4s;
+  cursor:pointer;
+  color: rgb(61, 171, 82);
+}
+
+
+
+.redirect-login > fa-icon {
+  margin-left: 3px;
+  font-size: 0.7rem;
+}
+
+@media (max-width: 980px) {
+  .limiter {
+    flex-direction: column;
+  }
+
+
+}
+
+

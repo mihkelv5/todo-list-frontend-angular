@@ -24,7 +24,6 @@ export class NavbarComponent {
 
   userMenuVisible = false;
   notificationMenuVisible = false;
-  //TODO: close elements when clicking outside a window
 
   searchValue = "";
   searchForm: FormGroup = new FormGroup({

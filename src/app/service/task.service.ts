@@ -24,6 +24,8 @@ export class TaskService {
   }
 
 
+  //TODO: remove subscriptions from this service as it might cause memory leaks
+
 
   public loadTasksFromDB() {
         this.http.get<Task[]>(this.host + "/task/all").subscribe(response => {
