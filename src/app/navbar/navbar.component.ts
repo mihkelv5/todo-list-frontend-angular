@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {AuthenticationService} from "../service/authentication.service";
 import {Router} from "@angular/router";
 import {FormControl, FormGroup} from "@angular/forms";
@@ -24,8 +24,7 @@ export class NavbarComponent {
 
   userMenuVisible = false;
   notificationMenuVisible = false;
-  @ViewChild("userMenu") userMenu!: ElementRef;
-  @ViewChild("notificationMenu") notificationMenu!: ElementRef;
+  //TODO: close elements when clicking outside a window
 
   searchValue = "";
   searchForm: FormGroup = new FormGroup({
@@ -61,29 +60,15 @@ export class NavbarComponent {
   toggleUserDropdownMenu() {
 
     if(this.notificationMenuVisible){
-      this.notificationMenu.nativeElement.classList.add("dropdown-menu-hidden")
       this.notificationMenuVisible = false;
     }
-    if(!this.userMenuVisible) {
-      this.userMenu.nativeElement.classList.remove("dropdown-menu-hidden")
-    } else {
-      this.userMenu.nativeElement.classList.add("dropdown-menu-hidden")
-    }
-
     this.userMenuVisible = !this.userMenuVisible;
   }
 
   toggleNotificationDropdownMenu() {
     if(this.userMenuVisible){
-      this.userMenu.nativeElement.classList.add("dropdown-menu-hidden")
       this.userMenuVisible = false;
     }
-    if(!this.notificationMenuVisible) {
-      this.notificationMenu.nativeElement.classList.remove("dropdown-menu-hidden")
-    } else {
-      this.notificationMenu.nativeElement.classList.add("dropdown-menu-hidden")
-    }
-
     this.notificationMenuVisible = !this.notificationMenuVisible;
   }
 

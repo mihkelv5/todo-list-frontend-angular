@@ -19,7 +19,7 @@
       <div (click)="toggleNotificationDropdownMenu()" class="bell-icon pointer-item">
         <fa-icon [icon]="faBell" ></fa-icon>
       </div>
-      <ul class="dropdown-menu dropdown-menu-hidden" #notificationMenu>
+      <ul class="dropdown-menu " *ngIf="notificationMenuVisible">
         <li>
           You have no notifications
         </li>
@@ -30,7 +30,7 @@
       <div (click)="toggleUserDropdownMenu()" class="user-icon pointer-item">
         <fa-icon [icon]="faUser" ></fa-icon>
       </div>
-      <ul class="dropdown-menu dropdown-menu-hidden" #userMenu>
+      <ul class="dropdown-menu" *ngIf="userMenuVisible">
         <li class="dropdown-menu-item pointer-item">
           <span>
               <fa-icon [icon]="faSettings" class="dropdown-icon fa-fw" ></fa-icon>
