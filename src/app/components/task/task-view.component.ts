@@ -62,11 +62,12 @@ export class TaskViewComponent implements OnInit, OnDestroy {
     const newTask =
       new Task(0,
         new Date("2022-11-11"),
-        true,
+        false,
         "test",
         this.loremIpsum.substring(0, this.getRandomInt(100)),
         this.getRandomInt(500),
-        this.getRandomInt(300));
+        this.getRandomInt(300),
+        "#a1fbff");
     this.subscriptions.push(this.taskService.addTask(newTask)
         .subscribe(() => {
           this.loadTasks(); //TODO: search for better alternative for subscribe

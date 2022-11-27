@@ -13,13 +13,13 @@
   </ul>
 </div>
 <div id="board">
-  <div class="task" *ngFor="let task of tasks"
-
+  <div class="task" *ngFor="let task of tasks "
+       [ngStyle]="{'background' : task.color}"
        [cdkDragData]="task" (cdkDragEnded)="taskDropped(task, $event)"
        [cdkDragFreeDragPosition]="getTaskLocation(task)"
        cdkDragBoundary="#board"
        cdkDrag>
-    <div class="task-content">
+    <div class="task-content" >
       <h3>{{task.title}}</h3>
       <p>{{task.description}}</p>
       <button (click)="deleteTask(task.id)">Delete</button>
