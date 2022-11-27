@@ -2,7 +2,25 @@
   background: rgba(255,244,235,0.25);
   display: flex;
   justify-content: space-around;
+  align-items: center;
+}
 
+.pointer-item:hover {
+  cursor:pointer;
+}
+
+
+.home-icon {
+  display: block;
+  font-size: 1.7rem;
+  background: #dadada;
+  padding: 3px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+}
+
+.home-icon > {
+  top: 5px;
 }
 
 .search-bar {
@@ -32,24 +50,29 @@
   outline: none;
 }
 
-.search-btn:hover {
-  cursor: pointer;
-}
 
 .dropdown-menu-parent {
   position: relative;
   align-self: center;
 }
 
-.user-logo {
+.account-elements {
+  display: flex;
+  gap: 8px;
+}
+.bell-icon {
   padding: 7px;
   font-size: 2rem;
   background: #dadada;
   border-radius: 50%;
+
 }
 
-.user-logo:hover {
-  cursor: pointer;
+.user-icon {
+  padding: 7px;
+  font-size: 2rem;
+  background: #dadada;
+  border-radius: 50%;
 }
 
 
@@ -58,7 +81,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #dadada;
+  background: #e3e3e3;
   list-style: none;
   font-size: 1.5rem;
   right: -10px;
@@ -74,20 +97,24 @@
   pointer-events: none;
 }
 
-.dropdown-menu > li{
-  border: black 1px solid;
-  margin: 20px 10px;
-}
 
-.dropdown-menu li:not(:last-child) {
+.dropdown-menu-item {
+  align-self: stretch;
+  margin: 10px 10px;
   padding: 15px;
-}
-
-.logout-btn {
-
+  display: flex;
 }
 
 
-.dropdown-menu > :hover {
-
+.dropdown-icon {
+  width: 25px;
+  height: 25px;
+  font-size: 20px;
+  padding: 5px;
+  background: #c5c5c5;
+  background-size: 25px 25px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
+
+

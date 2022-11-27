@@ -1,9 +1,5 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {AuthenticationService} from "../service/authentication.service";
-import {Router} from "@angular/router";
-import {FormControl, FormGroup} from "@angular/forms";
-import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
-import {faUser} from "@fortawesome/free-regular-svg-icons";
+import {Component, OnInit} from '@angular/core';
+
 
 
 @Component({

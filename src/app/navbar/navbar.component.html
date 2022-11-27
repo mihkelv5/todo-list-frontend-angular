@@ -1,30 +1,58 @@
 <nav class="nav">
-  <form [formGroup]="searchForm" class="search-bar">
+
+
+  <div class="home-icon"> <!--home icon-->
+    <fa-icon [icon]="faHome" class="home-icon pointer-item" routerLink="/home"></fa-icon>
+  </div>
+
+
+  <form [formGroup]="searchForm" class="search-bar"> <!--search bar-->
     <input type="text"  placeholder="Search for events"
            formControlName="search" (keydown.enter)="searchTasks()">
-    <fa-icon [icon]="faMagnifyingGlass" (click)="searchTasks()" class="search-btn"></fa-icon>
+    <fa-icon [icon]="faMagnifyingGlass" (click)="searchTasks()" class="search-btn pointer-item"></fa-icon>
   </form>
-  <div class="dropdown-menu-parent" >
-    <div (click)="toggleUserDropdownMenu()" class="user-logo">
-      <fa-icon [icon]="faUser" ></fa-icon>
+
+
+  <div class="account-elements">  <!--account elements-->
+
+    <div class="dropdown-menu-parent">  <!--notification icon icon-->
+      <div (click)="toggleNotificationDropdownMenu()" class="bell-icon pointer-item">
+        <fa-icon [icon]="faBell" ></fa-icon>
+      </div>
+      <ul class="dropdown-menu dropdown-menu-hidden" #notificationMenu>
+        <li>
+          You have no notifications
+        </li>
+      </ul>
     </div>
-    <ul class="dropdown-menu dropdown-menu-hidden" #dropdownMenu>
-      <li>
+
+    <div class="dropdown-menu-parent" > <!--user icon-->
+      <div (click)="toggleUserDropdownMenu()" class="user-icon pointer-item">
+        <fa-icon [icon]="faUser" ></fa-icon>
+      </div>
+      <ul class="dropdown-menu dropdown-menu-hidden" #userMenu>
+        <li class="dropdown-menu-item pointer-item">
           <span>
-            Profile - Todo
+              <fa-icon [icon]="faSettings" class="dropdown-icon fa-fw" ></fa-icon>
+              Settings
           </span>
-      </li>
-      <li>
-          <span>
-            Friends - Todo
-          </span>
-      </li>
-      <li>
-          <span (click)="logout()" class="logout-btn">
-            Logout
-          </span>
-      </li>
-    </ul>
+        </li >
+        <li class="dropdown-menu-item pointer-item">
+            <span>
+              <fa-icon [icon]="faFriends" class="dropdown-icon fa-fw"></fa-icon>
+              Friends
+            </span>
+        </li>
+        <li class="dropdown-menu-item pointer-item">
+            <span (click)="logout()" class="logout-btn">
+              <fa-icon [icon]="faLogout" class="dropdown-icon fa-fw"></fa-icon>
+              Logout
+            </span>
+        </li>
+      </ul>
+    </div>
+
   </div>
+
 
 </nav>
