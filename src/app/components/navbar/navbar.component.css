@@ -1,5 +1,10 @@
 .nav {
   background: rgba(255,244,235,0.25);
+}
+
+.limiter {
+  margin: 0 auto;
+  max-width: 1000px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -29,7 +34,7 @@
   border-radius: 25px;
   padding: 10px;
   width: 40vw;
-  max-width: 300px;
+  max-width: 400px;
   margin: 10px;
 
 }
@@ -94,10 +99,6 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
 }
 
-.dropdown-menu-hidden {
-  opacity: 0;
-  pointer-events: none;
-}
 
 
 .dropdown-menu-item {

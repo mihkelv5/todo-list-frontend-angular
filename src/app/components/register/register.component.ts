@@ -18,6 +18,7 @@ export class RegisterComponent implements OnDestroy{
   faEnvelope = faEnvelope;
   faLock = faLock;
   registerMessage = ""
+  registerErrorMessage = "";
   showLoading = false;
 
   private subscriptions: Subscription[] = [];
@@ -31,22 +32,29 @@ export class RegisterComponent implements OnDestroy{
   }
 
   register(user: User) {
+    this.registerErrorMessage = "";
     user.enabled = true; //TODO: add email confirmation to backend
     user.roles = "ROLE_USER"
     this.showLoading = true;
     this.subscriptions.push(
       this.authenticationService.register(user).subscribe(
-        () => {
-          this.registerMessage = "Account successfully created"
+          () => {
+            this.registerMessage = "Account successfully created"
 
-          setTimeout(() => {
-            this.registerMessage = "";
-            this.router.navigateByUrl("/login")
-          }, 2000);
-        }
-      ));
+            setTimeout(() => {
+              this.registerMessage = "";
+              this.router.navigateByUrl("/login")
+            }, 2000);
 
 
+          }, (error) => {
+            this.showLoading = false;
+            if(error.status == 422){
+              this.registerErrorMessage = "Username already taken";
+            } else {
+              this.registerErrorMessage = "Something went wrong, please try again";
+            }
+          }));
   }
 
 

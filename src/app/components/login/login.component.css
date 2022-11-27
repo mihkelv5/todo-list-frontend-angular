@@ -84,6 +84,7 @@ input:-webkit-autofill:active{
   padding: 50px;
 }
 .title{
+
   margin-bottom: 50px;
   font-size: 2rem;
 }
@@ -177,6 +178,9 @@ input:-webkit-autofill:active{
   .limiter {
     flex-direction: column;
   }
+  .login-wrapper {
+    padding: 50px 10px;
+  }
 
   .login-container {
     min-height: 70vh;
@@ -190,7 +194,7 @@ input:-webkit-autofill:active{
   }
 
   .description span {
-    margin: 0 auto 30px auto;
+    margin: 10px auto 30px auto;
   }
 }
 

@@ -162,13 +162,16 @@ input:-webkit-autofill:active{
 
 
 .redirect-login > fa-icon {
-  margin-left: 3px;
+  margin-right: 3px;
   font-size: 0.7rem;
 }
 
 @media (max-width: 980px) {
   .limiter {
     flex-direction: column;
+  }
+  .login-wrapper {
+    padding: 50px 10px;
   }
 
 

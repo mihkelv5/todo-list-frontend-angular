@@ -21,6 +21,7 @@
           <span *ngIf="passwordInput.invalid && passwordInput.touched" class="invalid-details">Please enter a password</span>
 
           <span class="valid-details">{{registerMessage}}</span>
+          <span class="invalid-details">{{registerErrorMessage}}</span>
           <button type="submit" [disabled]="loginForm.invalid || showLoading" name="register-button" class="btn register-btn">
             <span *ngIf="showLoading">LOADING...</span>
             <span *ngIf="!showLoading">REGISTER ACCOUNT</span>
