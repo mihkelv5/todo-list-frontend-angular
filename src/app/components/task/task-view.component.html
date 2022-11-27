@@ -1,9 +1,9 @@
 
 
-<button (click)="addTestTask()" >addTask</button>
 
 <div id="board">
-  <div class="task" *ngFor="let task of taskService.tasks"
+  <button (click)="addTestTask()" class="add-task-btn" >addTask</button>
+  <div class="task" *ngFor="let task of tasks"
 
        [cdkDragData]="task" (cdkDragEnded)="taskDropped(task, $event)"
        [cdkDragFreeDragPosition]="getTaskLocation(task)"

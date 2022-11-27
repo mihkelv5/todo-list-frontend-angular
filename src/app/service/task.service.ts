@@ -24,13 +24,8 @@ export class TaskService {
   }
 
 
-  //TODO: remove subscriptions from this service as it might cause memory leaks
-
-
-  public loadTasksFromDB() {
-        this.http.get<Task[]>(this.host + "/task/all").subscribe(response => {
-          this.tasks = response;
-      });
+  public loadTasksFromDB(): Observable<Task[]> {
+        return this.http.get<Task[]>(this.host + "/task/all")
   }
 
 
@@ -45,15 +40,12 @@ export class TaskService {
 
   public deleteTask(id: number) {
 
-    this.http.delete(this.host + "/task/delete/" + id ).subscribe(
-      () => {
-        this.loadTasksFromDB();
-      });
+    return this.http.delete(this.host + "/task/delete/" + id );
   }
 
   public moveTask(task: Task){
 
-    this.http.put<Task>(this.host + "/task/moveTask",task).subscribe()
+    return this.http.put<Task>(this.host + "/task/moveTask",task)
   }
 
 

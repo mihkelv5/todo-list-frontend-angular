@@ -1,13 +1,12 @@
 #board {
-  margin: 0 auto;
   position: relative;
-  width: 600px;
-  height: 400px;
-  border: dotted #ccc 2px;
+  height: 100%;
+
 }
 
 
 .task {
+  z-index: 1;
   position: absolute;
   width: 100px;
   min-height: 100px;
@@ -30,4 +29,9 @@
   position: absolute;
   right: 0;
   top: 0;
+}
+
+.add-task-btn {
+  position: absolute;
+  z-index: 2;
 }

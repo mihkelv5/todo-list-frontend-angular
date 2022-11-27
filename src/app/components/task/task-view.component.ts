@@ -1,40 +1,53 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TaskService} from "../../service/task.service";
 import {Task} from "../../model/task";
 import {CdkDragEnd} from "@angular/cdk/drag-drop";
+import {Subscription} from "rxjs";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-task-view',
   templateUrl: './task-view.component.html',
   styleUrls: ['./task-view.component.css']
 })
-export class TaskViewComponent implements OnInit {
+export class TaskViewComponent implements OnInit, OnDestroy {
   loremIpsum = "Lorem ipsum dolor sit amet, " +
     "consectetur adipiscing elit, sed do eiusmod tempor " +
     "incididunt ut labore et dolore magna aliqua. " +
     "Ut enim ad minim veniam, quis nostrud exercitation " +
     "ullamco laboris nisi ut aliquip ex ea commodo consequat."
 
+  faPlus = faPlus;
+
+  private subscriptions: Subscription[] = [];
+  tasks: Task[] = [];
+
   constructor(public taskService: TaskService) {
   }
 
-
   ngOnInit(): void {
-    this.taskService.loadTasksFromDB();
+    this.loadTasks();
   }
 
-  loadTasks() {
-    this.taskService.loadTasksFromDB();
+  loadTasks(){
+    this.subscriptions.push(
+      this.taskService.loadTasksFromDB().subscribe(response => {
+        this.tasks = response;
+      }));
   }
+
 
   deleteTask(id: number) {
-    this.taskService.deleteTask(id);
+    this.subscriptions.push(
+      this.taskService.deleteTask(id).subscribe(() => {
+        this.loadTasks();
+      }));
   }
 
   taskDropped(task: Task, dropPoint: CdkDragEnd) {
     task.xLocation = dropPoint.source.getFreeDragPosition().x
     task.yLocation = dropPoint.source.getFreeDragPosition().y
-    this.taskService.moveTask(task);
+    this.subscriptions.push(this.taskService.moveTask(task).subscribe());
   }
 
   getTaskLocation(task: Task) {
@@ -54,13 +67,19 @@ export class TaskViewComponent implements OnInit {
         this.loremIpsum.substring(0, this.getRandomInt(100)),
         this.getRandomInt(500),
         this.getRandomInt(300));
-    this.taskService.addTask(newTask)
-      .subscribe(() => this.taskService.loadTasksFromDB());
+    this.subscriptions.push(this.taskService.addTask(newTask)
+        .subscribe(() => {
+          this.loadTasks(); //TODO: search for better alternative for subscribe
+        }));
   }
 
-  testLog(){
-    console.log("test");
+
+
+  ngOnDestroy(): void {
+    this.tasks = [];
+    this.subscriptions.forEach((sub => sub.unsubscribe()));
   }
+
 
 
 }
