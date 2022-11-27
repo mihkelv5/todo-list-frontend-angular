@@ -5,24 +5,31 @@
     <form [formGroup]="searchForm" class="search-bar">
       <input type="text"  placeholder="Search for events"
              formControlName="search" (keydown.enter)="searchTasks()">
-      <fa-icon [icon]="faMagnifyingGlass" (click)="searchTasks()"></fa-icon>
+      <fa-icon [icon]="faMagnifyingGlass" (click)="searchTasks()" class="search-btn"></fa-icon>
     </form>
-    <div class="user-logo" >
-      <fa-icon [icon]="faUser" (click)="toggleUserDropdownMenu()"></fa-icon>
+    <div class="dropdown-menu-parent" >
+      <div (click)="toggleUserDropdownMenu()" class="user-logo">
+        <fa-icon [icon]="faUser" ></fa-icon>
+      </div>
       <ul class="dropdown-menu dropdown-menu-hidden" #dropdownMenu>
         <li>
-          Profile
+          <span>
+            Profile - Todo
+          </span>
         </li>
         <li>
-          Friends?
+          <span>
+            Friends - Todo
+          </span>
         </li>
         <li>
-          <button>
+          <span (click)="logout()" class="logout-btn">
             Logout
-          </button>
+          </span>
         </li>
       </ul>
     </div>
 
   </nav>
 </div>
+
