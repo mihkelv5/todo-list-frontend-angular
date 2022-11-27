@@ -17,6 +17,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AppRoutingModule } from './app-routing.module';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     HomeComponent,
     TaskViewComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

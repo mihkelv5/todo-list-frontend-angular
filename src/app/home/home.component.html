@@ -1,35 +1,6 @@
 
 <div class="background-image">
+  <app-navbar></app-navbar>
 
-  <nav class="nav">
-    <form [formGroup]="searchForm" class="search-bar">
-      <input type="text"  placeholder="Search for events"
-             formControlName="search" (keydown.enter)="searchTasks()">
-      <fa-icon [icon]="faMagnifyingGlass" (click)="searchTasks()" class="search-btn"></fa-icon>
-    </form>
-    <div class="dropdown-menu-parent" >
-      <div (click)="toggleUserDropdownMenu()" class="user-logo">
-        <fa-icon [icon]="faUser" ></fa-icon>
-      </div>
-      <ul class="dropdown-menu dropdown-menu-hidden" #dropdownMenu>
-        <li>
-          <span>
-            Profile - Todo
-          </span>
-        </li>
-        <li>
-          <span>
-            Friends - Todo
-          </span>
-        </li>
-        <li>
-          <span (click)="logout()" class="logout-btn">
-            Logout
-          </span>
-        </li>
-      </ul>
-    </div>
-
-  </nav>
 </div>
 

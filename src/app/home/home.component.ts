@@ -15,49 +15,6 @@ import {faUser} from "@fortawesome/free-regular-svg-icons";
 
 export class HomeComponent implements OnInit {
 
-  faUser = faUser;
-  faMagnifyingGlass = faMagnifyingGlass;
-  userDropDownMenuVisible = false;
-  @ViewChild("dropdownMenu") dropdownMenu!: ElementRef;
-
-  searchValue = "";
-  searchForm: FormGroup = new FormGroup({
-    search: new FormControl("")
-  });
-
-  constructor(private authService: AuthenticationService, private router: Router) {
-
-  }
-
-
-  ngOnInit(): void {
-    console.log(localStorage.getItem("user"));
-  }
-
-
-
-  logout(){
-    this.authService.logout();
-    this.router.navigate(["/login"]);
-  }
-
-  isLoggedIn(){
-    return this.authService.isUserLoggedIn();
-  }
-
-  searchTasks() {
-    console.log(this.searchForm.get("search")?.value);
-    this.searchForm.setValue({"search" : ""})
-  }
-
-
-  toggleUserDropdownMenu() {
-
-    if(!this.userDropDownMenuVisible) {
-      this.dropdownMenu.nativeElement.classList.remove("dropdown-menu-hidden")
-    } else {
-      this.dropdownMenu.nativeElement.classList.add("dropdown-menu-hidden")
-    }
-    this.userDropDownMenuVisible = !this.userDropDownMenuVisible;
+  ngOnInit() {
   }
 }

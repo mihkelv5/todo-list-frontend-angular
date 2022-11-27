@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit, OnDestroy{
   private subscriptions: Subscription[] = [];
 
   constructor(private router: Router, private authenticationService: AuthenticationService) {
+
   }
 
 
