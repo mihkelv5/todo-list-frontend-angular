@@ -18,6 +18,7 @@ import { RegisterComponent } from './register/register.component';
 import { AppRoutingModule } from './app-routing.module';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { NavbarComponent } from './navbar/navbar.component';
+import {ClickedOutsideDirective} from "./directives/ClickedOutside.directive";
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     TaskViewComponent,
     LoginComponent,
     RegisterComponent,
-    NavbarComponent
+    NavbarComponent,
+    ClickedOutsideDirective
   ],
   imports: [
     BrowserModule,

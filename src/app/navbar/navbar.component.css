@@ -28,7 +28,8 @@
   background: #dadada;
   border-radius: 25px;
   padding: 10px;
-  width: 300px;
+  width: 40vw;
+  max-width: 300px;
   margin: 10px;
 
 }
@@ -43,7 +44,7 @@
 .search-bar > input {
   background: #dadada;
   border: none;
-  width: 275px;
+  width: 92%;
   font-size: 1.2rem;
 }
 .search-bar > input:focus {
@@ -115,6 +116,18 @@
   background-size: 25px 25px;
   border-radius: 50%;
   margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    justify-content: start;
+  }
+  .nav:first-child {
+    margin-left: 5px;
+  }
+  .search-bar > input {
+    font-size: 1rem;
+  }
 }
 
 

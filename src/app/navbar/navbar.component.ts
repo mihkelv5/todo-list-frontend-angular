@@ -31,14 +31,9 @@ export class NavbarComponent {
     search: new FormControl("")
   });
 
-  constructor(private authService: AuthenticationService, private router: Router) {
-
-  }
+  constructor(private authService: AuthenticationService, private router: Router) {}
 
 
-  ngOnInit(): void {
-
-  }
 
 
 
@@ -55,7 +50,10 @@ export class NavbarComponent {
     console.log(this.searchForm.get("search")?.value);
     this.searchForm.setValue({"search" : ""})
   }
-
+  closeUserAndNotificationMenu(){
+    this.userMenuVisible = false;
+    this.notificationMenuVisible = false;
+  }
 
   toggleUserDropdownMenu() {
 
