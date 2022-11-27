@@ -31,10 +31,6 @@
   overflow-y: scroll;
 }
 
-.header {
-  background: #dadada;
-  height: 30px;
-}
 
 .my-tasks {
   display: flex;
@@ -44,6 +40,8 @@
   width: 100%;
   height: 50%;
 }
+
+
 
 .board {
   flex: 1;

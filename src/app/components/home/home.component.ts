@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
 
 
 @Component({
@@ -10,6 +10,9 @@ import {Component, OnInit} from '@angular/core';
 
 
 export class HomeComponent implements OnInit {
+
+
+  faPlus = faPlus;
 
   ngOnInit() {
   }
