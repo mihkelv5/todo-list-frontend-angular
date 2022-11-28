@@ -4,6 +4,7 @@ import {Task} from "../../model/task";
 import {CdkDragEnd} from "@angular/cdk/drag-drop";
 import {Subscription} from "rxjs";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {AuthenticationService} from "../../service/authentication.service";
 
 @Component({
   selector: 'app-task-view',
@@ -21,17 +22,20 @@ export class TaskViewComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
   tasks: Task[] = [];
+  userId = 0;
 
-  constructor(public taskService: TaskService) {
+  constructor(private taskService: TaskService, private authService: AuthenticationService) {
   }
 
   ngOnInit(): void {
     this.loadTasks();
+    const user = this.authService.getUserFromLocalCache()
+    this.userId = user.id;
   }
 
   loadTasks(){
     this.subscriptions.push(
-      this.taskService.loadTasksFromDB().subscribe(response => {
+      this.taskService.loadTasksFromDB(this.userId).subscribe(response => {
         this.tasks = response;
       }));
   }

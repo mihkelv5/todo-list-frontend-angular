@@ -13,8 +13,7 @@ export class TaskService {
 
   private host = environment.apiBaseUrl;
 
-  userToken: string = "";
-  credentials: string = '{"username" : "foos", "password" : "foos"}';
+
   tasks: Task[] = [];
   constructor(private http: HttpClient) {
 
@@ -24,8 +23,8 @@ export class TaskService {
   }
 
 
-  public loadTasksFromDB(): Observable<Task[]> {
-        return this.http.get<Task[]>(this.host + "/task/all")
+  public loadTasksFromDB(id: number): Observable<Task[]> {
+        return this.http.get<Task[]>(this.host + "/task/user/" + id + "/tasks");
   }
 
 
