@@ -8,7 +8,7 @@
     <li class="pointer-cursor" > This week </li> <!--TODO: needs backend logic for -->
     <li class="pointer-cursor" > Uncompleted </li>
     <li class="pointer-cursor" > Completed </li>
-    <li class="add-task-btn pointer-cursor" (click)="addTestTask()">
+    <li class="add-task-btn pointer-cursor" (click)="setViewTask(true, 0)">
       <fa-icon [icon]="faPlus"></fa-icon>
     </li>
   </ul>
@@ -25,11 +25,14 @@
       <div class="task-content" >
         <h3>{{task.title}}</h3>
         <p>{{task.description}}</p>
-        <button (click)="deleteTask(task.id)">Delete</button>
+        <div class="task-buttons">
+          <button (click)="deleteTask(task.id)">Delete</button>
+          <button (click)="setViewTask(true, task.id)">Edit</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
-<app-view-task *ngIf="viewTaskComponentOpen"></app-view-task>
+<app-view-task *ngIf="viewTaskComponentOpen" (onHide)="setViewTask($event, 0)" [taskId]="taskId"></app-view-task>
 
 

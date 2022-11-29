@@ -178,15 +178,15 @@ input:-webkit-autofill:active{
   .limiter {
     flex-direction: column;
   }
-  .login-wrapper {
-    padding: 50px 10px;
-  }
 
   .login-container {
     min-height: 70vh;
     align-items: start;
   }
 
+  .login-wrapper {
+    padding: 50px 10px;
+  }
   .description {
 
     justify-content: center;

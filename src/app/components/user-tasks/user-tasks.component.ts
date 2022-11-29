@@ -5,7 +5,6 @@ import {CdkDragEnd} from "@angular/cdk/drag-drop";
 import {Subscription} from "rxjs";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {AuthenticationService} from "../../service/authentication.service";
-import {TaskFilterEnum} from "../../enum/task-filter.enum";
 
 @Component({
   selector: 'app-user-tasks',
@@ -17,10 +16,9 @@ export class UserTasksComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
   tasks: Task[] = [];
-  userId = 0;
-  taskFilter: TaskFilterEnum = TaskFilterEnum.ALL_TASKS;
-  viewTaskComponentOpen = false;
-
+  viewTaskComponentOpen = false; //enables or disables task create/edit component
+  userId = 0; //used when getting tasks from user
+  taskId = 0; //used when a task view is initialized
   constructor(private taskService: TaskService, private authService: AuthenticationService) {
   }
 
@@ -68,6 +66,7 @@ export class UserTasksComponent implements OnInit, OnDestroy {
 
   //Temporary methods for development
 
+
  addEmptyTask() {
 
  }
@@ -112,4 +111,10 @@ export class UserTasksComponent implements OnInit, OnDestroy {
   }
 
 
+  setViewTask(bool: boolean, taskId:number) {
+    this.taskId = taskId;
+    this.viewTaskComponentOpen = bool;
+
+
+  }
 }
