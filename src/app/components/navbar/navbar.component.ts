@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {AuthenticationService} from "../../service/authentication.service";
 import {Router} from "@angular/router";
 import {FormControl, FormGroup} from "@angular/forms";
@@ -49,6 +49,7 @@ export class NavbarComponent {
     console.log(this.searchForm.get("search")?.value);
     this.searchForm.setValue({"search" : ""})
   }
+  @HostListener('document:keydown.escape', ['$event'])
   closeUserAndNotificationMenu(){
     this.userMenuVisible = false;
     this.notificationMenuVisible = false;
@@ -68,5 +69,6 @@ export class NavbarComponent {
     }
     this.notificationMenuVisible = !this.notificationMenuVisible;
   }
+  
 
 }
