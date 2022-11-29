@@ -1,0 +1,35 @@
+
+
+<div class="header">
+  <span class="headline">My tasks</span>
+  <ul class="header-buttons">
+    <li class="pointer-cursor" > All tasks </li>
+    <li class="pointer-cursor" > My tasks</li> <!--TODO: think of better name for user created tasks they created for themselves-->
+    <li class="pointer-cursor" > This week </li> <!--TODO: needs backend logic for -->
+    <li class="pointer-cursor" > Uncompleted </li>
+    <li class="pointer-cursor" > Completed </li>
+    <li class="add-task-btn pointer-cursor" (click)="addTestTask()">
+      <fa-icon [icon]="faPlus"></fa-icon>
+    </li>
+  </ul>
+</div>
+<div id="board">
+  <div *ngFor="let task of tasks">
+
+    <div class="task"
+         [ngStyle]="{'background' : task.color}"
+         [cdkDragData]="task" (cdkDragEnded)="taskDropped(task, $event)"
+         [cdkDragFreeDragPosition]="getTaskLocation(task)"
+         cdkDragBoundary="#board"
+         cdkDrag>
+      <div class="task-content" >
+        <h3>{{task.title}}</h3>
+        <p>{{task.description}}</p>
+        <button (click)="deleteTask(task.id)">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-view-task *ngIf="viewTaskComponentOpen"></app-view-task>
+
+

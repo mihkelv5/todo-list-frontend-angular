@@ -6,7 +6,7 @@
     <div class="login-container">
       <div class="login-wrapper">
         <span class="title">Register new account</span>
-        <form #loginForm="ngForm" (ngSubmit)="register(loginForm.value)" class="login-form">
+        <form #registerForm="ngForm" (ngSubmit)="register(registerForm.value)" class="login-form">
           <div class="login-data-wrapper">
             <fa-icon [icon]="faEnvelope"></fa-icon>
             <input type="text" class="login-data" name="username" placeholder="Username"
@@ -22,7 +22,7 @@
 
           <span class="valid-details">{{registerMessage}}</span>
           <span class="invalid-details">{{registerErrorMessage}}</span>
-          <button type="submit" [disabled]="loginForm.invalid || showLoading" name="register-button" class="btn register-btn">
+          <button type="submit" [disabled]="registerForm.invalid || showLoading" name="register-button" class="btn register-btn">
             <span *ngIf="showLoading">LOADING...</span>
             <span *ngIf="!showLoading">REGISTER ACCOUNT</span>
           </button>

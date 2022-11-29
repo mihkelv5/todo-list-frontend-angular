@@ -5,24 +5,21 @@ import {CdkDragEnd} from "@angular/cdk/drag-drop";
 import {Subscription} from "rxjs";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {AuthenticationService} from "../../service/authentication.service";
+import {TaskFilterEnum} from "../../enum/task-filter.enum";
 
 @Component({
-  selector: 'app-task-view',
-  templateUrl: './task-view.component.html',
-  styleUrls: ['./task-view.component.css']
+  selector: 'app-user-tasks',
+  templateUrl: './user-tasks.component.html',
+  styleUrls: ['./user-tasks.component.css']
 })
-export class TaskViewComponent implements OnInit, OnDestroy {
-  loremIpsum = "Lorem ipsum dolor sit amet, " +
-    "consectetur adipiscing elit, sed do eiusmod tempor " +
-    "incididunt ut labore et dolore magna aliqua. " +
-    "Ut enim ad minim veniam, quis nostrud exercitation " +
-    "ullamco laboris nisi ut aliquip ex ea commodo consequat."
-
+export class UserTasksComponent implements OnInit, OnDestroy {
   faPlus = faPlus;
 
   private subscriptions: Subscription[] = [];
   tasks: Task[] = [];
   userId = 0;
+  taskFilter: TaskFilterEnum = TaskFilterEnum.ALL_TASKS;
+  viewTaskComponentOpen = false;
 
   constructor(private taskService: TaskService, private authService: AuthenticationService) {
   }
@@ -58,33 +55,61 @@ export class TaskViewComponent implements OnInit, OnDestroy {
     return {x: task.xLocation, y: task.yLocation};
   }
 
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
-  }
 
-  addTestTask() {
-    const newTask =
-      new Task(0,
-        new Date("2022-11-11"),
-        false,
-        "test",
-        this.loremIpsum.substring(0, this.getRandomInt(100)),
-        this.getRandomInt(500),
-        this.getRandomInt(300),
-        "#a1fbff");
-    this.subscriptions.push(this.taskService.addTask(newTask)
-        .subscribe(() => {
-          this.loadTasks(); //TODO: search for better alternative for subscribe
-        }));
-  }
+
 
 
 
   ngOnDestroy(): void {
     this.tasks = [];
     this.subscriptions.forEach((sub => sub.unsubscribe()));
+    this.userId = 0;
   }
 
+  //Temporary methods for development
+
+ addEmptyTask() {
+
+ }
+
+  addTestTask() {
+    const newTask =
+      new Task(0,
+        new Date("2022-11-11"),
+        this.isCompleteRandom(),
+        "test",
+        this.getRandomString(50),
+        this.getRandomInt(500),
+        this.getRandomInt(300),
+        this.getRandomColor(),
+        this.userId);
+    this.subscriptions.push(this.taskService.addTask(newTask)
+        .subscribe(() => {
+          this.tasks.push(newTask);
+        }));
+  }
+
+  getRandomString(max: number): string {
+    const loremIpsum = "Lorem ipsum dolor sit amet, " +
+      "consectetur adipiscing elit, sed do eiusmod tempor " +
+      "incididunt ut labore et dolore magna aliqua. " +
+      "Ut enim ad minim veniam, quis nostrud exercitation " +
+      "ullamco laboris nisi ut aliquip ex ea commodo consequat."
+    return loremIpsum.substring(0, this.getRandomInt(max))
+  }
+
+  getRandomInt(max: number) {
+    return Math.floor(Math.random() * max);
+  }
+
+  isCompleteRandom(): boolean {
+    return Math.random() > 0.5;
+  }
+
+  getRandomColor() {
+    const color = Math.floor(0x1000000 * Math.random()).toString(16);
+    return '#' + ('000000' + color).slice(-6);
+  }
 
 
 }

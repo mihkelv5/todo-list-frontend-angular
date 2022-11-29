@@ -19,7 +19,7 @@ export class NavbarComponent {
   faFriends = faUsers;
   faHome = faHouse;
   faBell = faBell;
-  //TODO: put icons in a single list
+  //TODO: ?put in list
 
 
   userMenuVisible = false;

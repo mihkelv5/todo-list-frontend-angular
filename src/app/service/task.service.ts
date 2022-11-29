@@ -43,8 +43,8 @@ export class TaskService {
   }
 
   public moveTask(task: Task){
-
-    return this.http.put<Task>(this.host + "/task/moveTask",task)
+    const coords: number[] = [task.xLocation, task.yLocation]
+    return this.http.put<Task>(this.host + "/task/moveTask/" + task.id , coords)
   }
 
 

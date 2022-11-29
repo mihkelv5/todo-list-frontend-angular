@@ -15,17 +15,21 @@
 }
 
 
+
+
 .home-icon {
-  display: block;
+  display: flex;
   font-size: 1.7rem;
   background: #dadada;
-  padding: 3px;
   aspect-ratio: 1/1;
   border-radius: 50%;
+
 }
 
-.home-icon > {
-  top: 5px;
+.home-icon > fa-icon{
+  padding: 5px;
+  margin: auto;
+
 }
 
 .search-bar {
@@ -59,7 +63,6 @@
 
 .dropdown-menu-parent {
   position: relative;
-  align-self: center;
 }
 
 .account-elements {
