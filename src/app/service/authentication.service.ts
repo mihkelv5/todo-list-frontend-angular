@@ -36,6 +36,8 @@ export class AuthenticationService {
     localStorage.removeItem("user");
   }
 
+  //TODO: save data in cookies instead of localstorage
+
   public saveToken(token: string): void {
     this.token = token;
     localStorage.setItem("token", token);

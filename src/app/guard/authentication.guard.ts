@@ -19,7 +19,7 @@ export class AuthenticationGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.isUserLoggedIn();
   }
-
+//TODO: check if token is still valid
   private isUserLoggedIn(): boolean {
     if (this.authenticationService.isUserLoggedIn()) {
       return true;

@@ -40,8 +40,8 @@ import { ViewTaskComponent } from './components/task-view/view-task.component';
     LoginComponent,
     RegisterComponent,
     NavbarComponent,
-    ClickedOutsideDirective,
-    ViewTaskComponent
+    ViewTaskComponent,
+    ClickedOutsideDirective
   ],
   imports: [
     BrowserModule,
