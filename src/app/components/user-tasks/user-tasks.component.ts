@@ -23,9 +23,9 @@ export class UserTasksComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadTasks();
     const user = this.authService.getUserFromLocalCache()
     this.userId = user.id;
+    this.loadTasks();
   }
 
   loadTasks(){
@@ -55,6 +55,12 @@ export class UserTasksComponent implements OnInit, OnDestroy {
 
 
 
+  setViewTask(bool: boolean, taskId:number) {
+    this.taskId = taskId;
+    this.viewTaskComponentOpen = bool;
+    this.loadTasks(); //
+
+  }
 
 
 
@@ -67,14 +73,12 @@ export class UserTasksComponent implements OnInit, OnDestroy {
   //Temporary methods for development
 
 
- addEmptyTask() {
 
- }
-
-  addTestTask() {
+  addTestTask() { //TODO: move logic to task view component
+    console.log("new task")
     const newTask =
       new Task(0,
-        new Date("2022-11-11"),
+        new Date(),
         this.isCompleteRandom(),
         "test",
         this.getRandomString(50),
@@ -84,7 +88,7 @@ export class UserTasksComponent implements OnInit, OnDestroy {
         this.userId);
     this.subscriptions.push(this.taskService.addTask(newTask)
         .subscribe(() => {
-          this.tasks.push(newTask);
+          this.loadTasks();
         }));
   }
 
@@ -111,10 +115,4 @@ export class UserTasksComponent implements OnInit, OnDestroy {
   }
 
 
-  setViewTask(bool: boolean, taskId:number) {
-    this.taskId = taskId;
-    this.viewTaskComponentOpen = bool;
-
-
-  }
 }

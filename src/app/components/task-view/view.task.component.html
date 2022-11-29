@@ -1,5 +1,10 @@
 <div class="background-blur" >
-    <div class="task-container" (clickedOutside)="closeView()">
-      <p>Id of the task: {{taskId}}</p>
+    <div class="task-container" (clickedOutside)="closeView()" >
+
+      <div *ngIf="taskId!=0"> <!--if new task is created-->
+        <p>Id of the task: {{taskId}}</p>
+        <button (click)="deleteTask(taskId)">Delete task</button>
+      </div>
+      <button *ngIf="taskId==0" (click)="createNewTask()">create new task</button> <!--if task is edited-->
     </div>
 </div>

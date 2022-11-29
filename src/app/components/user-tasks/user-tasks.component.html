@@ -25,14 +25,15 @@
       <div class="task-content" >
         <h3>{{task.title}}</h3>
         <p>{{task.description}}</p>
-        <div class="task-buttons">
-          <button (click)="deleteTask(task.id)">Delete</button>
-          <button (click)="setViewTask(true, task.id)">Edit</button>
-        </div>
+
+        <button (click)="setViewTask(true, task.id)" class="task-buttons">Edit</button>
       </div>
     </div>
   </div>
 </div>
-<app-view-task *ngIf="viewTaskComponentOpen" (onHide)="setViewTask($event, 0)" [taskId]="taskId"></app-view-task>
+<app-view-task *ngIf="viewTaskComponentOpen"
+               (closeActive)="setViewTask($event, 0)"
+               (createTask)="addTestTask()"
+               [taskId]="taskId"></app-view-task>
 
 
