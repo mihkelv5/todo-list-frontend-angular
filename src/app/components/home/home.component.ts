@@ -15,5 +15,6 @@ export class HomeComponent implements OnInit {
   faPlus = faPlus;
 
   ngOnInit() {
+
   }
 }

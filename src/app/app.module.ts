@@ -29,7 +29,9 @@ import { UserTasksComponent } from './components/user-tasks/user-tasks.component
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { ViewTaskComponent } from './components/task-view/view-task.component';
+import { ViewTaskComponent } from './components/user-tasks/task-view/view-task.component';
+import { EventViewComponent } from './components/user-events/event-view/event-view.component';
+import { UserEventsComponent } from './components/user-events/user-events.component';
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { ViewTaskComponent } from './components/task-view/view-task.component';
     RegisterComponent,
     NavbarComponent,
     ViewTaskComponent,
-    ClickedOutsideDirective
+    ClickedOutsideDirective,
+    EventViewComponent,
+    UserEventsComponent
   ],
   imports: [
     BrowserModule,

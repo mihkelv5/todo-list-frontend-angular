@@ -1,7 +1,7 @@
 .header {
   display: flex;
   background: #dadada;
-  height: 30px;
+  height: 40px;
 }
 
 .pointer-cursor:hover{
@@ -25,7 +25,7 @@
 }
 
 .header-buttons > li:not(:last-child) {
-  padding: 5px;
+  padding: 10px 5px;
 }
 
 .add-task-btn {
@@ -44,7 +44,7 @@
 
 #board {
   position: relative;
-  height: calc(100% - 30px);
+  height: calc(100% - 40px);
 
 }
 

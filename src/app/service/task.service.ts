@@ -14,13 +14,12 @@ export class TaskService {
   private host = environment.apiBaseUrl;
 
 
-  tasks: Task[] = [];
+
   constructor(private http: HttpClient) {
 
   }
 
-  ngOnInit(){
-  }
+
 
 
   public loadTasksFromDB(id: number): Observable<Task[]> {

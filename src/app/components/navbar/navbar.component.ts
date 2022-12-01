@@ -56,7 +56,6 @@ export class NavbarComponent {
   }
 
   toggleUserDropdownMenu() {
-
     if(this.notificationMenuVisible){
       this.notificationMenuVisible = false;
     }
@@ -69,6 +68,6 @@ export class NavbarComponent {
     }
     this.notificationMenuVisible = !this.notificationMenuVisible;
   }
-  
+
 
 }
