@@ -1,0 +1,43 @@
+.header {
+  display: flex;
+  background: #dadada;
+  height: 40px;
+}
+
+.headline {
+  font-size: 1.2rem;
+  width: 20%;
+  align-self: center;
+  margin: 0 10px;
+}
+
+.board {
+  position: relative;
+  height: calc(100% - 40px);
+  display: flex;
+  flex-direction: column;
+
+}
+
+.event {
+  display: flex;
+  margin: 10px auto;
+  background: #dadada;
+  width: 90%;
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid #6c6c6c;
+  align-items: center;
+}
+
+/*placeholder*/
+.event > p {
+  margin: 0 0 0 10px;
+  font-size: 1.2rem;
+}
+
+.event:hover {
+  cursor: pointer;
+}
+
+

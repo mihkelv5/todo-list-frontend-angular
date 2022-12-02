@@ -33,7 +33,7 @@
 </div>
 <app-view-task *ngIf="viewTaskComponentOpen"
                (closeActive)="setViewTask($event, 0)"
-               (createTask)="addTestTask()"
+               (createTask)="loadTasks()"
                [taskId]="taskId"></app-view-task>
 
 

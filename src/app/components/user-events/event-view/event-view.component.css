@@ -1,0 +1,25 @@
+.background-image {
+  background-image: linear-gradient(to bottom right, #a5dbe0, #528846);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.limiter {
+  border: 1px solid black;
+  height: 95vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1000px;
+}
+
+.task-view {
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+}

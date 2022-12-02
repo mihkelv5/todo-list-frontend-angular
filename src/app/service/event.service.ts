@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {Task} from "../model/task";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -9,17 +8,26 @@ import {Observable} from "rxjs";
 })
 export class EventService {
 
-  private host = environment.apiBaseUrl;
+  private host = environment.apiBaseUrl + "/event";
 
   constructor(private http: HttpClient) {
 
   }
 
-  public addEvent(event: Event): Observable<Task> {
-    return this.http.post<Task>(this.host + "/event/add", event);
+  public addEvent(event: Event): Observable<Event> {
+    return this.http.post<Event>(this.host + "/add", event);
   }
 
-  public loadEventsFromDB(id: number): Observable<Task[]> {
-    return this.http.get<Task[]>(this.host + "/task/user/" + id + "/tasks");
+  public findEventById(eventId: number): Observable<Event> {
+    return this.http.get<Event>(this.host + "/find/" + eventId)
+  }
+
+  public loadEventsFromDB(userId: number): Observable<Event[]> {
+    return this.http.get<Event[]>(this.host + "/user/" + userId);
+  }
+
+  public registerUserToEvent(eventId: number, userId: number) {
+    //should eventId and userId be in body?
+    return this.http.put<number>(this.host + "/" + eventId + "/register" + userId, eventId);
   }
 }

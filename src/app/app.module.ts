@@ -32,6 +32,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ViewTaskComponent } from './components/user-tasks/task-view/view-task.component';
 import { EventViewComponent } from './components/user-events/event-view/event-view.component';
 import { UserEventsComponent } from './components/user-events/user-events.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 
 @NgModule({
@@ -55,7 +59,11 @@ import { UserEventsComponent } from './components/user-events/user-events.compon
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule
 
   ],
   providers: [AuthenticationGuard, TaskService, AuthenticationService,

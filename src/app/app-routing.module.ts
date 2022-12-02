@@ -7,12 +7,13 @@ import {AuthenticationGuard} from "./guard/authentication.guard";
 import {UserTasksComponent} from "./components/user-tasks/user-tasks.component";
 import {EventViewComponent} from "./components/user-events/event-view/event-view.component";
 
+
 const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent},
   { path: "home", component: HomeComponent, canActivate: [AuthenticationGuard] },
   { path: "tasks", component: UserTasksComponent, canActivate: [AuthenticationGuard]},
-  { path: "events", component: EventViewComponent, canActivate: [AuthenticationGuard]},
+  { path: "event/:eventId", component: EventViewComponent, canActivate: [AuthenticationGuard]},
   { path: "", redirectTo: "/login", pathMatch: "full" },
   { path: "**", redirectTo: "/login"}
 ]

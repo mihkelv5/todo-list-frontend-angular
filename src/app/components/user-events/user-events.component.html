@@ -1,1 +1,15 @@
-<p>user-events works!</p>
+<div class="header">
+  <span class="headline">My Events</span>
+</div>
+
+<div class="board">
+  <div *ngFor="let event of events">
+    <div class="event" (click)="clickedOnEvent(event.id)">
+      <p>
+        {{event.id}}
+        {{event.title}}
+      </p>
+    </div>
+
+  </div>
+</div>
