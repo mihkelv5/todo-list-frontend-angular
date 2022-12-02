@@ -1,39 +1,39 @@
 <div class="background-blur" >
-    <div class="task-container">
+    <div class="task-container">'
+      <span *ngIf="taskId == 0">Create a new task</span>
+      <span *ngIf="taskId != 0">Edit existing task</span>
       <form #taskForm="ngForm" (ngSubmit)="onSubmit(taskForm.value)" class="task-form">
-
+        <span>Task title:</span>
         <input type="text" class="task-data-wrapper" name="title" placeholder="Title"
                ngModel #titleInput="ngModel" required>
-
-        <mat-form-field class="example-full-width" appearance="fill"  >
-          <mat-label>Choose a date</mat-label>
+        <span>Pick a date:</span>
+        <mat-form-field class="task-date-form" appearance="fill"  >
+          <mat-label>DD/MM/YYYY</mat-label>
           <input matInput [matDatepicker]="picker" name="date" ngModel #dateInput="ngModel" required>
-          <mat-hint>DD-MM-YYYY</mat-hint>
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-        <textarea type="text" name="description" placeholder="description"
+        <span>Task description:</span>
+        <textarea type="text" class="task-data-wrapper task-textarea" maxlength="100" name="description" placeholder="description"
           ngModel #descriptionInput="ngModel" required
         ></textarea>
+        <span>Pick a color:</span>
         <input type="text" class="task-data-wrapper" name="color" placeholder="#dadada"
             ngModel #colorInput="ngModel">
-        <button type="submit">Create form task</button>
+        <div class="task-form-buttons">
+
+          <button *ngIf="taskId == 0" type="submit"
+            [disabled]="taskForm.invalid"
+          >Create new task</button>
+
+
+
+          <button *ngIf="taskId != 0" (click)="onSubmit(taskForm.value)">Save</button>
+          <button *ngIf="taskId != 0" (click)="deleteTask(taskId)">Delete task</button>
+          <button (click)="cancelForm(taskForm)">Cancel</button>
+        </div>
 
       </form>
 
-
-
-
-
-      <div *ngIf="taskId!=0"> <!--if new task is created-->
-        <p>Id of the task: {{taskId}}</p>
-        <button (click)="deleteTask(taskId)">Delete task</button>
-      </div>
-      <div *ngIf="taskId!=0">
-        <button (click)="onSubmit(taskForm.value)" >Save</button>
-      </div>
-      <div *ngIf="taskId==0">
-        <button  (click)="createNewTask()">create new task</button> <!--if task is edited-->
-      </div>
     </div>
 </div>

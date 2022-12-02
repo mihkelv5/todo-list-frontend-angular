@@ -1,7 +1,7 @@
 <div class="background-image">
   <app-navbar></app-navbar>
   <div class="limiter">
-    <button (click)="toggleTaskView(true, 0)">Create new task</button>
+    <fa-icon [icon]="faPlus" class="add-task-btn pointer-cursor" (click)="toggleTaskView(true, 0)"></fa-icon>
     <div *ngFor="let task of tasks">
       <div (click)="toggleTaskView(true, task.id)">
         {{task.description}}

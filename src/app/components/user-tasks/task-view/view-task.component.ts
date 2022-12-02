@@ -2,6 +2,7 @@ import {Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output}
 import {TaskService} from "../../../service/task.service";
 import {Subscription} from "rxjs";
 import {Task} from "../../../model/task";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-view-task',
@@ -67,6 +68,12 @@ export class ViewTaskComponent implements OnInit, OnDestroy{
       }));
   }
 
+  cancelForm(taskForm: NgForm) {
+    this.closeView();
+    taskForm.resetForm();
+  }
+
+
   onSubmit(task: Task) {
     if(this.currentTask){
 
@@ -82,9 +89,8 @@ export class ViewTaskComponent implements OnInit, OnDestroy{
     }
 
   }
-
-
   //methods for development
+
   addTestTask() {
     const newTask =
       new Task(0,

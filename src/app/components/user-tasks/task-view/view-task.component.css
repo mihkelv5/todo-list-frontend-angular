@@ -1,3 +1,12 @@
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+  -webkit-box-shadow: 0 0 0 30px #dadada inset !important;
+
+} /*removes browser autofill color*/
 .background-blur {
   display: flex;
   position: absolute;
@@ -23,6 +32,12 @@
   padding: 50px;
 }
 
+.task-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .task-data-wrapper {
   display: flex;
   flex-wrap: nowrap;
@@ -32,9 +47,23 @@
   border-radius: 25px;
   padding: 10px;
   margin-bottom: 10px;
+  border: 1px solid #6c6c6c;
 }
 
-.task-form {
-  display: flex;
-  flex-direction: column;
+.task-date-form {
+  width: 100%;
+  padding: 10px;
 }
+
+.task-textarea {
+  resize: none;
+  height: 80px;
+}
+
+.task-form-buttons {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+}
+
+

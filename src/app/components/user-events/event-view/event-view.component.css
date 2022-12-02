@@ -6,6 +6,7 @@
 }
 
 .limiter {
+  position: relative;
   border: 1px solid black;
   height: 95vh;
   display: flex;
@@ -23,3 +24,18 @@
   width: 100%;
   position: fixed;
 }
+
+.add-task-btn {
+  position: absolute;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  background: #c5c5c5;
+  top: 5px;
+  right: 5px;
+  display: flex;
+  width: 25px;
+  height: 25px;
+  justify-content: center;
+  align-items: center;
+}
+

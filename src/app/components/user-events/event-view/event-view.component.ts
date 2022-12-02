@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {EventService} from "../../../service/event.service";
 import {Subscription} from "rxjs";
 import {TaskService} from "../../../service/task.service";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-event-view',
@@ -18,6 +19,9 @@ export class EventViewComponent implements OnInit, OnDestroy {
 
   tasks: any = [];
   isTaskViewOpen = false;
+
+
+  faPlus = faPlus;
 
   constructor(private eventService: EventService, private taskService: TaskService, private route: ActivatedRoute) {}
 
