@@ -3,6 +3,7 @@ import {TaskService} from "../../../service/task.service";
 import {Subscription} from "rxjs";
 import {Task} from "../../../model/task";
 import {NgForm} from "@angular/forms";
+import {AuthenticationService} from "../../../service/authentication.service";
 
 @Component({
   selector: 'app-view-task',
@@ -11,17 +12,22 @@ import {NgForm} from "@angular/forms";
 })
 export class ViewTaskComponent implements OnInit, OnDestroy{
 
-  @Input("taskId") taskId!: number;
-  @Input("eventId") eventId : number | undefined;
-  currentTask: Task | undefined;
-  isCloseActive = false; //TODO: confirmation of closing window.
-  @Output() closeActive = new EventEmitter<boolean>();
+  @Input("taskId") taskId!: number; //0 if new task, otherwise existing task
 
+  //if is created through event, then has id, if user creates one themselves, then null
+  @Input("eventId") eventId : number | undefined;
+
+  //is retrieved from db if parent calls this component
+  currentTask: Task | undefined;
+  isCloseActive = false; // TODO: confirmation of closing window.
+
+  //emits to parent to change the boolean if current component is shown or not
+  @Output() closeWindow = new EventEmitter<boolean>();
   @Output() createTask = new EventEmitter();
   private subscriptions: Subscription[] = [];
-  private userId: number = 1;
+  private userId: number = 0;
 
-  constructor(private taskService: TaskService) {
+  constructor(private taskService: TaskService, private authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
@@ -31,6 +37,8 @@ export class ViewTaskComponent implements OnInit, OnDestroy{
           this.currentTask = response;
           }));
     }
+
+    this.userId = this.authenticationService.getUserFromLocalCache().id;
 
     setTimeout(() => {
         this.isCloseActive = true;
@@ -49,9 +57,10 @@ export class ViewTaskComponent implements OnInit, OnDestroy{
 
   }
 
+  //emits
   closeView() {
     if(this.isCloseActive){
-      this.closeActive.emit(false);
+      this.closeWindow.emit(false);
     }
   }
 
@@ -76,7 +85,17 @@ export class ViewTaskComponent implements OnInit, OnDestroy{
 
   onSubmit(task: Task) {
     if(this.currentTask){
-
+      task.id = this.currentTask.id;
+      task.xLocation = this.currentTask.xLocation;
+      task.yLocation = this.currentTask.yLocation;
+      if(!task.color){
+        task.color = this.currentTask.color;
+      }
+      this.subscriptions.push(
+        this.taskService.updateTask(task).subscribe(() => {
+          this.createTask.emit();
+          this.closeWindow.emit();
+        }));
     } else {
       if(!task.color) {
         task.color = this.getRandomColor();
@@ -84,7 +103,7 @@ export class ViewTaskComponent implements OnInit, OnDestroy{
       this.subscriptions.push(
         this.taskService.addTask(task, this.eventId).subscribe(() => {
           this.createTask.emit()
-          this.closeActive.emit(false);
+          this.closeWindow.emit(false);
           }));
     }
 
@@ -108,7 +127,7 @@ export class ViewTaskComponent implements OnInit, OnDestroy{
       this.subscriptions.push(this.taskService.addTask(newTask, this.eventId)
         .subscribe(() => {
           this.createTask.emit()
-          this.closeActive.emit(false);
+          this.closeWindow.emit(false);
         }));
 
 

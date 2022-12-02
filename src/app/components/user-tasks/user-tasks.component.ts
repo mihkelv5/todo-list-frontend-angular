@@ -71,9 +71,6 @@ export class UserTasksComponent implements OnInit, OnDestroy {
     }
   }
 
-  //Temporary methods for development
-
-
 
 
 

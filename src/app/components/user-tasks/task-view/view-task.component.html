@@ -23,17 +23,13 @@
         <div class="task-form-buttons">
 
           <button *ngIf="taskId == 0" type="submit"
-            [disabled]="taskForm.invalid"
-          >Create new task</button>
+            [disabled]="taskForm.invalid">Create new task</button>
 
+          <button *ngIf="taskId != 0" type="submit">Save</button>
 
-
-          <button *ngIf="taskId != 0" (click)="onSubmit(taskForm.value)">Save</button>
-          <button *ngIf="taskId != 0" (click)="deleteTask(taskId)">Delete task</button>
           <button (click)="cancelForm(taskForm)">Cancel</button>
         </div>
-
       </form>
-
+      <button *ngIf="taskId != 0" (click)="deleteTask(taskId)">Delete task</button>
     </div>
 </div>

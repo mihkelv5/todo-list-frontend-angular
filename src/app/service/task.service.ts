@@ -57,7 +57,7 @@ export class TaskService {
   }
 
   public deleteTask(id: number) {
-    return this.http.delete(this.host + "/delete/" + id );
+    return this.http.delete(this.host + "/delete/" + id);
   }
 
 
