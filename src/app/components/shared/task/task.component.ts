@@ -77,7 +77,11 @@ export class TaskComponent implements OnInit, OnDestroy{
   }
 
   editTask() {
-    this.router.navigateByUrl("/task/" + this.task.id + "/" + this.task.event_id)
+    if(this.task.event_id != undefined){
+      this.router.navigateByUrl("/task/" + this.task.id + "/" + this.task.event_id)
+    } else {
+      this.router.navigateByUrl("/task/" + this.task.id + "/nan")
+    }
 
   }
 

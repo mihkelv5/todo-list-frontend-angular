@@ -33,11 +33,9 @@ import { UserTasksComponent } from './components/shared/user-tasks/user-tasks.co
 import { LoginComponent } from './components/core/login/login.component';
 import { RegisterComponent } from './components/core/register/register.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
-import { ViewTaskComponent } from './components/feature/task-view/view-task.component';
 import { EventViewComponent } from './components/feature/event-view/event-view.component';
 import { UserEventsComponent } from './components/shared/user-events/user-events.component';
 import { TaskComponent } from './components/shared/task/task.component';
-import { CreateTaskComponent } from './components/feature/create-task/create-task.component';
 import { EditTaskComponent } from './components/feature/edit-task/edit-task.component';
 import { EventTasksComponent } from "./components/shared/event-tasks/event-tasks.component";
 
@@ -50,12 +48,10 @@ import { EventTasksComponent } from "./components/shared/event-tasks/event-tasks
     LoginComponent,
     RegisterComponent,
     NavbarComponent,
-    ViewTaskComponent,
     ClickedOutsideDirective,
     EventViewComponent,
     UserEventsComponent,
     TaskComponent,
-    CreateTaskComponent,
     EditTaskComponent,
     EventTasksComponent
   ],

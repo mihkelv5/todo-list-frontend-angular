@@ -1,27 +1,33 @@
-<div class="task-container">'
+<div class="background-image">
+  <app-navbar></app-navbar>
+  <div class="limiter">
+    <div class="task-container">'
 
-  <form #taskForm="ngForm" (ngSubmit)="onSubmit(taskForm.value)" class="task-form">
-    <span>Task title:</span>
-    <input type="text" class="task-data-wrapper" name="title" placeholder="Title" value="{{task.title}}"
-           ngModel #titleInput="ngModel" required>
-    <span>Pick a date:</span>
-    <mat-form-field class="task-date-form" appearance="fill"  >
+      <form #taskForm="ngForm" class="task-form">
+      <span>Task title:</span>
+      <input type="text" class="task-data-wrapper" name="title" placeholder="Title" value="{{task.title}}"
+      ngModel #titleInput="ngModel" required>
+      <span>Pick a date:</span>
+      <mat-form-field class="task-date-form" appearance="fill"  >
       <mat-label>DD/MM/YYYY</mat-label>
       <input matInput [matDatepicker]="picker" name="date" ngModel #dateInput="ngModel"  value="{{task.date}}" required>
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <span>Task description:</span>
-    <textarea type="text" class="task-data-wrapper task-textarea" maxlength="100" name="description" placeholder="description"
-              ngModel #descriptionInput="ngModel" [value]=task.description  required
-    ></textarea>
-    <span>Pick a color:</span>
-    <input type="text" class="task-data-wrapper" name="color" placeholder="#dadada"
-           ngModel #colorInput="ngModel">
-    <div class="task-form-buttons">
+      </mat-form-field>
+      <span>Task description:</span>
+      <textarea type="text" class="task-data-wrapper task-textarea" maxlength="100" name="description" placeholder="description"
+      ngModel #descriptionInput="ngModel" [value]=task.description  required
+      ></textarea>
+      <span>Pick a color:</span>
+      <input type="text" class="task-data-wrapper" name="color" placeholder="#dadada"
+      ngModel #colorInput="ngModel">
+      <div class="task-form-buttons">
 
-      <button type="submit"
-              [disabled]="taskForm.invalid">Save</button>
+        <button type="submit"
+        [disabled]="taskForm.invalid && task.id == 0" (click)="onSubmit(taskForm.value); taskForm.resetForm()">Save</button>
+        <button (click)="taskForm.resetForm(); onCancel()" >cancel</button>
+      </div>
+      </form>
     </div>
-  </form>
+  </div>
 </div>

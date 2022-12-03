@@ -1,6 +1,9 @@
 <div class="background-image">
   <app-navbar></app-navbar>
   <div class="limiter">
+
+
+    <button (click)="createTask()">add task</button>
     <app-event-tasks [eventId]="eventId" class="event-board"></app-event-tasks>
   </div>
 </div>

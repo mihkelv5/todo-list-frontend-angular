@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Task} from "../../../model/task";
 import {TaskService} from "../../../service/task.service";
 import {Subscription} from "rxjs";
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-edit-task',
@@ -11,10 +12,11 @@ import {Subscription} from "rxjs";
 })
 export class EditTaskComponent implements  OnInit, OnDestroy{
 
+
   private eventId: number | undefined;
   task: Task;
   subscription: Subscription | undefined;
-  constructor(private route: ActivatedRoute, private taskService: TaskService) {
+  constructor(private route: ActivatedRoute, private location: Location, private taskService: TaskService) {
     this.task = new Task(
       0,
       new Date(),
@@ -31,10 +33,14 @@ export class EditTaskComponent implements  OnInit, OnDestroy{
 
   ngOnInit(): void {
     const taskId = this.route.snapshot.paramMap.get("taskId");
+    const eventId = this.route.snapshot.paramMap.get("eventId");
+    if(eventId && eventId != "nan") {
+      this.eventId = +eventId;
+    }
+
     if (taskId && taskId != "new") { //
       this.subscription =  this.taskService.findTaskById(+taskId).subscribe(response => {
         this.task = response;
-
       })
     }
   }
@@ -44,9 +50,17 @@ export class EditTaskComponent implements  OnInit, OnDestroy{
 
   }
 
+
+  //if task id is 0, then it is a new task, that does not exist in db. Otherwise, updates task and sends it to server.
+
   onSubmit(task: Task) {
-    if(task.id == 0){
-      this.taskService.addTask(task, task.event_id).subscribe();
+    if(this.task.id == 0){
+      if(!task.color){
+        task.color = this.getRandomColor();
+      }
+      this.taskService.addTask(task, this.eventId).subscribe(() => {
+        this.location.back();
+      });
     }
     else {
       const newTask = this.task;
@@ -56,9 +70,19 @@ export class EditTaskComponent implements  OnInit, OnDestroy{
       if(task.color) {
         newTask.color = task.color;
       }
-      console.log("task id:" + this.task.id)
-      this.taskService.updateTask(newTask).subscribe();
+      this.taskService.updateTask(newTask).subscribe(() => {
+        this.location.back();
+      });
     }
+  }
 
+  onCancel() {
+    this.location.back();
+  }
+
+
+  getRandomColor() {
+    const color = Math.floor(0x1000000 * Math.random()).toString(16);
+    return '#' + ('000000' + color).slice(-6);
   }
 }

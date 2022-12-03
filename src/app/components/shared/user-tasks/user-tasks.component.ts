@@ -75,6 +75,6 @@ export class UserTasksComponent implements OnInit, OnDestroy {
 
 
   createNewTask() {
-    this.router.navigateByUrl("/task/new/Nan")
+    this.router.navigateByUrl("/task/new/nan")
   }
 }

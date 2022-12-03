@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {EventService} from "../../../service/event.service";
 import {Subscription} from "rxjs";
 import {TaskService} from "../../../service/task.service";
@@ -19,12 +19,12 @@ export class EventViewComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   tasks: Task[] = [];
 
-  constructor(private eventService: EventService, private taskService: TaskService, private route: ActivatedRoute) {}
+  constructor(private eventService: EventService, private taskService: TaskService,
+              private route: ActivatedRoute, private router: Router) {}
 
 
   ngOnInit(): void {
     const routeId = this.route.snapshot.paramMap.get("eventId");
-    console.log(routeId);
     if (routeId) {
       this.eventId = +routeId;
     }
@@ -32,6 +32,11 @@ export class EventViewComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
+  }
+
+
+  createTask() {
+    this.router.navigateByUrl("/task/new/" + this.eventId)
   }
 
 
