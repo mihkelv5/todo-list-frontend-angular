@@ -51,6 +51,7 @@ export class AuthenticationService {
       return JSON.parse(localStorage.getItem("user") || "{}")
   }
 
+
   public loadToken(): void {
     this.token = localStorage.getItem("token") || "";
   }

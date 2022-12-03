@@ -1,9 +1,24 @@
 
-  <div class="task">
-    <div class="task-content" >
-      <h3>{{task.title}}</h3>
-      <p>{{task.description}}</p>
+  <div class="task" (clickedOutside)="closePopUp()"
 
-      <button class="task-buttons">Edit</button>
+    [ngStyle]="{'background' : task.color}"
+    [cdkDragData]="task" (cdkDragEnded)="taskDropped(task, $event)"
+    [cdkDragFreeDragPosition]="getTaskLocation(task)"
+    cdkDragBoundary="#board"
+    cdkDrag>
+    <div class="task-content" (mousedown)="onMouseDown($event)" (click)="onClick($event)">
+      <h3>{{task.id}}</h3>
+      <p>{{task.description}}</p>
+    </div>
+    <div *ngIf="taskPopupOpen" class="task-popup">
+      <ul class="task-buttons">
+        <li>
+          <button (click)="editTask()">edit</button>
+        </li>
+        <li>
+          <button (click)="deleteTask()">del</button>
+        </li>
+      </ul>
+      <p>{{task.title}}</p>
     </div>
   </div>

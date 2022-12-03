@@ -1,3 +1,5 @@
+
+
 export class Task {
   id: number;
   date: Date;
@@ -12,7 +14,7 @@ export class Task {
 
 
   constructor(id: number, date: Date, isComplete: boolean, title: string, description: string, xLocation: number,
-              yLocation: number, color:string, user_id:number, event_id: number | undefined ) {
+              yLocation: number, color:string, ownerId:number, event_id: number | undefined ) {
     this.id = id;
     this.date = date;
     this.isComplete = isComplete;
@@ -21,7 +23,7 @@ export class Task {
     this.xLocation = xLocation;
     this.yLocation = yLocation;
     this.color = color;
-    this.user_id = user_id;
+    this.user_id = ownerId;
     this.event_id = event_id;
   }
 }

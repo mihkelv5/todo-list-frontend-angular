@@ -3,20 +3,9 @@
 
 <div id="board">
   <div *ngFor="let task of tasks">
-    <div >
-       <div class="task"
-            [ngStyle]="{'background' : task.color}"
-             [cdkDragData]="task" (cdkDragEnded)="taskDropped(task, $event)"
-             [cdkDragFreeDragPosition]="getTaskLocation(task)"
-             cdkDragBoundary="#board"
-             cdkDrag>
-        <task-component [task]="task"></task-component>
-    </div>
-    </div>
+        <task-component [task]="task" [userId]="userId" (refreshTasks)="loadTasks()"></task-component>
   </div>
 </div>
-<app-view-task *ngIf="viewTaskComponentOpen"
-               (closeWindow)="setViewTask($event, 0)"
-               [taskId]="taskId"></app-view-task>
+
 
 

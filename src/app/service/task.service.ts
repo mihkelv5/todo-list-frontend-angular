@@ -53,7 +53,7 @@ export class TaskService {
 
 
   public updateTask(task: Task): Observable<Task> {
-    return this.http.put<Task>(this.host + "/update", task);
+    return this.http.put<Task>(this.host + "/update/" + task.id, task);
   }
 
   public deleteTask(id: number) {

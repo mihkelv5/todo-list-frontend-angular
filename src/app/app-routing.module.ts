@@ -6,6 +6,7 @@ import {HomeComponent} from "./components/core/home/home.component";
 import {AuthenticationGuard} from "./guard/authentication.guard";
 import {UserTasksComponent} from "./components/shared/user-tasks/user-tasks.component";
 import {EventViewComponent} from "./components/feature/event-view/event-view.component";
+import {EditTaskComponent} from "./components/feature/edit-task/edit-task.component";
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: "home", component: HomeComponent, canActivate: [AuthenticationGuard] },
   { path: "tasks", component: UserTasksComponent, canActivate: [AuthenticationGuard]},
   { path: "event/:eventId", component: EventViewComponent, canActivate: [AuthenticationGuard]},
+  { path: "task/:taskId/:eventId", component: EditTaskComponent, canActivate: [AuthenticationGuard]},
   { path: "", redirectTo: "/login", pathMatch: "full" },
   { path: "**", redirectTo: "/login"}
 ]

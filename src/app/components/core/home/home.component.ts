@@ -17,15 +17,19 @@ export class HomeComponent implements OnInit {
   faPlus = faPlus;
 
 
+  constructor() {
+  }
+
   ngOnInit() {
 
   }
 
   filterTasks(selectedTask: TaskFilterEnum){
-
-    this.tasksComponent.loadTasks(selectedTask);
-
-
+    this.tasksComponent.loadTasksWithFilter(selectedTask);
   }
 
+
+  createNewTask() {
+    this.tasksComponent.createNewTask();
+  }
 }
