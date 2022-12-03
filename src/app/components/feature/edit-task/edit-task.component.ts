@@ -64,9 +64,15 @@ export class EditTaskComponent implements  OnInit, OnDestroy{
     }
     else {
       const newTask = this.task;
-      newTask.title = task.title;
-      newTask.description = task.description;
-      newTask.date = task.date;
+      if(task.title){
+        newTask.title = task.title;
+      }
+      if(task.description){
+        newTask.description = task.description;
+      }
+      if(task.date){
+        newTask.date = task.date;
+      }
       if(task.color) {
         newTask.color = task.color;
       }

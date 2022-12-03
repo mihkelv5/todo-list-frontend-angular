@@ -18,7 +18,7 @@ export class EventTasksComponent implements OnInit, OnDestroy {
   tasks: Task[] = [];
   viewTaskComponentOpen = false; //enables or disables task create/edit component
 
-  taskId = 0; //used when a task view is initialized
+
   @Input("eventId") eventId!: number;
   constructor(private taskService: TaskService) {
   }

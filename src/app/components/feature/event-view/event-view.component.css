@@ -7,10 +7,10 @@
   height: 100%;
   width: 100%;
   overflow: hidden;
+  position: relative;
 }
 
 .limiter {
-  position: relative;
   height: 95vh;
   display: flex;
   align-items: center;
@@ -22,8 +22,46 @@
   padding: 30px;
 }
 
+.event-details {
+  display: flex;
+  flex-direction: column;
+  min-height: 100px;
+  width: 50%;
+  align-items: center;
+  gap: 15px;
+
+}
+
+.headline {
+  font-size: 2.5rem;
+}
+
+.description {
+  font-size: 1.2rem;
+}
+
+
+
 .event-board {
-  height: 50%;
+  position: relative;
+  margin-top: 20px;
+  height: calc(50% - 56px);
   width: 100%;
   background: rgba(255,255,255,0.25);
+}
+
+.add-task-btn {
+  display: flex;
+  font-size: 1.2rem;
+  position: absolute;
+  top: -50px;
+  right: 10px;
+  background: #88de73;
+  padding: 10px;
+  border-radius: 25px;
+  box-shadow: 1px 1px 3px 1px #56a256;
+}
+
+.add-task-btn:hover {
+  cursor: pointer;
 }

@@ -4,6 +4,8 @@ import {EventService} from "../../../service/event.service";
 import {Subscription} from "rxjs";
 import {TaskService} from "../../../service/task.service";
 import {Task} from "../../../model/task";
+import {Event} from "../../../model/event";
+import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 
 
 @Component({
@@ -12,10 +14,10 @@ import {Task} from "../../../model/task";
   styleUrls: ['./event-view.component.css']
 })
 export class EventViewComponent implements OnInit, OnDestroy {
-
-
+  faPenToSquare = faPenToSquare;
+  isEventLoaded = false;
   eventId!: number;
-
+  event!: Event;
   subscriptions: Subscription[] = [];
   tasks: Task[] = [];
 
@@ -26,7 +28,13 @@ export class EventViewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const routeId = this.route.snapshot.paramMap.get("eventId");
     if (routeId) {
-      this.eventId = +routeId;
+      this.subscriptions.push(
+        this.eventService.findEventById(+routeId).subscribe(response => {
+          // @ts-ignore
+          this.event = response;
+          this.isEventLoaded = true;
+        })
+      )
     }
   }
 
@@ -36,7 +44,7 @@ export class EventViewComponent implements OnInit, OnDestroy {
 
 
   createTask() {
-    this.router.navigateByUrl("/task/new/" + this.eventId)
+    this.router.navigateByUrl("/task/new/" + this.event.id)
   }
 
 

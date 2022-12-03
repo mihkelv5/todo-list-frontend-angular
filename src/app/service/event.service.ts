@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {User} from "../model/user";
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,9 @@ export class EventService {
   public registerUserToEvent(eventId: number, userId: number) {
     //should eventId and userId be in body?
     return this.http.put<number>(this.host + "/" + eventId + "/register" + userId, eventId);
+  }
+
+  public findUsersByEvent(eventId: number): Observable<User[]> {
+    return this.http.get<User[]>(this.host + "/" + eventId + "/users");
   }
 }

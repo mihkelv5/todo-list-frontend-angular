@@ -1,9 +1,20 @@
 <div class="background-image">
   <app-navbar></app-navbar>
-  <div class="limiter">
 
+  <div *ngIf="isEventLoaded" class="limiter">
 
-    <button (click)="createTask()">add task</button>
-    <app-event-tasks [eventId]="eventId" class="event-board"></app-event-tasks>
+    <div  class="event-details">
+      <span class="headline">{{event.title}}</span>
+      <span class="description">{{event.description}}</span>
+
+    </div>
+
+    <div class="event-board">
+      <app-event-tasks [eventId]="event.id" ></app-event-tasks>
+      <div class="add-task-btn" (click)="createTask()">
+        <fa-icon [icon]="faPenToSquare" ></fa-icon>
+        <span>Create new task</span>
+      </div>
+    </div>
   </div>
 </div>
