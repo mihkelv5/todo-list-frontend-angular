@@ -1,6 +1,6 @@
-export enum TaskFilterEnum{
-  ALL_TASKS = "All-Tasks",
-  THIS_WEEK = "This-Week",
-  NOT_COMPLETED = "Not-Completed",
-  COMPLETED = "Completed"
+export enum TaskFilterEnum {
+  ALL_TASKS = 0,
+  MY_TASKS = 1,
+  THIS_WEEK = 2,
+  COMPLETED = 3
 }

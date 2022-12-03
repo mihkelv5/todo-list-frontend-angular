@@ -42,8 +42,8 @@ export class UserEventsComponent implements OnInit, OnDestroy{
     )
   }
 
-
   clickedOnEvent(eventId: number) {
     this.router.navigateByUrl("/event/" + eventId); //TODO: add guard that checks if event exists.
   }
+
 }

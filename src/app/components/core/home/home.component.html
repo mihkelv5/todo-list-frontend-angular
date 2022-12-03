@@ -3,13 +3,25 @@
   <app-navbar></app-navbar>
   <div class="home-page">
     <div class="limiter">
-
       <div class="my-item">
         <div class="header">
-          <app-user-events></app-user-events>
+          <span class="headline">My Events</span>
         </div>
+        <app-user-events></app-user-events>
       </div>
       <div class="my-item">
+        <div class="header">
+          <span class="headline">My tasks</span>
+          <ul class="header-buttons">
+            <li class="pointer-cursor" (click)="filterTasks(0)"> All tasks </li>
+            <li class="pointer-cursor" (click)="filterTasks(1)"> My tasks</li> <!--TODO: think of better name for user created tasks they created for themselves-->
+            <li class="pointer-cursor" (click)="filterTasks(2)"> This week </li> <!--TODO: needs backend logic for -->
+            <li class="pointer-cursor" (click)="filterTasks(3)"> Completed </li>
+            <li class="add-task-btn pointer-cursor">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </li>
+          </ul>
+        </div>
         <app-user-tasks class="board"></app-user-tasks>
       </div>
     </div>

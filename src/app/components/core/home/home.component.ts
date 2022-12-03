@@ -1,5 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {TaskFilterEnum} from "../../../enum/task-filter.enum";
+import {UserTasksComponent} from "../../shared/user-tasks/user-tasks.component";
 
 
 @Component({
@@ -11,10 +13,19 @@ import {faPlus} from "@fortawesome/free-solid-svg-icons";
 
 export class HomeComponent implements OnInit {
 
-
+  @ViewChild(UserTasksComponent) tasksComponent!: UserTasksComponent;
   faPlus = faPlus;
+
 
   ngOnInit() {
 
   }
+
+  filterTasks(selectedTask: TaskFilterEnum){
+
+    this.tasksComponent.loadTasks(selectedTask);
+
+
+  }
+
 }

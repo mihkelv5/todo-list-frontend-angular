@@ -22,12 +22,16 @@ export class TaskService {
 
 
 
-  public loadTasksFromDB(id: number): Observable<Task[]> {
-        return this.http.get<Task[]>(this.host + "/user/" + id + "/tasks");
+  public loadUserTasks(id: number): Observable<Task[]> {
+        return this.http.get<Task[]>(this.host + "/user/" + id + "/all");
+  }
+
+  loadUserTasksNoEvent(id: number): Observable<Task[]> {
+    return this.http.get<Task[]>(this.host + "/user/" + id + "/own");
   }
 
   public loadTasksByEvent(eventId: number): Observable<Task[]> {
-     return this.http.get<Task[]>(this.host + "/findByEvent/" + eventId);
+     return this.http.get<Task[]>(this.host + "/event/" + eventId);
   }
 
   findTaskById(taskId: number):Observable<Task>  {
@@ -47,10 +51,6 @@ export class TaskService {
     return this.http.post<Task>(this.host + "/add", task);
   }
 
-  public addTaskWithEvent(eventId: number, task: Task): Observable<Task> {
-      return this.http.post<Task>(this.host + "/add/event/" + eventId, task);
-
-  }
 
   public updateTask(task: Task): Observable<Task> {
     return this.http.put<Task>(this.host + "/update", task);

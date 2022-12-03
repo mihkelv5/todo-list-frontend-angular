@@ -36,6 +36,9 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import { TaskComponent } from './components/shared/task/task.component';
+import { CreateTaskComponent } from './components/feature/create-task/create-task.component';
+import { EditTaskComponent } from './components/feature/edit-task/edit-task.component';
 
 
 @NgModule({
@@ -49,7 +52,10 @@ import {MatNativeDateModule} from "@angular/material/core";
     ViewTaskComponent,
     ClickedOutsideDirective,
     EventViewComponent,
-    UserEventsComponent
+    UserEventsComponent,
+    TaskComponent,
+    CreateTaskComponent,
+    EditTaskComponent
   ],
   imports: [
     BrowserModule,

@@ -1,58 +1,14 @@
-.header {
-  display: flex;
-  background: #dadada;
-  height: 40px;
-}
-
-.pointer-cursor:hover{
-  cursor: pointer;
-  background: rgba(0,0,0,0.25);
-}
-
-.headline {
-  font-size: 1.2rem;
-  width: 15%;
-  align-self: center;
-  margin: 0 10px;
-}
-
-.header-buttons {
-  display: flex;
-  gap: 10px;
-  list-style: none;
-  align-items: center;
-  width: 85%;
-}
-
-.header-buttons > li:not(:last-child) {
-  padding: 10px 5px;
-}
-
-.add-task-btn {
-  border-radius: 50%;
-  font-size: 1.4rem;
-  background: #c5c5c5;
-  margin-left: auto;
-  margin-right: 5px;
-  display: flex;
-  width: 25px;
-  height: 25px;
-  justify-content: center;
-  align-items: center;
-}
 
 
 #board {
   position: relative;
-  height: calc(100% - 40px);
-
+  height: 100%;
+  width: 100%;
 }
 
 .task {
   z-index: 0;
   position: absolute;
-  width: 100px;
-  min-height: 100px;
   background: white;
   border-radius: 5px;
   border: #6c6c6c 1px solid;
