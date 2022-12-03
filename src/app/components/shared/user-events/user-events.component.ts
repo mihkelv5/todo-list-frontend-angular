@@ -13,7 +13,7 @@ export class UserEventsComponent implements OnInit, OnDestroy{
 
 
   private subscriptions: Subscription[] = [];
-  private userId = 0;
+  private userId = 0; //used to find events for specific user
   events: any = []; //no idea why events:Event[] = []; does not work
 
   constructor(private authService: AuthenticationService, private eventService: EventService, private router: Router) {

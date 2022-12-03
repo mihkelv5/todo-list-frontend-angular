@@ -14,7 +14,6 @@
           <div class="task-content" >
             <h3>{{task.title}}</h3>
             <p>{{task.description}}</p>
-
             <button (click)="setViewTask(true, task.id)" class="task-buttons">Edit</button>
           </div>
         </div>
@@ -26,5 +25,5 @@
 <app-view-task class="task-view" *ngIf="isTaskViewOpen"
                (closeWindow)="setViewTask($event, 0)"
                [taskId]="taskId"
-               [eventId]="eventId"
-></app-view-task>
+               [eventId]="eventId">
+</app-view-task>

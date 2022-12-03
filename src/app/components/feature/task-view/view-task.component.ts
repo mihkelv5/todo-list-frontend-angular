@@ -12,14 +12,14 @@ import {AuthenticationService} from "../../../service/authentication.service";
 })
 export class ViewTaskComponent implements OnInit, OnDestroy{
 
-  @Input("taskId") taskId!: number; //0 if new task, otherwise existing task
+  //0 if new task, otherwise existing task
+  @Input("taskId") taskId!: number;
 
   //if is created through event, then has id, if user creates one themselves, then null
   @Input("eventId") eventId : number | undefined;
 
   //is retrieved from db if parent calls this component
   currentTask: Task | undefined;
-  isCloseActive = false; // TODO: confirmation of closing window.
 
   //emits to parent to change the boolean if current component is shown or not
   @Output() closeWindow = new EventEmitter<boolean>();
@@ -40,10 +40,6 @@ export class ViewTaskComponent implements OnInit, OnDestroy{
 
     this.userId = this.authenticationService.getUserFromLocalCache().id;
 
-    setTimeout(() => {
-        this.isCloseActive = true;
-      }, 100 //so it wouldn't instantly close when initiated
-    )
   }
 
   ngOnDestroy(): void {
@@ -51,24 +47,13 @@ export class ViewTaskComponent implements OnInit, OnDestroy{
     this.currentTask = undefined;
   }
 
-  createNewTask(){
-    this.addTestTask();
 
-
-  }
-
-  //emits
-  closeView() {
-    if(this.isCloseActive){
-      this.closeWindow.emit(false);
-    }
-  }
-
-
+  //sends "false" to parent to close window
   @HostListener('document:keydown.escape', ['$event'])
-  public onEscapePressed(){
-    this.closeView();
+  closeView() {
+    this.closeWindow.emit(false);
   }
+
 
   deleteTask(id: number) {
     this.subscriptions.push(
@@ -106,48 +91,6 @@ export class ViewTaskComponent implements OnInit, OnDestroy{
           this.closeWindow.emit(false);
           }));
     }
-
-  }
-  //methods for development
-
-  addTestTask() {
-    const newTask =
-      new Task(0,
-        new Date(),
-        this.isCompleteRandom(),
-        "test",
-        this.getRandomString(50),
-        this.getRandomInt(500),
-        this.getRandomInt(300),
-        this.getRandomColor(),
-        this.userId,
-        this.eventId);
-     //probably should do it smarter
-
-      this.subscriptions.push(this.taskService.addTask(newTask, this.eventId)
-        .subscribe(() => {
-          this.createTask.emit()
-          this.closeWindow.emit(false);
-        }));
-
-
-  }
-
-  getRandomString(max: number): string {
-    const loremIpsum = "Lorem ipsum dolor sit amet, " +
-      "consectetur adipiscing elit, sed do eiusmod tempor " +
-      "incididunt ut labore et dolore magna aliqua. " +
-      "Ut enim ad minim veniam, quis nostrud exercitation " +
-      "ullamco laboris nisi ut aliquip ex ea commodo consequat."
-    return loremIpsum.substring(0, this.getRandomInt(max))
-  }
-
-  getRandomInt(max: number) {
-    return Math.floor(Math.random() * max);
-  }
-
-  isCompleteRandom(): boolean {
-    return Math.random() > 0.5;
   }
 
   getRandomColor() {
