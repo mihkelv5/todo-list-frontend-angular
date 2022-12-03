@@ -1,5 +1,5 @@
 import {Component, HostListener} from '@angular/core';
-import {AuthenticationService} from "../../service/authentication.service";
+import {AuthenticationService} from "../../../service/authentication.service";
 import {Router} from "@angular/router";
 import {FormControl, FormGroup} from "@angular/forms";
 import {faMagnifyingGlass, faGear, faArrowRightFromBracket, faUsers, faHouse} from "@fortawesome/free-solid-svg-icons";

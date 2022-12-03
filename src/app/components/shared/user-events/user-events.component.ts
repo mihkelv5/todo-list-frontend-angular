@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AuthenticationService} from "../../service/authentication.service";
-import {EventService} from "../../service/event.service";
+import {AuthenticationService} from "../../../service/authentication.service";
+import {EventService} from "../../../service/event.service";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
 

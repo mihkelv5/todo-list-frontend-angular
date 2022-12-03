@@ -1,11 +1,11 @@
 import {Component, OnDestroy} from '@angular/core';
 import {Location} from "@angular/common";
-import {User} from "../../model/user";
+import {User} from "../../../model/user";
 import {faEnvelope} from "@fortawesome/free-solid-svg-icons";
 import {faLock, faArrowLeftLong} from "@fortawesome/free-solid-svg-icons";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
-import {AuthenticationService} from "../../service/authentication.service";
+import {AuthenticationService} from "../../../service/authentication.service";
 
 @Component({
   selector: 'app-register',

@@ -24,14 +24,14 @@ import {ClickedOutsideDirective} from "./directive/ClickedOutside.directive";
 
 //components
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
-import { UserTasksComponent } from './components/user-tasks/user-tasks.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { ViewTaskComponent } from './components/user-tasks/task-view/view-task.component';
-import { EventViewComponent } from './components/user-events/event-view/event-view.component';
-import { UserEventsComponent } from './components/user-events/user-events.component';
+import { HomeComponent } from './components/core/home/home.component';
+import { UserTasksComponent } from './components/shared/user-tasks/user-tasks.component';
+import { LoginComponent } from './components/core/login/login.component';
+import { RegisterComponent } from './components/core/register/register.component';
+import { NavbarComponent } from './components/shared/navbar/navbar.component';
+import { ViewTaskComponent } from './components/feature/task-view/view-task.component';
+import { EventViewComponent } from './components/feature/event-view/event-view.component';
+import { UserEventsComponent } from './components/shared/user-events/user-events.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatDatepickerModule} from "@angular/material/datepicker";

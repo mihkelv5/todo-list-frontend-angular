@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import {Routes, RouterModule} from "@angular/router";
-import {LoginComponent} from "./components/login/login.component";
-import {RegisterComponent} from "./components/register/register.component";
-import {HomeComponent} from "./components/home/home.component";
+import {LoginComponent} from "./components/core/login/login.component";
+import {RegisterComponent} from "./components/core/register/register.component";
+import {HomeComponent} from "./components/core/home/home.component";
 import {AuthenticationGuard} from "./guard/authentication.guard";
-import {UserTasksComponent} from "./components/user-tasks/user-tasks.component";
-import {EventViewComponent} from "./components/user-events/event-view/event-view.component";
+import {UserTasksComponent} from "./components/shared/user-tasks/user-tasks.component";
+import {EventViewComponent} from "./components/feature/event-view/event-view.component";
 
 
 const routes: Routes = [

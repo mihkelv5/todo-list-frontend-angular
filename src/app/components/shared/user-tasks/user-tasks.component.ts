@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {TaskService} from "../../service/task.service";
-import {Task} from "../../model/task";
+import {TaskService} from "../../../service/task.service";
+import {Task} from "../../../model/task";
 import {CdkDragEnd} from "@angular/cdk/drag-drop";
 import {Subscription} from "rxjs";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import {AuthenticationService} from "../../service/authentication.service";
+import {AuthenticationService} from "../../../service/authentication.service";
 
 @Component({
   selector: 'app-user-tasks',
@@ -70,10 +70,5 @@ export class UserTasksComponent implements OnInit, OnDestroy {
       this.loadTasks();
     }
   }
-
-
-
-
-
 
 }

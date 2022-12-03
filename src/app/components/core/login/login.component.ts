@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {AuthenticationService} from "../../service/authentication.service";
-import {User} from "../../model/user";
+import {AuthenticationService} from "../../../service/authentication.service";
+import {User} from "../../../model/user";
 import {Subscription} from "rxjs";
 
 import {HttpResponse} from "@angular/common/http";
-import {HeaderType} from "../../enum/header-type.enum";
+import {HeaderType} from "../../../enum/header-type.enum";
 import {faEnvelope} from "@fortawesome/free-solid-svg-icons";
 import {faLock, faArrowRightLong} from "@fortawesome/free-solid-svg-icons";
 
