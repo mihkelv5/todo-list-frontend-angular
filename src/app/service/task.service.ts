@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Task} from '../model/task'
+import {TaskModel} from '../model/task.model'
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 
@@ -22,20 +22,20 @@ export class TaskService {
 
 
 
-  public loadUserTasks(id: number): Observable<Task[]> {
-        return this.http.get<Task[]>(this.host + "/user/" + id + "/all");
+  public loadUserTasks(id: number): Observable<TaskModel[]> {
+        return this.http.get<TaskModel[]>(this.host + "/user/" + id + "/all");
   }
 
-  loadUserTasksNoEvent(id: number): Observable<Task[]> {
-    return this.http.get<Task[]>(this.host + "/user/" + id + "/own");
+  loadUserTasksNoEvent(id: number): Observable<TaskModel[]> {
+    return this.http.get<TaskModel[]>(this.host + "/user/" + id + "/own");
   }
 
-  public loadTasksByEvent(eventId: number): Observable<Task[]> {
-     return this.http.get<Task[]>(this.host + "/event/" + eventId);
+  public loadTasksByEvent(eventId: number): Observable<TaskModel[]> {
+     return this.http.get<TaskModel[]>(this.host + "/event/" + eventId);
   }
 
-  findTaskById(taskId: number):Observable<Task>  {
-    return this.http.get<Task>(this.host + "/find/" + taskId);
+  findTaskById(taskId: number):Observable<TaskModel>  {
+    return this.http.get<TaskModel>(this.host + "/find/" + taskId);
   }
 
 
@@ -44,16 +44,16 @@ export class TaskService {
 
 
 
-  public addTask(task: Task, eventId: number | undefined ): Observable<Task> {
+  public addTask(task: TaskModel, eventId: number | undefined ): Observable<TaskModel> {
     if(eventId){
-      return this.http.post<Task>(this.host + "/add/event/" + eventId, task);
+      return this.http.post<TaskModel>(this.host + "/add/event/" + eventId, task);
     }
-    return this.http.post<Task>(this.host + "/add", task);
+    return this.http.post<TaskModel>(this.host + "/add", task);
   }
 
 
-  public updateTask(task: Task): Observable<Task> {
-    return this.http.put<Task>(this.host + "/update/" + task.id, task);
+  public updateTask(task: TaskModel): Observable<TaskModel> {
+    return this.http.put<TaskModel>(this.host + "/update/" + task.id, task);
   }
 
   public deleteTask(id: number) {
@@ -61,8 +61,12 @@ export class TaskService {
   }
 
 
-  public moveTask(task: Task){
+  public moveTask(task: TaskModel){
     const coords: number[] = [task.xLocation, task.yLocation]
-    return this.http.put<Task>(this.host + "/moveTask/" + task.id , coords)
+    return this.http.put<TaskModel>(this.host + "/moveTask/" + task.id , coords)
+  }
+
+  public taskSetComplete(id: number, isComplete: boolean): Observable<TaskModel> {
+    return this.http.put<TaskModel>(this.host + "/complete/" + id, isComplete);
   }
 }

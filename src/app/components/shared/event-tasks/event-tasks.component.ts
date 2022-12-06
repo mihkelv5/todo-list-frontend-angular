@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {TaskService} from "../../../service/task.service";
-import {Task} from "../../../model/task";
+import {TaskModel} from "../../../model/task.model";
 import {CdkDragEnd} from "@angular/cdk/drag-drop";
 import {Subscription} from "rxjs";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
@@ -15,8 +15,7 @@ export class EventTasksComponent implements OnInit, OnDestroy {
 
 
   private subscriptions: Subscription[] = [];
-  tasks: Task[] = [];
-  viewTaskComponentOpen = false; //enables or disables task create/edit component
+  tasks: TaskModel[] = [];
 
 
   @Input("eventId") eventId!: number;
@@ -31,7 +30,7 @@ export class EventTasksComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.taskService.loadTasksByEvent(this.eventId).subscribe(response => {
         this.tasks = response;
-        this.tasks.forEach(task => task.event_id = this.eventId)
+        this.tasks.forEach(task => task.eventId = this.eventId)
       })
     )
   }
@@ -42,13 +41,13 @@ export class EventTasksComponent implements OnInit, OnDestroy {
 
   }
 
-  taskDropped(task: Task, dropPoint: CdkDragEnd) {
+  taskDropped(task: TaskModel, dropPoint: CdkDragEnd) {
     task.xLocation = dropPoint.source.getFreeDragPosition().x
     task.yLocation = dropPoint.source.getFreeDragPosition().y
     this.subscriptions.push(this.taskService.moveTask(task).subscribe());
   }
 
-  getTaskLocation(task: Task) {
+  getTaskLocation(task: TaskModel) {
     return {x: task.xLocation, y: task.yLocation};
   }
 

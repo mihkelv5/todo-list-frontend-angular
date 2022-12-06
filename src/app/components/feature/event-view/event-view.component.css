@@ -13,6 +13,7 @@
 .limiter {
   height: 95vh;
   display: flex;
+
   align-items: center;
   flex-direction: column;
   box-sizing: border-box;
@@ -64,4 +65,23 @@
 
 .add-task-btn:hover {
   cursor: pointer;
+}
+
+.edit-event-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0 0 auto;
+
+}
+
+.edit-event-buttons > *{
+  cursor: pointer;
+  background: #dadada;
+  border-radius: 25px;
+  padding: 10px;
+  box-shadow: 1px 1px 3px 1px #2c592c;
+}
+
+.edit-event-buttons fa-icon {
+  margin-right: 10px;
 }

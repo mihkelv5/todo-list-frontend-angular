@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {User} from "../model/user";
+import {UserModel} from "../model/user.model";
+import {EventModel} from "../model/event.model";
 
 @Injectable({
   providedIn: 'root'
@@ -15,16 +16,21 @@ export class EventService {
 
   }
 
-  public addEvent(event: Event): Observable<Event> {
-    return this.http.post<Event>(this.host + "/add", event);
+  public addEvent(event: EventModel): Observable<EventModel> {
+    return this.http.post<EventModel>(this.host + "/add", event);
   }
 
-  public findEventById(eventId: number): Observable<Event> {
-    return this.http.get<Event>(this.host + "/find/" + eventId)
+  public updateEvent(event: EventModel): Observable<EventModel> {
+    console.log(event.id);
+    return this.http.put<EventModel>(this.host + "/update", event);
   }
 
-  public loadEventsFromDB(userId: number): Observable<Event[]> {
-    return this.http.get<Event[]>(this.host + "/user/" + userId);
+  public findEventById(eventId: number): Observable<EventModel> {
+    return this.http.get<EventModel>(this.host + "/find/" + eventId)
+  }
+
+  public loadEventsFromDB(userId: number): Observable<EventModel[]> {
+    return this.http.get<EventModel[]>(this.host + "/user/" + userId);
   }
 
   public registerUserToEvent(eventId: number, userId: number) {
@@ -32,7 +38,7 @@ export class EventService {
     return this.http.put<number>(this.host + "/" + eventId + "/register" + userId, eventId);
   }
 
-  public findUsersByEvent(eventId: number): Observable<User[]> {
-    return this.http.get<User[]>(this.host + "/" + eventId + "/users");
+  public findUsersByEvent(eventId: number): Observable<UserModel[]> {
+    return this.http.get<UserModel[]>(this.host + "/" + eventId + "/users");
   }
 }

@@ -19,7 +19,6 @@ export class NavbarComponent {
   faFriends = faUsers;
   faHome = faHouse;
   faBell = faBell;
-  //TODO: ?put in list
 
 
   userMenuVisible = false;

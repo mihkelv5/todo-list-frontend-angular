@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TaskService} from "../../../service/task.service";
-import {Task} from "../../../model/task";
+import {TaskModel} from "../../../model/task.model";
 import {Subscription} from "rxjs";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {AuthenticationService} from "../../../service/authentication.service";
@@ -18,7 +18,7 @@ export class UserTasksComponent implements OnInit, OnDestroy {
   tasksViewFilter !: TaskFilterEnum;
 
   private subscriptions: Subscription[] = [];
-  tasks: Task[] = [];
+  tasks: TaskModel[] = [];
   viewTaskComponentOpen = false; //enables or disables task create/edit component
   userId = 0; //used when getting tasks from user
   taskId = 0; //used when a task view is initialized
@@ -56,6 +56,7 @@ export class UserTasksComponent implements OnInit, OnDestroy {
         this.subscriptions.push(
           this.taskService.loadUserTasks(this.userId).subscribe(response => {
             this.tasks = response;
+
           }));
         return
       }
@@ -75,6 +76,6 @@ export class UserTasksComponent implements OnInit, OnDestroy {
 
 
   createNewTask() {
-    this.router.navigateByUrl("/task/new/nan")
+    this.router.navigateByUrl("/task/new/nan/nan")
   }
 }

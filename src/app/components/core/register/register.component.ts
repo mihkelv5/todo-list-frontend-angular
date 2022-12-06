@@ -1,6 +1,6 @@
 import {Component, OnDestroy} from '@angular/core';
 import {Location} from "@angular/common";
-import {User} from "../../../model/user";
+import {UserModel} from "../../../model/user.model";
 import {faEnvelope} from "@fortawesome/free-solid-svg-icons";
 import {faLock, faArrowLeftLong} from "@fortawesome/free-solid-svg-icons";
 import {Subscription} from "rxjs";
@@ -31,7 +31,7 @@ export class RegisterComponent implements OnDestroy{
     this.location.back();
   }
 
-  register(user: User) {
+  register(user: UserModel) {
     this.registerErrorMessage = "";
     user.enabled = true; //TODO: add email confirmation to backend
     user.roles = "ROLE_USER"

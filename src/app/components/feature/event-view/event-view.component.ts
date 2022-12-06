@@ -3,9 +3,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {EventService} from "../../../service/event.service";
 import {Subscription} from "rxjs";
 import {TaskService} from "../../../service/task.service";
-import {Task} from "../../../model/task";
-import {Event} from "../../../model/event";
+import {TaskModel} from "../../../model/task.model";
+import {EventModel} from "../../../model/event.model";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import {faPencil, faUsers} from "@fortawesome/free-solid-svg-icons";
 
 
 @Component({
@@ -15,11 +16,15 @@ import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 })
 export class EventViewComponent implements OnInit, OnDestroy {
   faPenToSquare = faPenToSquare;
+  faPencil = faPencil;
+  faUsers = faUsers;
+
+
   isEventLoaded = false;
   eventId!: number;
-  event!: Event;
+  event!: EventModel;
   subscriptions: Subscription[] = [];
-  tasks: Task[] = [];
+  tasks: TaskModel[] = [];
 
   constructor(private eventService: EventService, private taskService: TaskService,
               private route: ActivatedRoute, private router: Router) {}
@@ -44,8 +49,11 @@ export class EventViewComponent implements OnInit, OnDestroy {
 
 
   createTask() {
-    this.router.navigateByUrl("/task/new/" + this.event.id)
+    this.router.navigateByUrl("/task/new/" + this.event.id + "/" + this.event.title)
   }
 
 
+  editEvent() {
+    this.router.navigateByUrl("/event/edit/" + this.event.id)
+  }
 }

@@ -1,24 +1,76 @@
 
-  <div class="task" (clickedOutside)="closePopUp()"
+  <div class="task" (clickedOutside)="closePopUp()" *ngIf="task != null"
 
-    [ngStyle]="{'background' : task.color}"
+    [ngStyle]="{'background' : task.color, 'z-index' : taskZIndex}"
     [cdkDragData]="task" (cdkDragEnded)="taskDropped(task, $event)"
+       (cdkDragStarted)="taskDragStarted()"
     [cdkDragFreeDragPosition]="getTaskLocation(task)"
+       [cdkDragStartDelay]="100"
     cdkDragBoundary="#board"
     cdkDrag>
-    <div class="task-content" (mousedown)="onMouseDown($event)" (click)="onClick($event)">
-      <h3>{{task.id}}</h3>
-      <p>{{task.description}}</p>
+    <div class="task-content" (click)="togglePopUp()"  cdkDragHandle>
+      <h3>{{task.title}}</h3>
+      <div class="task-complete">
+        <p *ngIf="!task.complete">{{task.date}}</p>
+
+        <fa-icon *ngIf="task.complete" [icon]="faCircleCheck"></fa-icon>
+      </div>
     </div>
     <div *ngIf="taskPopupOpen" class="task-popup">
       <ul class="task-buttons">
+
+        <li class="task-calendar" >
+          <div *ngIf="task.complete">
+            <fa-icon [icon]="faCalendarCheck "></fa-icon>
+            <span>TaskModel is complete</span>
+          </div>
+          <div *ngIf="!task.complete">
+            <fa-icon [icon]="faCalendar"></fa-icon>
+            <span *ngIf="timeUntilDue>0">Time left: {{timeUntilDue}} day</span>
+            <span *ngIf="timeUntilDue!=1 && timeUntilDue > 0">s</span>
+            <span *ngIf="timeUntilDue == 0"> Due today</span>
+          </div>
+        </li>
+
         <li>
-          <button (click)="editTask()">edit</button>
+          <fa-icon [icon]="faPencil" (click)="editTask()"></fa-icon>
+        </li>
+
+        <li>
+          <fa-icon [icon]="faPeopleGroup" ></fa-icon>
+        </li>
+
+        <li>
+          <fa-icon [icon]="faTrash" (click)="deleteTask()">del</fa-icon>
+        </li>
+
+      </ul>
+      <ul class="task-details">
+        <li class="task-details-element">
+          <fa-icon [icon]="faSquare" [ngStyle]="{'color' : task.color, 'font-size' : '1.2rem'}"></fa-icon>
+          <div>
+            <span class="task-details-header">{{task.title}}</span>
+            <span class="task-details-description">{{task.description}}</span>
+          </div>
         </li>
         <li>
-          <button (click)="deleteTask()">del</button>
+          <fa-icon [icon]="faUserLock"></fa-icon>
+          <span>Owner: {{task.userId}}</span>
+        </li>
+        <li>
+          <fa-icon [icon]="faUsers"></fa-icon>
+          <span>Assigned to:</span>
         </li>
       </ul>
-      <p>{{task.title}}</p>
+      <div class="complete-button">
+        <div *ngIf="task.complete" class="complete-button-red">
+          <fa-icon [icon]="faCircleXmark"></fa-icon>
+          <span (click)="completeTask(false)">Mark not done</span>
+        </div>
+        <div *ngIf="!task.complete" class="complete-button-green">
+          <fa-icon [icon]="faCircleCheck"></fa-icon>
+          <span  (click)="completeTask(true)" >Mark done</span>
+        </div>
+      </div>
     </div>
   </div>

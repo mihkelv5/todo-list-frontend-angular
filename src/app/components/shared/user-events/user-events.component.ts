@@ -3,6 +3,7 @@ import {AuthenticationService} from "../../../service/authentication.service";
 import {EventService} from "../../../service/event.service";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
+import {EventModel} from "../../../model/event.model";
 
 @Component({
   selector: 'app-user-events',
@@ -14,7 +15,7 @@ export class UserEventsComponent implements OnInit, OnDestroy{
 
   private subscriptions: Subscription[] = [];
   private userId = 0; //used to find events for specific user
-  events: any = []; //no idea why events:Event[] = [] gives error,
+  events: EventModel[] = [];
 
   constructor(private authService: AuthenticationService, private eventService: EventService, private router: Router) {
   }

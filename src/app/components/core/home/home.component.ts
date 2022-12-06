@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {TaskFilterEnum} from "../../../enum/task-filter.enum";
 import {UserTasksComponent} from "../../shared/user-tasks/user-tasks.component";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -17,7 +18,7 @@ export class HomeComponent implements OnInit {
   faPlus = faPlus;
 
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
@@ -31,5 +32,9 @@ export class HomeComponent implements OnInit {
 
   createNewTask() {
     this.tasksComponent.createNewTask();
+  }
+
+  createNewEvent() {
+      this.router.navigateByUrl("/event/edit/new")
   }
 }

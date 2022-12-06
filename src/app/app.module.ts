@@ -36,8 +36,11 @@ import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { EventViewComponent } from './components/feature/event-view/event-view.component';
 import { UserEventsComponent } from './components/shared/user-events/user-events.component';
 import { TaskComponent } from './components/shared/task/task.component';
-import { EditTaskComponent } from './components/feature/edit-task/edit-task.component';
 import { EventTasksComponent } from "./components/shared/event-tasks/event-tasks.component";
+import { EditTaskComponent } from './components/feature/edit-task/edit-task.component';
+import { EditEventComponent } from './components/feature/edit-event/edit-event.component';
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import { InviteComponent } from './components/shared/invite/invite.component';
 
 
 @NgModule({
@@ -53,9 +56,12 @@ import { EventTasksComponent } from "./components/shared/event-tasks/event-tasks
     UserEventsComponent,
     TaskComponent,
     EditTaskComponent,
-    EventTasksComponent
+    EventTasksComponent,
+    EditEventComponent,
+    InviteComponent
   ],
   imports: [
+
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -67,7 +73,8 @@ import { EventTasksComponent } from "./components/shared/event-tasks/event-tasks
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSlideToggleModule
 
   ],
   providers: [AuthenticationGuard, TaskService, AuthenticationService,

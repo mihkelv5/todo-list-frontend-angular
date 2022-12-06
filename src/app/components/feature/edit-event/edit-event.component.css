@@ -1,0 +1,64 @@
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+  -webkit-box-shadow: 0 0 0 30px #dadada inset !important;
+
+} /*removes browser autofill color*/
+.background-image {
+  background-image: linear-gradient(to bottom right, #a5dbe0, #528846);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.limiter {
+  position: relative;
+  height: 95vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1000px;
+  padding: 30px;
+}
+
+.event-container {
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  background: #eaeaea;
+  border-radius: 10px;
+  padding: 50px;
+  box-shadow: 1px 1px 10px 3px rgba(46, 93, 46, 0.2);
+}
+
+.event-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+}
+
+.event-data-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
+  width: 380px;
+  background: #dadada;
+  border-radius: 25px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #6c6c6c;
+}
+
+.description {
+  resize: none;
+  height: 80px;
+  width: 380px;
+}

@@ -6,8 +6,13 @@
       <div class="my-item">
         <div class="header">
           <span class="headline">My Events</span>
+          <div class="header-buttons">
+            <div class="add-task-btn pointer-cursor" (click)="createNewEvent()">
+              <fa-icon [icon]="faPlus"></fa-icon>
+            </div>
+          </div>
         </div>
-        <app-user-events></app-user-events>
+        <app-user-events class="user-events"></app-user-events>
       </div>
       <div class="my-item">
         <div class="header">

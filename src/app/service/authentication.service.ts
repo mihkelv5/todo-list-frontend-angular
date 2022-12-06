@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
-import {User} from "../model/user";
+import {UserModel} from "../model/user.model";
 import {JwtHelperService} from "@auth0/angular-jwt";
 
 
@@ -17,14 +17,14 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {}
 
-  public login(user: User) : Observable<HttpResponse<User>> {
+  public login(user: UserModel) : Observable<HttpResponse<UserModel>> {
 
-    return this.http.post<User>(this.host + "/user/login", user, {observe: "response"});
+    return this.http.post<UserModel>(this.host + "/user/login", user, {observe: "response"});
   }
 
 
-  public register(user: User) : Observable<HttpResponse<any>> {
-    return this.http.post<HttpResponse<User>>
+  public register(user: UserModel) : Observable<HttpResponse<any>> {
+    return this.http.post<HttpResponse<UserModel>>
     (this.host + "/user/register", user);
   }
 
@@ -43,11 +43,11 @@ export class AuthenticationService {
     localStorage.setItem("token", token);
   }
 
-  public addUserToLocalCache(user: User): void {
+  public addUserToLocalCache(user: UserModel): void {
     localStorage.setItem("user", JSON.stringify(user));
   }
 
-  public getUserFromLocalCache(): User {
+  public getUserFromLocalCache(): UserModel {
       return JSON.parse(localStorage.getItem("user") || "{}")
   }
 

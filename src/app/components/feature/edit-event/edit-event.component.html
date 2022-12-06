@@ -1,0 +1,26 @@
+<div class="background-image">
+  <app-navbar></app-navbar>
+  <div class="limiter">
+    <div class="event-container">
+      <form class="event-form" #editForm="ngForm">
+
+          <label for="event-title">Event title:</label>
+          <input  type="text" value="{{currentEvent.title}}" name="title" id="event-title" class="event-data-wrapper" ngModel #titleInput="ngModel" required>
+
+
+          <label for="event-description">Description:</label>
+          <textarea [value]=currentEvent.description name="description" id="event-description" class="event-data-wrapper description" maxlength="255" ngModel #descriptionInput="ngModel" required></textarea>
+
+          <span>
+            Invite users:
+          </span>
+
+          <span>Users can invite others: </span>
+          <!--<mat-slide-toggle> </mat-slide-toggle>-->
+
+          <button type="submit" (click)="submitData(editForm.value)">Save</button>
+      </form>
+      <button (click)="resetForm()">Cancel</button>
+    </div>
+  </div>
+</div>

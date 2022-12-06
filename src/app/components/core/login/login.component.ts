@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../service/authentication.service";
-import {User} from "../../../model/user";
+import {UserModel} from "../../../model/user.model";
 import {Subscription} from "rxjs";
 
 import {HttpResponse} from "@angular/common/http";
@@ -36,12 +36,12 @@ export class LoginComponent implements OnInit, OnDestroy{
     }
   }
 
-  onLogin(user: User) {
+  onLogin(user: UserModel) {
 
     this.showLoading = true;
     this.subscriptions.push(
       this.authenticationService.login(user).subscribe(
-        (response: HttpResponse<User>) => {
+        (response: HttpResponse<UserModel>) => {
           const token = response.headers.get(HeaderType.JWT_TOKEN);
           if (token != null && response.body) {
             this.loginErrorMessage = "";

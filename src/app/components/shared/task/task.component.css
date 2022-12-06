@@ -1,25 +1,4 @@
-.task {
-  position: relative;
-  cursor: pointer;
-  width: 100px;
-}
 
-.task-popup {
-  background: #dadada;
-  position: absolute;
-  right: calc(100% + 10px);
-  top: 0;
-  border-radius: 5px;
-  box-shadow: 1px 1px 5px 1px #888888;
-
-}
-
-.task-buttons {
-  display: flex;
-  align-items: flex-end;
-  list-style: none;
-
-}
 
 .task {
   z-index: 0;
@@ -27,6 +6,15 @@
   background: white;
   border-radius: 5px;
   border: #6c6c6c 1px solid;
+  cursor: pointer;
+  min-width: 100px;
+  max-width: 150px;
+}
+
+.task:active {
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+  0 8px 10px 1px rgba(0, 0, 0, 0.14),
+  0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
 .task-content{
@@ -34,8 +22,122 @@
   height: 100%;
 }
 
-.task-content > p {
-  margin: 0 10px;
-  word-break: break-word;
+.task-content > h3 {
+  margin: 0 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
 
+.task-complete > p {
+  margin: 0 5px;
+  word-break: break-word;
+}
+
+.task-complete {
+  display: flex;
+
+}
+
+.task-complete > fa-icon {
+  font-size: 1.1rem;
+  margin-left: auto;
+  margin-right: 3px;
+  color: rgba(19,111,40,1);
+}
+
+.task-popup {
+  transform: translateY(-30%);
+  min-height: 200px;
+  min-width: 350px;
+  cursor: default;
+  background: #ffffff;
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 0;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px 1px #888888;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.task-popup li {
+  list-style: none;
+}
+
+.task-buttons {
+  padding: 10px;
+  margin: 0;
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  list-style: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #464646;
+
+}
+
+
+.task-calendar {
+  margin-right: auto;
+  font-size: 1.2rem;
+  cursor: default;
+  color: #8d8d8d;
+}
+
+.task-calendar  fa-icon {
+  margin-right: 10px;
+}
+
+.task-calendar span {
+  white-space: nowrap;
+}
+
+.task-details {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.task-details li {
+  display: flex;
+  gap: 20px
+}
+
+
+.task-details-element > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-details-header {
+  font-size: 1.2rem;
+}
+
+.task-details-description {
+  max-width: 250px;
+  word-wrap: anywhere;
+}
+
+.complete-button{
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 5px;
+}
+
+.complete-button-red {
+
+  display: flex;
+  gap: 5px;
+  color: rgba(149,2,5,0.65)
+}
+
+
+.complete-button-green {
+  display: flex;
+  gap: 5px;
+  color: #56a256;
 }
