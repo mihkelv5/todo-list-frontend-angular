@@ -87,6 +87,7 @@ export class EventViewComponent implements OnInit, OnDestroy {
         this.subscriptions.push(
           this.inviteService.inviteUserToEvent(this.event.id, username).subscribe(response => {
             console.log(response);
+            //TODO: confirmation notification
           })
         )
       })

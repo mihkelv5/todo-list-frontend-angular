@@ -18,11 +18,6 @@ export class ClickedOutsideDirective {
       this.clickedOutside.emit();
     }
   }
+
 }
-/*@HostListener('window:click', ['$event'])
-  onWindowClick(event: MouseEvent) {
-    // Check if the clicked element is not the component itself
-    if (!(event.target as HTMLElement).closest('#component-id')) {
-      // Close the window here
-    }
-  }*/
+

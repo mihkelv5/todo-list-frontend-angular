@@ -84,6 +84,12 @@ export class InviteUserComponent {
     }
   }
 
+  closeWindowOutsideClick($event: MouseEvent) {
+    if($event.target == $event.currentTarget){
+      this.closeWindow();
+    }
+  }
+
   sendUserInvites(){
     this.inviteUsers.emit(this.invitedUsers);
   }
