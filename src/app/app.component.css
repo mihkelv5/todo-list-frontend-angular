@@ -1,1 +1,7 @@
+.background-image {
 
+  background-image: linear-gradient(to bottom right, #a5dbe0, #528846);
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}

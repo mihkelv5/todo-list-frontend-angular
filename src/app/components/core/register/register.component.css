@@ -24,9 +24,7 @@ input:-webkit-autofill:active{
 
 } /*removes browser autofill color*/
 
-.background-image {
-  background-image: linear-gradient(to bottom right, #a5dbe0, #528846);
-}
+
 
 .limiter {
   display: flex;

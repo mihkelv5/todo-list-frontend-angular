@@ -15,6 +15,7 @@ export class AuthenticationService {
   private loggedInUsername = "";
   private jwtHelper = new JwtHelperService();
 
+
   constructor(private http: HttpClient) {}
 
   public login(user: UserModel) : Observable<HttpResponse<UserModel>> {
