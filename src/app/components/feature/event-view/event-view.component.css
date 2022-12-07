@@ -69,19 +69,60 @@
 
 .edit-event-buttons {
   display: flex;
+  width: 100%;
   gap: 10px;
-  margin: 10px 0 0 auto;
+  margin: 10px 0 ;
+  justify-content: right;
 
 }
-
 .edit-event-buttons > *{
   cursor: pointer;
-  background: #dadada;
+
   border-radius: 25px;
   padding: 10px;
   box-shadow: 1px 1px 3px 1px #2c592c;
 }
 
+.delete-event{
+  background: #b34643;
+  margin-right: auto;
+}
+
+.edit-event {
+  background: #dadada;
+}
+
 .edit-event-buttons fa-icon {
   margin-right: 10px;
 }
+
+.delete-event-confirmation {
+  top: 0;
+  left: 0;
+  z-index: 999;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-event-confirmation-window {
+  height: 100px;
+  width: 200px;
+  padding: 30px;
+  background: #dadada;
+  border-radius: 25px;
+}
+
+.participators-window {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+

@@ -74,7 +74,11 @@ export class EditTaskComponent implements  OnInit, OnDestroy{
         newTask.date = task.date;
       }
       if(task.color) {
-        newTask.color = task.color;
+        if(task.color.toLowerCase() === "random"){
+          newTask.color = this.getRandomColor();
+        } else {
+          newTask.color = task.color;
+        }
       }
       this.taskService.updateTask(newTask).subscribe(() => {
         this.location.back();

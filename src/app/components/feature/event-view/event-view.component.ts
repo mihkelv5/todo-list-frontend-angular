@@ -5,8 +5,10 @@ import {Subscription} from "rxjs";
 import {TaskService} from "../../../service/task.service";
 import {TaskModel} from "../../../model/task.model";
 import {EventModel} from "../../../model/event.model";
-import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import {faPencil, faUsers} from "@fortawesome/free-solid-svg-icons";
+import {InviteService} from "../../../service/invite.service";
+
 
 
 @Component({
@@ -18,6 +20,8 @@ export class EventViewComponent implements OnInit, OnDestroy {
   faPenToSquare = faPenToSquare;
   faPencil = faPencil;
   faUsers = faUsers;
+  faTrashCan = faTrashCan;
+  openParticipatorsWindow = false;
 
 
   isEventLoaded = false;
@@ -25,9 +29,11 @@ export class EventViewComponent implements OnInit, OnDestroy {
   event!: EventModel;
   subscriptions: Subscription[] = [];
   tasks: TaskModel[] = [];
+  deleteEventConfirmation = false;
 
   constructor(private eventService: EventService, private taskService: TaskService,
-              private route: ActivatedRoute, private router: Router) {}
+              private route: ActivatedRoute, private router: Router,
+              private inviteService: InviteService) {}
 
 
   ngOnInit(): void {
@@ -45,6 +51,7 @@ export class EventViewComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe())
   }
 
 
@@ -55,5 +62,35 @@ export class EventViewComponent implements OnInit, OnDestroy {
 
   editEvent() {
     this.router.navigateByUrl("/event/edit/" + this.event.id)
+  }
+
+  deleteEvent() {
+    this.subscriptions.push(
+      this.eventService.deleteEvent(this.event.id).subscribe(() => {
+        this.deleteEventConfirmation = false;
+        this.router.navigateByUrl("/home");
+        //TODO: add toggle to ask if all tasks should be deleted with it too.
+      }));
+  }
+
+  toggleDeleteEventConfirmation(bool: boolean){
+    this.deleteEventConfirmation = bool;
+  }
+
+  toggleParticipatorWindow(bool: boolean) {
+    this.openParticipatorsWindow = bool;
+  }
+
+  inviteUsers($event: string[]) {
+    if($event.length != 0){
+      $event.forEach(username => {
+        this.subscriptions.push(
+          this.inviteService.inviteUserToEvent(this.event.id, username).subscribe(response => {
+            console.log(response);
+          })
+        )
+      })
+    }
+    this.openParticipatorsWindow = false;
   }
 }

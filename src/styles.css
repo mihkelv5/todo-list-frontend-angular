@@ -17,3 +17,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   max-width: 1000px;
   padding: 30px;
 }
+
+.text-data-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
+  width: 380px;
+  background: #dadada;
+  border-radius: 25px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #6c6c6c;
+}

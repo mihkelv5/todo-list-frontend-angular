@@ -1,0 +1,50 @@
+<div class="manage-users">
+  <div class="container">
+    <div class="header">
+      <span>Invite to Workgroup</span>
+      <div class="close-window" (click)="closeWindow()">
+        <fa-icon [icon]="faXmark"></fa-icon>
+      </div>
+    </div>
+    <div class="body">
+      <div *ngIf="filteredResults$ | async as array" class="search">
+        <div class="search-bar">
+          <input type="text" class="" [formControl]="searchControl" />
+          <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
+        </div>
+          <div class="search-results">
+            <ul class="result-list">
+              <li *ngFor="let result of array" (click)="addToEvent(result)" class="result-entry">
+                <fa-icon [icon]="faUser"></fa-icon>
+                <span >{{result}}</span>
+              </li>
+            </ul>
+          </div>
+      </div>
+      <div class="invited-users">
+
+        <ul class="result-list">
+          <li>
+            <span>Currently invited: </span>
+          </li>
+          <li *ngFor="let username of invitedUsers" class="result-entry">
+            <fa-icon [icon]="faUser"></fa-icon>
+            <span >{{username}}</span>
+            <div class="remove-user" (click)="removeFromEvent(username)">
+              <fa-icon [icon]="faXmark"></fa-icon>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+
+
+    </div>
+    <div class="footer">
+      <button (click)="closeWindow()"
+        class="cancel-button">Discard</button>
+      <button (click)="sendUserInvites()" [disabled]="invitedUsers.length < 1"
+        class="invite-button">Send invites</button>
+    </div>
+  </div>
+</div>

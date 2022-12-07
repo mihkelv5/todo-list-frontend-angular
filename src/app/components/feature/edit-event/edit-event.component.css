@@ -42,6 +42,6 @@ input:-webkit-autofill:active{
 
 .description {
   resize: none;
-  height: 80px;
+  height: 100px;
   width: 380px;
 }

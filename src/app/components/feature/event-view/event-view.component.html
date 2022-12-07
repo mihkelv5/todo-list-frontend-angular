@@ -16,18 +16,37 @@
       </div>
     </div>
 
+
     <div class="edit-event-buttons">
+      <div class="delete-event" (click)="toggleDeleteEventConfirmation(true)">
+        <fa-icon [icon]="faTrashCan"></fa-icon>
+        <span>Delete event</span>
+      </div>
       <div class="edit-event" (click)="editEvent()">
         <fa-icon  [icon]="faPencil"></fa-icon>
         <span>Edit event</span>
       </div>
-      <div class="event-users">
+      <div class="edit-event" (click)="toggleParticipatorWindow(true)">
         <fa-icon [icon]="faUsers"></fa-icon>
         <span>Participators</span>
+
       </div>
+    </div>
+  </div>
+
+  <div class="delete-event-confirmation" *ngIf="deleteEventConfirmation">
+    <div class="delete-event-confirmation-window">
+      <span>Do you really want to delete event?</span>
+      <button (click)="deleteEvent()">Yes</button>
+      <button (click)="toggleDeleteEventConfirmation(false)">No</button>
 
     </div>
   </div>
 
-
+  <app-invite *ngIf="openParticipatorsWindow"
+              [eventId]="event.id"
+              class="participators-window"
+              (closeWindowEvent)="toggleParticipatorWindow(false)"
+  (inviteUsers)="inviteUsers($event)">
+  </app-invite>
 

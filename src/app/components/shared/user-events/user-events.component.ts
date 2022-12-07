@@ -14,7 +14,7 @@ export class UserEventsComponent implements OnInit, OnDestroy{
 
 
   private subscriptions: Subscription[] = [];
-  private userId = 0; //used to find events for specific user
+  private username = ""; //used to find events for specific user
   events: EventModel[] = [];
 
   constructor(private authService: AuthenticationService, private eventService: EventService, private router: Router) {
@@ -22,23 +22,22 @@ export class UserEventsComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     const user = this.authService.getUserFromLocalCache();
-    this.userId = user.id;
+    this.username = user.username;
     this.loadEvents();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
     this.events = [];
-    this.userId = 0;
+    this.username = "";
   }
 
 
 
   private loadEvents() {
     this.subscriptions.push(
-      this.eventService.loadEventsFromDB(this.userId).subscribe(response => {
+      this.eventService.loadEventsFromDB(this.username).subscribe(response => {
         this.events = response;
-
       })
     )
   }
