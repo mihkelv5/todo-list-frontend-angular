@@ -10,6 +10,7 @@ import {Location} from "@angular/common";
   selector: 'app-edit-event',
   templateUrl: './edit-event.component.html',
   styleUrls: ['./edit-event.component.css']
+
 })
 export class EditEventComponent implements OnInit, OnDestroy{
   private eventId?: number;

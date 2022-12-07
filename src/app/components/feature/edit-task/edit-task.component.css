@@ -9,19 +9,6 @@ input:-webkit-autofill:active{
 } /*removes browser autofill color*/
 
 
-.limiter {
-  position: relative;
-  height: 95vh;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  box-sizing: border-box;
-  width: 100%;
-  margin: 0 auto;
-  max-width: 1000px;
-  padding: 30px;
-}
-
 .task-container {
   z-index: 2;
   margin: 50px;

@@ -2,7 +2,7 @@
   background: rgba(255,244,235,0.25);
 }
 
-.limiter {
+.nav-limiter {
   margin: 0 auto;
   max-width: 1000px;
   display: flex;
