@@ -1,0 +1,14 @@
+<div class="invite">
+  <fa-icon [icon]="faUser" class="inviter-icon"></fa-icon>
+  <div class="invite-data">
+    <span class="invite-data-bold">{{invite.requesterUsername}} </span>
+    <span > invites you to the event </span>
+    <span class="invite-data-bold"> {{invite.eventName}} </span>
+
+    <div class="invite-buttons">
+      <button class="decline-button" (click)="respondToEvent(false)">decline</button>
+      <button class="accept-button" (click)="respondToEvent(true)">accept</button>
+    </div>
+  </div>
+
+</div>

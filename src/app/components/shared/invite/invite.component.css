@@ -1,0 +1,52 @@
+.invite {
+  display: flex;
+  width: 100%;
+  padding: 10px;
+}
+
+.inviter-icon {
+  align-self: center;
+  font-size: 2.5rem;
+  margin-right: 10px;
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 50%;
+}
+.invite-data {
+  font-family: Arial, sans-serif;
+  font-weight: 500;
+  width: 90%;
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+
+.invite-data-bold {
+  font-weight: bold;
+
+}
+
+.invite-buttons {
+  margin-top: 5px;
+  display: flex;
+  gap: 10px;
+
+}
+
+.invite-buttons > button {
+  font-size: 0.9rem;
+  color: #4b4b4b;
+  border: none;
+  box-shadow: rgba(0, 0, 0, 0.05) 0 6px 24px 0, rgba(0, 0, 0, 0.08) 0 0 0 1px;
+  border-radius: 3px;
+}
+
+.decline-button {
+  background: rgba(243, 95, 92, 0.42);
+}
+
+.accept-button {
+  background: rgba(105, 250, 94, 0.42);
+}
+
+
+

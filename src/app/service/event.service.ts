@@ -25,7 +25,6 @@ export class EventService {
   }
 
   public updateEvent(event: EventModel): Observable<EventModel> {
-    console.log(event.id);
     return this.http.put<EventModel>(this.host + "/update", event);
   }
 

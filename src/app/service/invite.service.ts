@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
-import {EventInvitationModel} from "../model/EventInvitationModel";
+import {EventInvitationModel} from "../model/eventInvitation.model";
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,8 @@ export class InviteService {
     return this.http.post(this.host + "event/" + eventId + "/user/" + username,"");
   }
 
-  public getAllInvitationsByUsername(username: string): Observable<EventInvitationModel> {
-    return this.http.get<EventInvitationModel>(this.host + username + "/get/all");
+  public getAllInvitationsByUsername(username: string): Observable<EventInvitationModel[]> {
+    return this.http.get<EventInvitationModel[]>(this.host + username + "/get/all");
   }
 
 
@@ -28,7 +28,7 @@ export class InviteService {
   }
 
   public declineInvite(invite: EventInvitationModel) {
-    return this.http.put(this.host + "decline/" + invite.id, "")
+    return this.http.delete(this.host + "decline/" + invite.id)
   }
 
   public findUsernamesToInvite(eventId: number): Observable<string[]> {

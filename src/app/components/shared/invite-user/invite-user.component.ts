@@ -7,7 +7,7 @@ import {faUser} from "@fortawesome/free-regular-svg-icons";
 
 
 @Component({
-  selector: 'app-invite',
+  selector: 'app-invite-users',
   templateUrl: './invite-user.component.html',
   styleUrls: ['./invite-user.component.css']
 })

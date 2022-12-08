@@ -4,6 +4,7 @@ import {EventService} from "../../../service/event.service";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {EventModel} from "../../../model/event.model";
+import {faImage} from "@fortawesome/free-regular-svg-icons";
 
 @Component({
   selector: 'app-user-events',
@@ -12,6 +13,7 @@ import {EventModel} from "../../../model/event.model";
 })
 export class UserEventsComponent implements OnInit, OnDestroy{
 
+  faImage=faImage;
 
   private subscriptions: Subscription[] = [];
   private username = ""; //used to find events for specific user

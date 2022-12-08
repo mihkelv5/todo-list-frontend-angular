@@ -43,10 +43,10 @@
     </div>
   </div>
 
-  <app-invite *ngIf="openParticipatorsWindow"
+  <app-invite-users *ngIf="openParticipatorsWindow"
               [eventId]="event.id"
               class="participators-window"
               (closeWindowEvent)="toggleParticipatorWindow(false)"
   (inviteUsers)="inviteUsers($event)">
-  </app-invite>
+  </app-invite-users>
 

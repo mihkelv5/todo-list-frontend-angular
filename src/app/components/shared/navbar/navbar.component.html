@@ -1,4 +1,4 @@
-<nav class="nav" *ngIf="isLoggedIn()">
+<nav class="nav" >
   <div class="nav-limiter">
 
 
@@ -15,42 +15,63 @@
 
 
     <div class="account-elements" (clickedOutside)="closeUserAndNotificationMenu()">  <!--account elements-->
-
+      <!--(clickedOutside)="closeUserAndNotificationMenu()" does not work with ngfor-->
       <div class="dropdown-menu-parent">  <!--notification icon icon-->
         <div (click)="toggleNotificationDropdownMenu()" class="bell-icon pointer-item">
           <fa-icon [icon]="faBell" ></fa-icon>
+          <div *ngIf="invites.length > 0" class="bell-icon-notifications">
+            <span>{{invites.length}}</span>
+          </div>
         </div>
-        <ul class="dropdown-menu " *ngIf="notificationMenuVisible">
-          <li>
-            You have no notifications
-          </li>
-        </ul>
+        <div class="dropdown-menu " *ngIf="notificationMenuVisible">
+
+            <ul class="dropdown-menu-list" >
+              <li class="list-header">
+                <span class="your-notifications">Your notifications</span>
+<!--                <div class="list-header-buttons">
+                  <button class="all-notifications">All</button>
+                  <button class="new-notifications">New</button>
+                </div>-->
+              </li>
+              <li *ngIf="invites.length == 0">
+                <span>you have no notifications</span>
+              </li>
+              <li *ngFor="let invite of invites">
+                <invite-component [invite]="invite"
+                (responseEmitter)="respondToInvite($event, invite)"
+                >
+                </invite-component>
+              </li>
+            </ul>
+        </div>
       </div>
 
       <div class="dropdown-menu-parent" > <!--user icon-->
         <div (click)="toggleUserDropdownMenu()" class="user-icon pointer-item">
           <fa-icon [icon]="faUser" ></fa-icon>
         </div>
-        <ul class="dropdown-menu" *ngIf="userMenuVisible" >
-          <li class="dropdown-menu-item pointer-item">
+        <div class="dropdown-menu" *ngIf="userMenuVisible" >
+          <ul class="dropdown-menu-list">
+            <li class="dropdown-menu-item pointer-item">
             <span>
                 <fa-icon [icon]="faSettings" class="dropdown-icon fa-fw" ></fa-icon>
                 Settings
             </span>
-          </li >
-          <li class="dropdown-menu-item pointer-item">
+            </li >
+            <li class="dropdown-menu-item pointer-item">
               <span>
                 <fa-icon [icon]="faFriends" class="dropdown-icon fa-fw"></fa-icon>
                 Friends
               </span>
-          </li>
-          <li class="dropdown-menu-item pointer-item">
+            </li>
+            <li class="dropdown-menu-item pointer-item">
               <span (click)="logout()" class="logout-btn">
                 <fa-icon [icon]="faLogout" class="dropdown-icon fa-fw"></fa-icon>
                 Logout
               </span>
-          </li>
-        </ul>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 

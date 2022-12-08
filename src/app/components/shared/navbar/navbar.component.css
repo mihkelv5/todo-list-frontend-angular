@@ -4,7 +4,7 @@
 
 .nav-limiter {
   margin: 0 auto;
-  max-width: 1000px;
+  max-width: 1400px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -75,7 +75,26 @@
   font-size: 2rem;
   background: #dadada;
   border-radius: 50%;
+  position: relative;
+}
 
+.bell-icon-notifications{
+  position: absolute;
+  background: red;
+  border-radius: 50%;
+  top: -4px;
+  right: -4px;
+  height: 10px;
+  width: 10px;
+  padding: 3px;
+}
+
+.bell-icon-notifications > span {
+  color: white;
+  font-size: 0.8rem;
+  position: absolute;
+  top: -2px;
+  right: 4px;
 }
 
 .user-icon {
@@ -87,6 +106,10 @@
 
 
 .dropdown-menu {
+
+}
+
+.dropdown-menu-list {
   z-index: 10;
   position: absolute;
   display: flex;
@@ -99,11 +122,9 @@
   top: 25px;
   padding: 10px;
   border-radius: 10px;
-  width: 200px;
+  width: 300px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
 }
-
-
 
 .dropdown-menu-item {
   align-self: stretch;
@@ -123,6 +144,20 @@
   border-radius: 50%;
   margin-right: 10px;
 }
+
+.list-header {
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.list-header-buttons {
+  display: flex;
+
+}
+
+
 
 @media (max-width: 768px) {
 
