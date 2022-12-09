@@ -26,7 +26,7 @@ export class EditTaskComponent implements  OnInit, OnDestroy{
       0,
       0,
       "white",
-      0,
+      "",
       undefined,
       undefined
     );

@@ -40,8 +40,9 @@ import { EventTasksComponent } from "./components/shared/event-tasks/event-tasks
 import { EditTaskComponent } from './components/feature/edit-task/edit-task.component';
 import { EditEventComponent } from './components/feature/edit-event/edit-event.component';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import { InviteUserComponent } from './components/shared/invite-user/invite-user.component';
+import { InviteUserComponent } from './components/feature/event-view/invite-user/invite-user.component';
 import { InviteComponent } from './components/shared/invite/invite.component';
+import { AssignUserComponent } from './components/shared/task/assign-user/assign-user.component';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { InviteComponent } from './components/shared/invite/invite.component';
     EventTasksComponent,
     EditEventComponent,
     InviteUserComponent,
-    InviteComponent
+    InviteComponent,
+    AssignUserComponent
   ],
   imports: [
 

@@ -1,0 +1,29 @@
+<div class="wrapper">
+  <div class="container">
+    <div (click)="closeWindow(false)" class="close-button">
+      <fa-icon [icon]="faXmark"></fa-icon>
+    </div>
+    <div class="header">
+      <span>Assign users to task</span>
+    </div>
+    <div class="body">
+      <ul class="available-users">
+        <li *ngFor="let username of canBeAssigned" (click)="assignUser(username)">
+          {{username}}
+        </li>
+      </ul>
+      <ul class="assigned-users">
+        <li class="">
+          <span >Assigned:</span>
+        </li>
+        <li *ngFor="let username of assignedUsers" (click)="removeUser(username)">
+          {{username}}
+        </li>
+      </ul>
+    </div>
+    <div class="footer">
+
+    </div>
+    <button (click)="closeWindow(true)" >Assign</button>
+  </div>
+</div>

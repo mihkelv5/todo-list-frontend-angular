@@ -119,7 +119,6 @@ export class NavbarComponent implements OnInit, OnDestroy{
     this.notificationMenuVisible = !this.notificationMenuVisible;
   }
 
-
   respondToInvite($event: boolean, invite: EventInvitationModel) {
     if($event){
       this.subscriptions.push(

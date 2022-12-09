@@ -49,7 +49,7 @@
 .task-popup {
   transform: translateY(-30%);
   min-height: 200px;
-  min-width: 350px;
+  min-width: 400px;
   cursor: default;
   background: #ffffff;
   position: absolute;
@@ -140,4 +140,17 @@
   display: flex;
   gap: 5px;
   color: #56a256;
+}
+
+.assign-users {
+  position: relative;
+}
+
+.assign-users > assign-user-component {
+  position: absolute;
+}
+
+.assigned-users {
+  display: flex;
+  flex-direction: column;
 }

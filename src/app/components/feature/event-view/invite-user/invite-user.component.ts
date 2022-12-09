@@ -1,9 +1,10 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {InviteService} from "../../../service/invite.service";
+import {InviteService} from "../../../../service/invite.service";
 import {FormControl} from "@angular/forms";
 import {map, Observable, startWith, Subscription} from "rxjs";
 import {faXmark, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import {faUser} from "@fortawesome/free-regular-svg-icons";
+import {EventModel} from "../../../../model/event.model";
 
 
 @Component({
@@ -27,7 +28,7 @@ export class InviteUserComponent {
   searchValue = "";
   canClose = false;
 
-  @Input("eventId") eventId !: number;
+  @Input("event") event !: EventModel;
   @Output() closeWindowEvent = new EventEmitter<void>;
   @Output() inviteUsers = new EventEmitter<string[]>;
 
@@ -42,7 +43,7 @@ export class InviteUserComponent {
 
   loadUsersFromDB() {
     this.subscriptions.push(
-      this.invitationService.findUsernamesToInvite(this.eventId).subscribe(response => {
+      this.invitationService.findUsernamesToInvite(this.event.id).subscribe(response => {
         this.results = response;
         this.searchControl.setValue("");
       }))

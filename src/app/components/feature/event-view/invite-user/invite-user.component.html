@@ -6,23 +6,23 @@
         <fa-icon [icon]="faXmark"></fa-icon>
       </div>
     </div>
-    <div class="body">
+    <div class="body"> <!--user search-->
       <div *ngIf="filteredResults$ | async as array" class="search">
         <div class="search-bar">
           <input type="text" class="" [formControl]="searchControl" />
           <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
         </div>
-          <div class="search-results">
+          <div class="search-results"> <!--search result-->
             <ul class="result-list">
               <li *ngFor="let result of array" (click)="addToEvent(result)" class="result-entry">
                 <fa-icon [icon]="faUser"></fa-icon>
                 <span >{{result}}</span>
               </li>
+
             </ul>
           </div>
       </div>
-      <div class="invited-users">
-
+      <div class="invited-users">  <!--list of users that have been selected-->
         <ul class="result-list">
           <li>
             <span>Currently invited: </span>
@@ -33,6 +33,15 @@
             <div class="remove-user" (click)="removeFromEvent(username)">
               <fa-icon [icon]="faXmark"></fa-icon>
             </div>
+          </li>
+          <li *ngIf="invitedUsers.length == 0" >
+            <span class="no-users">
+              No new users invited
+            </span>
+          </li>
+          <li class="already-invited">Already in event:</li>
+          <li *ngFor="let eventUser of event.eventUsernames" class="result-entry">
+            <span>{{eventUser}}</span>
           </li>
         </ul>
       </div>

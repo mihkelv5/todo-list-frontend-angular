@@ -38,7 +38,9 @@ export class TaskService {
     return this.http.get<TaskModel>(this.host + "/find/" + taskId);
   }
 
-
+  assignUsersToTask(usernames: string[], taskId: number) {
+    return this.http.put(this.host + "/assign/" + taskId, usernames);
+  }
 
 
 

@@ -16,19 +16,21 @@
         <fa-icon *ngIf="task.complete" [icon]="faCircleCheck"></fa-icon>
       </div>
     </div>
-    <div *ngIf="taskPopupOpen" class="task-popup">
+    <div *ngIf="taskPopupWindow" class="task-popup">
       <ul class="task-buttons">
 
         <li class="task-calendar" >
           <div *ngIf="task.complete">
             <fa-icon [icon]="faCalendarCheck "></fa-icon>
-            <span>TaskModel is complete</span>
+            <span>Task is complete</span>
           </div>
           <div *ngIf="!task.complete">
             <fa-icon [icon]="faCalendar"></fa-icon>
-            <span *ngIf="timeUntilDue>0">Time left: {{timeUntilDue}} day</span>
-            <span *ngIf="timeUntilDue!=1 && timeUntilDue > 0">s</span>
+            <span *ngIf="timeUntilDue > 0">Time left: {{timeUntilDue}} day</span>
+            <span *ngIf="timeUntilDue < 0">Deadline passed {{timeUntilDue}} day</span>
+            <span *ngIf="timeUntilDue > 1 || timeUntilDue < -1">s</span>
             <span *ngIf="timeUntilDue == 0"> Due today</span>
+
           </div>
         </li>
 
@@ -36,8 +38,12 @@
           <fa-icon [icon]="faPencil" (click)="editTask()"></fa-icon>
         </li>
 
-        <li>
-          <fa-icon [icon]="faPeopleGroup" ></fa-icon>
+        <li *ngIf="task.eventId">
+          <fa-icon [icon]="faPeopleGroup" class="assign-users" (click)="assignUsersWindow = true"></fa-icon>
+          <assign-user-component *ngIf="assignUsersWindow" [usernames]="getEventUsers()" [assignedUsernames]="task.assignedUsernames"
+                                 (assignUsers)="assignUsersToTask($event)">
+
+          </assign-user-component>
         </li>
 
         <li>
@@ -53,13 +59,20 @@
             <span class="task-details-description">{{task.description}}</span>
           </div>
         </li>
-        <li>
+        <li *ngIf="task.eventId">
           <fa-icon [icon]="faUserLock"></fa-icon>
-          <span>Owner: {{task.userId}}</span>
+          <span>Owner: {{task.ownerUsername}}</span>
         </li>
-        <li>
+        <li *ngIf="task.eventId" >
           <fa-icon [icon]="faUsers"></fa-icon>
           <span>Assigned to:</span>
+          <div class="assigned-users">
+
+            <span *ngFor="let assignedUser of task.assignedUsernames">{{assignedUser}}</span>
+          </div>
+        </li>
+        <li *ngIf="!task.eventId">
+          <span>This is your own task</span>
         </li>
       </ul>
       <div class="complete-button">

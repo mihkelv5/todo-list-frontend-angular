@@ -41,7 +41,6 @@ export class EventViewComponent implements OnInit, OnDestroy {
     if (routeId) {
       this.subscriptions.push(
         this.eventService.findEventById(+routeId).subscribe(response => {
-          // @ts-ignore
           this.event = response;
           this.isEventLoaded = true;
         })

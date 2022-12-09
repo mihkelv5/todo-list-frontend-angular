@@ -6,6 +6,7 @@ import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {faPencil, faTrash, faPeopleGroup, faSquare, faUserLock, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {faCalendar, faCalendarCheck, faCircleCheck, faCircleXmark } from "@fortawesome/free-regular-svg-icons";
+import {EventModel} from "../../../model/event.model";
 
 @Component({
   selector: 'task-component',
@@ -28,23 +29,27 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   @Input("task") task!: TaskModel;
   @Input("userId") userId!: number;
-  @Input("eventId") eventId: number | undefined
+  @Input("event") event?: EventModel;
+
   @Output("refreshTasks") refreshTasksEmitter: EventEmitter<any> = new EventEmitter()
 
-  taskPopupOpen: boolean = false;
+  taskPopupWindow: boolean = false;
+  assignUsersWindow = false; //opens and closes assign user view
+
 
   //checks if task is dragged or clicked, so it wouldn't open popup if task is dragged
   cdkDragging: boolean = false;
 
   //brings task in front of others when moved or has popup open
   taskZIndex: number = 0;
+
   //used when checking if task is clicked or dragged
   mousePosition = {
     x: 0,
     y: 0
   };
-  subscriptions: Subscription[] = [];
 
+  subscriptions: Subscription[] = [];
 
   constructor(private taskService: TaskService, private router: Router) {
   }
@@ -53,6 +58,8 @@ export class TaskComponent implements OnInit, OnDestroy{
     const dueDate = new Date(this.task.date).getTime();
     const date = new Date().getTime()
     this.timeUntilDue = Math.floor((dueDate - date) / (1000 * 3600 * 24) + 1) //takes 2 timestamps and subtracts one from another
+
+
   }
 
   ngOnDestroy(): void {
@@ -61,18 +68,22 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   @HostListener('document:keydown.escape', ['$event'])
   closePopUp(){
-    this.taskZIndex = 0;
-    this.taskPopupOpen = false;
+    if(!this.assignUsersWindow){
+      this.taskZIndex = 0;
+      this.taskPopupWindow = false;3
+
+    }
   }
 
   togglePopUp(){
     if(!this.cdkDragging){
-      if(this.taskPopupOpen){
-        this.taskPopupOpen = false;
+      if(this.taskPopupWindow){
+        this.taskPopupWindow = false;
         this.taskZIndex = 0;
+        this.assignUsersWindow = false;
       } else {
-        this.taskPopupOpen = true;
-        this.taskZIndex = 999;
+        this.taskPopupWindow = true;
+        this.taskZIndex = 3;
 
       }
     }
@@ -91,7 +102,7 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   taskDragStarted(){
     this.cdkDragging = true;
-    this.taskZIndex = 999;
+    this.taskZIndex = 100;
   }
 
   taskDropped(task: TaskModel, dropPoint: CdkDragEnd) {
@@ -99,7 +110,7 @@ export class TaskComponent implements OnInit, OnDestroy{
     task.yLocation = dropPoint.source.getFreeDragPosition().y
 
     this.subscriptions.push(this.taskService.moveTask(task).subscribe(() => {
-      if(!this.taskPopupOpen){
+      if(!this.taskPopupWindow){
         this.taskZIndex = 0;
       }
       this.cdkDragging = false
@@ -120,10 +131,29 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   editTask() {
     if(this.task.eventId != undefined){
-      this.router.navigateByUrl("/task/" + this.task.id + "/" + this.task.eventId + "/" + this.task.eventName)
+      this.router.navigateByUrl("/task/" + this.task.id + "/" + this.event?.id + "/" + this.task.eventName)
     } else {
       this.router.navigateByUrl("/task/" + this.task.id + "/nan/nan")
     }
   }
 
+  getEventUsers(): string[] {
+    if(this.event?.eventUsernames){
+      return this.event?.eventUsernames
+    }
+    return [];
+  }
+
+  assignUsersToTask($event: string[]) {
+    if($event){
+      this.subscriptions.push(
+        this.taskService.assignUsersToTask($event, this.task.id).subscribe(() => {
+          this.task.assignedUsernames = $event;
+        })
+      );
+    }
+
+
+    this.assignUsersWindow = false;
+  }
 }

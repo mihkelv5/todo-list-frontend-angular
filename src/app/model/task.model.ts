@@ -9,13 +9,15 @@ export class TaskModel {
   xLocation: number;
   yLocation: number;
   color: string;
-  userId: number;
-  eventId: number | undefined;
-  eventName: string | undefined;
+  ownerUsername: string;
+  eventId?: number;
+  eventName?: string;
+  assignedUsernames ?: string[];
 
 
   constructor(id: number, date: Date, complete: boolean, title: string, description: string, xLocation: number,
-              yLocation: number, color:string, ownerId:number, event_id: number | undefined, eventName: string | undefined ) {
+              yLocation: number, color:string, ownerUsername:string, event_id?:number, eventName?: string,
+              assignedUsernames?: string[]) {
     this.id = id;
     this.date = date;
     this.complete = complete;
@@ -24,8 +26,9 @@ export class TaskModel {
     this.xLocation = xLocation;
     this.yLocation = yLocation;
     this.color = color;
-    this.userId = ownerId;
+    this.ownerUsername = ownerUsername;
     this.eventId = event_id;
     this.eventName = eventName;
+    this.assignedUsernames = assignedUsernames;
   }
 }

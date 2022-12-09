@@ -1,0 +1,60 @@
+.wrapper {
+  position: absolute;
+  top: -300px;
+  right: -200px;
+
+  height: 600px;
+  width: 400px;
+
+
+
+}
+
+.container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  background: white;
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px 1px #888888;
+
+  cursor: default;
+}
+
+.header {
+  margin: 5px auto;
+  height: 10%;
+}
+
+.body {
+
+  height: 80%;
+}
+.available-users {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  height: 50%;
+}
+
+.assigned-users {
+  height: 50%;
+  margin-top: 10px
+}
+
+.footer {
+  height: 10%;
+}
+
+.close-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  cursor: pointer;
+}
+
+

@@ -9,7 +9,7 @@
     </div>
 
     <div class="event-board">
-      <app-event-tasks [eventId]="event.id" ></app-event-tasks>
+      <app-event-tasks [event]="event" ></app-event-tasks>
       <div class="add-task-btn" (click)="createTask()">
         <fa-icon [icon]="faPenToSquare" ></fa-icon>
         <span>Create new task</span>
@@ -44,7 +44,7 @@
   </div>
 
   <app-invite-users *ngIf="openParticipatorsWindow"
-              [eventId]="event.id"
+              [event]="event"
               class="participators-window"
               (closeWindowEvent)="toggleParticipatorWindow(false)"
   (inviteUsers)="inviteUsers($event)">
