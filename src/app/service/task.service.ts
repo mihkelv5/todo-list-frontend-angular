@@ -22,12 +22,12 @@ export class TaskService {
 
 
 
-  public loadUserTasks(id: number): Observable<TaskModel[]> {
-        return this.http.get<TaskModel[]>(this.host + "/user/" + id + "/all");
+  public loadUserTasks(username: string): Observable<TaskModel[]> {
+        return this.http.get<TaskModel[]>(environment.apiBaseUrl + "/user/" + username + "/task/all");
   }
 
-  loadUserTasksNoEvent(id: number): Observable<TaskModel[]> {
-    return this.http.get<TaskModel[]>(this.host + "/user/" + id + "/own");
+  loadUserTasksNoEvent(username: string): Observable<TaskModel[]> {
+    return this.http.get<TaskModel[]>(environment.apiBaseUrl + "/user/" + username + "/task/private");
   }
 
   public loadTasksByEvent(eventId: number): Observable<TaskModel[]> {

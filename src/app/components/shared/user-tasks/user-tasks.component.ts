@@ -20,8 +20,9 @@ export class UserTasksComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   tasks: TaskModel[] = [];
   viewTaskComponentOpen = false; //enables or disables task create/edit component
-  userId = 0; //used when getting tasks from user
+  userId = 0; //soon to be deleted, moving from id to username
   taskId = 0; //used when a task view is initialized
+  username = "";
 
   constructor(private taskService: TaskService, private authenticationService: AuthenticationService, private router: Router) {
   }
@@ -29,6 +30,7 @@ export class UserTasksComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const user = this.authenticationService.getUserFromLocalCache()
     this.userId = user.id;
+    this.username = user.username;
     this.loadTasksWithFilter(TaskFilterEnum.ALL_TASKS);
   }
 
@@ -36,6 +38,7 @@ export class UserTasksComponent implements OnInit, OnDestroy {
     this.tasks = [];
     this.subscriptions.forEach((sub => sub.unsubscribe()));
     this.userId = 0;
+    this.username = "";
   }
 
   loadTasksWithFilter(tasksViewFilter: TaskFilterEnum) {
@@ -47,14 +50,14 @@ export class UserTasksComponent implements OnInit, OnDestroy {
     switch (this.tasksViewFilter) {
       case TaskFilterEnum.MY_TASKS: {
         this.subscriptions.push(
-          this.taskService.loadUserTasksNoEvent(this.userId).subscribe(response => {
+          this.taskService.loadUserTasksNoEvent(this.username).subscribe(response => {
             this.tasks = response;
           }));
         return
       }
       case TaskFilterEnum.ALL_TASKS: {
         this.subscriptions.push(
-          this.taskService.loadUserTasks(this.userId).subscribe(response => {
+          this.taskService.loadUserTasks(this.username).subscribe(response => {
             this.tasks = response;
 
           }));
