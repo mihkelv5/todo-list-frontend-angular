@@ -38,7 +38,7 @@ export class UserEventsComponent implements OnInit, OnDestroy{
 
   private loadEvents() {
     this.subscriptions.push(
-      this.eventService.loadEventsFromDB(this.username).subscribe(response => {
+      this.eventService.findEventsByUsername(this.username).subscribe(response => {
         this.events = response;
       })
     )

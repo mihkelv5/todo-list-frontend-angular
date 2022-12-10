@@ -12,6 +12,7 @@ export class EventService {
 
   private host = environment.apiBaseUrl + "/event";
 
+
   constructor(private http: HttpClient) {
 
   }
@@ -32,8 +33,8 @@ export class EventService {
     return this.http.get<EventModel>(this.host + "/find/" + eventId)
   }
 
-  public loadEventsFromDB(username: string): Observable<EventModel[]> {
-    return this.http.get<EventModel[]>(this.host + "/user/" + username);
+  public findEventsByUsername(username: string): Observable<EventModel[]> {
+    return this.http.get<EventModel[]>(environment.apiBaseUrl + "/user/" + username + "/events/all");
   }
 
 
