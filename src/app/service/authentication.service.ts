@@ -20,13 +20,13 @@ export class AuthenticationService {
 
   public login(user: UserModel) : Observable<HttpResponse<UserModel>> {
 
-    return this.http.post<UserModel>(this.host + "/user/login", user, {observe: "response"});
+    return this.http.post<UserModel>(this.host + "/auth/login", user, {observe: "response"});
   }
 
 
   public register(user: UserModel) : Observable<HttpResponse<any>> {
     return this.http.post<HttpResponse<UserModel>>
-    (this.host + "/user/register", user);
+    (this.host + "/auth/register", user);
   }
 
   public logout(): void {
