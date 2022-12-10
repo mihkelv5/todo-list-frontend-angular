@@ -19,7 +19,7 @@ export class InviteService {
   }
 
   public getAllInvitationsByUsername(username: string): Observable<EventInvitationModel[]> {
-    return this.http.get<EventInvitationModel[]>(this.host + username + "/get/all");
+    return this.http.get<EventInvitationModel[]>(environment.apiBaseUrl + "/user/" + username + "/invites/all");
   }
 
 
