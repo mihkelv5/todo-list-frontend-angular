@@ -3,7 +3,7 @@
 
 <div id="board">
   <div *ngFor="let task of tasks">
-        <task-component [task]="task" [userId]="userId" (refreshTasks)="loadTasks()"></task-component>
+        <task-component [task]="task" (refreshTasks)="loadTasks()"></task-component>
   </div>
 </div>
 

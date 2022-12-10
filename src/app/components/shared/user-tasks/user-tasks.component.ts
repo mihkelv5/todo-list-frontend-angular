@@ -20,7 +20,7 @@ export class UserTasksComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   tasks: TaskModel[] = [];
   viewTaskComponentOpen = false; //enables or disables task create/edit component
-  userId = 0; //soon to be deleted, moving from id to username
+
   taskId = 0; //used when a task view is initialized
   username = "";
 
@@ -29,7 +29,6 @@ export class UserTasksComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const user = this.authenticationService.getUserFromLocalCache()
-    this.userId = user.id;
     this.username = user.username;
     this.loadTasksWithFilter(TaskFilterEnum.ALL_TASKS);
   }
@@ -37,7 +36,6 @@ export class UserTasksComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.tasks = [];
     this.subscriptions.forEach((sub => sub.unsubscribe()));
-    this.userId = 0;
     this.username = "";
   }
 

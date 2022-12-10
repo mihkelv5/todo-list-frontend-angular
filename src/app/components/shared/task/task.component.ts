@@ -28,7 +28,6 @@ export class TaskComponent implements OnInit, OnDestroy{
 
 
   @Input("task") task!: TaskModel;
-  @Input("userId") userId!: number;
   @Input("event") event?: EventModel;
 
   @Output("refreshTasks") refreshTasksEmitter: EventEmitter<any> = new EventEmitter()
