@@ -20,33 +20,29 @@
       <ul class="task-buttons">
 
         <li class="task-calendar" >
-          <div *ngIf="task.complete">
+          <div *ngIf="task.complete" [ngStyle]="{'color' : '#65a15f'}">
             <fa-icon [icon]="faCalendarCheck "></fa-icon>
-            <span>Task is complete</span>
+            <span >Task is completed</span>
           </div>
           <div *ngIf="!task.complete">
             <fa-icon [icon]="faCalendar"></fa-icon>
-            <span *ngIf="timeUntilDue > 0">Time left: {{timeUntilDue}} day</span>
-            <span *ngIf="timeUntilDue < 0">Deadline passed {{timeUntilDue}} day</span>
-            <span *ngIf="timeUntilDue > 1 || timeUntilDue < -1">s</span>
-            <span *ngIf="timeUntilDue == 0"> Due today</span>
-
+            <span >{{dueDateMessage}}</span>
           </div>
         </li>
 
-        <li>
+        <li class="cursor-pointer">
           <fa-icon [icon]="faPencil" (click)="editTask()"></fa-icon>
         </li>
 
-        <li *ngIf="task.eventId">
-          <fa-icon [icon]="faPeopleGroup" class="assign-users" (click)="assignUsersWindow = true"></fa-icon>
+        <li *ngIf="isInEventView">
+          <fa-icon [icon]="faPeopleGroup" class="assign-users cursor-pointer" (click)="assignUsersWindow = true"></fa-icon>
           <assign-user-component *ngIf="assignUsersWindow" [usernames]="getEventUsers()" [assignedUsernames]="task.assignedUsernames"
                                  (assignUsers)="assignUsersToTask($event)">
 
           </assign-user-component>
         </li>
 
-        <li>
+        <li class="cursor-pointer">
           <fa-icon [icon]="faTrash" (click)="deleteTask()">del</fa-icon>
         </li>
 

@@ -43,16 +43,12 @@ export class TaskService {
   }
 
 
-
-
-
   public addTask(task: TaskModel, eventId: number | undefined ): Observable<TaskModel> {
     if(eventId){
       return this.http.post<TaskModel>(this.host + "/add/event/" + eventId, task);
     }
     return this.http.post<TaskModel>(this.host + "/add", task);
   }
-
 
   public updateTask(task: TaskModel): Observable<TaskModel> {
     return this.http.put<TaskModel>(this.host + "/update/" + task.id, task);

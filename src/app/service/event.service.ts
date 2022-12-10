@@ -22,15 +22,15 @@ export class EventService {
   }
 
   public deleteEvent(eventId: number) {
-    return this.http.delete(this.host + "/delete/" + eventId);
+    return this.http.delete(this.host + "/" + eventId + "/delete/" );
   }
 
   public updateEvent(event: EventModel): Observable<EventModel> {
-    return this.http.put<EventModel>(this.host + "/update", event);
+    return this.http.put<EventModel>(this.host + "/" + event.id + "/update/" , event);
   }
 
   public findEventById(eventId: number): Observable<EventModel> {
-    return this.http.get<EventModel>(this.host + "/find/" + eventId)
+    return this.http.get<EventModel>(this.host + "/" + eventId + "/find/")
   }
 
   public findEventsByUsername(username: string): Observable<EventModel[]> {

@@ -24,12 +24,14 @@ export class TaskComponent implements OnInit, OnDestroy{
   faUsers = faUsers;
   faCircleCheck = faCircleCheck;
   faCircleXmark = faCircleXmark;
-  timeUntilDue = 0;
 
+
+  timeUntilDue = 0;
+  dueDateMessage = "";
 
   @Input("task") task!: TaskModel;
   @Input("event") event?: EventModel;
-
+  @Input("isInEventView") isInEventView = false; //assigning users button will only be available if the task is viewed in event page.
   @Output("refreshTasks") refreshTasksEmitter: EventEmitter<any> = new EventEmitter()
 
   taskPopupWindow: boolean = false;
@@ -54,16 +56,42 @@ export class TaskComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    const dueDate = new Date(this.task.date).getTime();
-    const date = new Date().getTime()
-    this.timeUntilDue = Math.floor((dueDate - date) / (1000 * 3600 * 24) + 1) //takes 2 timestamps and subtracts one from another
-
-
+    this.findDueDate();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
+
+   findDueDate(){
+     const dueDate = new Date(this.task.date).getTime();
+     const date = new Date().getTime()
+     this.timeUntilDue = Math.floor((dueDate - date) / (1000 * 3600 * 24) + 1)
+     //takes 2 timestamps and subtracts one from another to show how many days left for task due date
+
+    switch (true){
+      case (this.timeUntilDue > 1): {
+        this.dueDateMessage = "Time left: " + this.timeUntilDue + " days";
+        break;
+      }
+      case (this.timeUntilDue == 1): {
+        this.dueDateMessage = "Due tomorrow";
+        break;
+      }
+      case (this.timeUntilDue == 0): {
+        this.dueDateMessage = "Due today";
+        break;
+      }
+      case (this.timeUntilDue == -1): {
+        this.dueDateMessage = "Deadline was yesterday";
+        break;
+      }
+      case (this.timeUntilDue < -1): {
+        this.dueDateMessage = "Deadline was " + Math.abs(this.timeUntilDue) + " days ago"
+      }
+
+    }
+   }
 
   @HostListener('document:keydown.escape', ['$event'])
   closePopUp(){

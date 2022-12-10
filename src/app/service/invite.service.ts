@@ -32,6 +32,6 @@ export class InviteService {
   }
 
   public findUsernamesToInvite(eventId: number): Observable<string[]> {
-    return this.http.get<string[]>(environment.apiBaseUrl + "/event/search/" + eventId + "/users");
+    return this.http.get<string[]>(environment.apiBaseUrl + "/event/" + eventId + "/search/users");
   }
 }
