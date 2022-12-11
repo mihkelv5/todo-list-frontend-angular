@@ -44,6 +44,8 @@ export class TaskComponent implements OnInit, OnDestroy{
   //brings task in front of others when moved or has popup open
   taskZIndex: number = 0;
 
+  styles = {"right" : "calc(100% + 10px)", "top" : "0"};
+
   //used when checking if task is clicked or dragged
   mousePosition = {
     x: 0,
@@ -135,7 +137,12 @@ export class TaskComponent implements OnInit, OnDestroy{
   taskDropped(task: TaskModel, dropPoint: CdkDragEnd) {
     task.xLocation = dropPoint.source.getFreeDragPosition().x
     task.yLocation = dropPoint.source.getFreeDragPosition().y
-
+    if(task.xLocation < 200){
+      this.styles.right = "-410px";
+    }
+    else {
+      this.styles.right = "calc(100% + 10px)";
+    }
     this.subscriptions.push(this.taskService.moveTask(task).subscribe(() => {
       if(!this.taskPopupWindow){
         this.taskZIndex = 0;

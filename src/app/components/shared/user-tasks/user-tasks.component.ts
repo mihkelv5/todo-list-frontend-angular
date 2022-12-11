@@ -50,14 +50,14 @@ export class UserTasksComponent implements OnInit, OnDestroy {
     switch (this.tasksViewFilter) {
       case TaskFilterEnum.MY_TASKS: {
         this.subscriptions.push(
-          this.taskService.loadUserTasksNoEvent(this.username).subscribe(response => {
+          this.taskService.loadUserTasksNoEvent().subscribe(response => {
             this.tasks = response;
           }));
         return
       }
       case TaskFilterEnum.ALL_TASKS: {
         this.subscriptions.push(
-          this.taskService.loadUserTasks(this.username).subscribe(response => {
+          this.taskService.loadUserTasks().subscribe(response => {
             this.tasks = response;
 
           }));

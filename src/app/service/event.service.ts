@@ -22,7 +22,7 @@ export class EventService {
   }
 
   public deleteEvent(eventId: number) {
-    return this.http.delete(this.host + "/" + eventId + "/delete/" );
+    return this.http.delete(this.host + "/delete/" + eventId );
   }
 
   public updateEvent(event: EventModel): Observable<EventModel> {
@@ -30,11 +30,11 @@ export class EventService {
   }
 
   public findEventById(eventId: number): Observable<EventModel> {
-    return this.http.get<EventModel>(this.host + "/" + eventId + "/find/")
+    return this.http.get<EventModel>(this.host + "/find/" + eventId)
   }
 
-  public findEventsByUsername(username: string): Observable<EventModel[]> {
-    return this.http.get<EventModel[]>(environment.apiBaseUrl + "/user/" + username + "/events/all");
+  public findEventsByUser(): Observable<EventModel[]> {
+    return this.http.get<EventModel[]>(this.host + "/user/all");
   }
 
 

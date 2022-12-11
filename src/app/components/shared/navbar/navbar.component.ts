@@ -69,7 +69,7 @@ export class NavbarComponent implements OnInit, OnDestroy{
 
   loadInvitesFromDB(){
     this.subscriptions.push(
-      this.inviteService.getAllInvitationsByUsername(this.username).subscribe(response => {
+      this.inviteService.getAllInvitationsByUsername().subscribe(response => {
         this.invites = response;
       })
     )

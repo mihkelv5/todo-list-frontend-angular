@@ -22,7 +22,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   faImage=faImage;
   @ViewChild(UserTasksComponent) tasksComponent!: UserTasksComponent;
   faPlus = faPlus;
-  eventList = ["event1", "secondevent", "event3", "this is the fourth one"]
   events: EventModel[] = [];
   activeEvent = 0;
   private username = "";
@@ -49,7 +48,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private loadEvents() {
     this.subscriptions.push(
-      this.eventService.findEventsByUsername(this.username).subscribe(response => {
+      this.eventService.findEventsByUser().subscribe(response => {
         this.events = response;
       })
     )
@@ -61,12 +60,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   prev() {
     this.activeEvent -= 1;
-
     if(this.activeEvent < 0){
       this.activeEvent = this.events.length - 1
     }
-
-
   }
 
   next() {

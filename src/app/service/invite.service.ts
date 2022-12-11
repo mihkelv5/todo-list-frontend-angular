@@ -12,26 +12,26 @@ export class InviteService {
   constructor(private http: HttpClient) {
   }
 
-  private host = environment.apiBaseUrl + "/invite/";
+  private host = environment.apiBaseUrl + "/invite";
 
   public inviteUserToEvent(eventId: number, username: string) {
-    return this.http.post(this.host + "event/" + eventId + "/user/" + username,"");
+    return this.http.post(this.host + "/event/" + eventId + "/user/" + username,"");
   }
 
-  public getAllInvitationsByUsername(username: string): Observable<EventInvitationModel[]> {
-    return this.http.get<EventInvitationModel[]>(environment.apiBaseUrl + "/user/" + username + "/invites/all");
+  public getAllInvitationsByUsername(): Observable<EventInvitationModel[]> {
+    return this.http.get<EventInvitationModel[]>(this.host + "/get/all");
   }
 
 
   public acceptInvite(invite: EventInvitationModel) {
-    return this.http.put(this.host + "accept/" + invite.id, "")
+    return this.http.put(this.host + "/accept/" + invite.id, "")
   }
 
   public declineInvite(invite: EventInvitationModel) {
-    return this.http.delete(this.host + "decline/" + invite.id)
+    return this.http.delete(this.host + "/decline/" + invite.id)
   }
 
   public findUsernamesToInvite(eventId: number): Observable<string[]> {
-    return this.http.get<string[]>(environment.apiBaseUrl + "/event/" + eventId + "/search/users");
+    return this.http.get<string[]>(environment.apiBaseUrl + "/user/event/" + eventId + "/all");
   }
 }

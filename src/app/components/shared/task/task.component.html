@@ -16,7 +16,7 @@
         <fa-icon *ngIf="task.complete" [icon]="faCircleCheck"></fa-icon>
       </div>
     </div>
-    <div *ngIf="taskPopupWindow" class="task-popup">
+    <div *ngIf="taskPopupWindow" class="task-popup" [ngStyle]="styles">
       <ul class="task-buttons">
 
         <li class="task-calendar" >

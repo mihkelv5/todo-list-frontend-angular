@@ -168,6 +168,10 @@
   color: #333333;
 }
 
+.current-event > span {
+  transition: transform 0.5s ease-in-out;
+}
+
 
 
 
