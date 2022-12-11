@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {TaskService} from "../../../service/task.service";
 import {TaskModel} from "../../../model/task.model";
 import {Subscription} from "rxjs";
@@ -6,6 +6,7 @@ import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {AuthenticationService} from "../../../service/authentication.service";
 import {TaskFilterEnum} from "../../../enum/task-filter.enum";
 import {Router} from "@angular/router";
+import {EventModel} from "../../../model/event.model";
 
 @Component({
   selector: 'app-user-tasks',
@@ -20,6 +21,7 @@ export class UserTasksComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   tasks: TaskModel[] = [];
   viewTaskComponentOpen = false; //enables or disables task create/edit component
+  @Input("currentEvent") currentEvent ?: EventModel;
 
   taskId = 0; //used when a task view is initialized
   username = "";
@@ -71,8 +73,6 @@ export class UserTasksComponent implements OnInit, OnDestroy {
         return;
       }
     }
-
-
   }
 
 
