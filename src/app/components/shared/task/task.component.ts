@@ -56,12 +56,15 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   subscriptions: Subscription[] = [];
 
-  constructor(private taskService: TaskService, private router: Router, private authservice: AuthenticationService) {
+  constructor(private taskService: TaskService, private router: Router, private authService: AuthenticationService) {
   }
 
   ngOnInit(): void {
-    this.currentUser = this.authservice.getUserFromLocalCache().username;
+    this.currentUser = this.authService.getUserFromLocalCache().username;
     this.findDueDate();
+    if(this.task.xLocation < 400){
+      this.styles.right = "-410px";
+    }
   }
 
   ngOnDestroy(): void {
@@ -141,7 +144,7 @@ export class TaskComponent implements OnInit, OnDestroy{
   taskDropped(task: TaskModel, dropPoint: CdkDragEnd) {
     task.xLocation = dropPoint.source.getFreeDragPosition().x
     task.yLocation = dropPoint.source.getFreeDragPosition().y
-    if(task.xLocation < 200){
+    if(task.xLocation < 400){
       this.styles.right = "-410px";
     }
     else {
