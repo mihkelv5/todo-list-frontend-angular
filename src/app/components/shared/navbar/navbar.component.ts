@@ -125,7 +125,7 @@ export class NavbarComponent implements OnInit, OnDestroy{
         this.inviteService.acceptInvite(invite).subscribe(() => {
           this.loadInvitesFromDB();
           this.closeUserAndNotificationMenu();
-          this.router.navigateByUrl("/event/" + invite.eventId);
+          this.router.navigateByUrl("/");
         }))
     } else {
       this.subscriptions.push(

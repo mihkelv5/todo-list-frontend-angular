@@ -7,6 +7,7 @@ import {Router} from "@angular/router";
 import {faPencil, faTrash, faPeopleGroup, faSquare, faUserLock, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {faCalendar, faCalendarCheck, faCircleCheck, faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import {EventModel} from "../../../model/event.model";
+import {AuthenticationService} from "../../../service/authentication.service";
 
 @Component({
   selector: 'task-component',
@@ -28,6 +29,7 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   timeUntilDue = 0;
   dueDateMessage = "";
+  currentUser = "";
 
   @Input("task") task!: TaskModel;
   @Input("event") event?: EventModel;
@@ -54,15 +56,17 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   subscriptions: Subscription[] = [];
 
-  constructor(private taskService: TaskService, private router: Router) {
+  constructor(private taskService: TaskService, private router: Router, private authservice: AuthenticationService) {
   }
 
   ngOnInit(): void {
+    this.currentUser = this.authservice.getUserFromLocalCache().username;
     this.findDueDate();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.currentUser = "";
   }
 
    findDueDate(){
@@ -186,8 +190,13 @@ export class TaskComponent implements OnInit, OnDestroy{
         })
       );
     }
-
-
     this.assignUsersWindow = false;
+  }
+
+  isUserInTask():boolean {
+    if(this.task.assignedUsernames){
+      return this.currentUser == this.task.ownerUsername || this.task.assignedUsernames?.includes(this.currentUser);
+    }
+    return false;
   }
 }
