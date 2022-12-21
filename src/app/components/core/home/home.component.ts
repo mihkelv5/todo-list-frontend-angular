@@ -28,10 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private authService: AuthenticationService, private eventService: EventService, private router: Router) {
-    const tempEvent = new EventModel(0, "", "")
-    this.events.push(tempEvent); //if events array is empty on load it will give an error while it is loading items from database.
-  }
+  constructor(private authService: AuthenticationService, private eventService: EventService, private router: Router) {}
 
 
   ngOnInit(): void {
@@ -63,6 +60,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     if(this.activeEvent < 0){
       this.activeEvent = this.events.length - 1
     }
+    this.filterTasks(4, this.events[this.activeEvent].id);
   }
 
   next() {
@@ -70,11 +68,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     if(this.activeEvent == this.events.length){
       this.activeEvent = 0;
     }
-
+    this.filterTasks(4, this.events[this.activeEvent].id);
   }
 
-  filterTasks(selectedTask: TaskFilterEnum){
-    this.tasksComponent.loadTasksWithFilter(selectedTask);
+  filterTasks(selectedTask: TaskFilterEnum, eventId?: number){
+    this.tasksComponent.loadTasksWithFilter(selectedTask, eventId);
   }
 
 

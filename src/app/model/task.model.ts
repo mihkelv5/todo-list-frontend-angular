@@ -1,7 +1,7 @@
 
 
 export class TaskModel {
-  id: number;
+  id?: number;
   date: Date;
   complete: boolean;
   title: string;
@@ -15,7 +15,7 @@ export class TaskModel {
   assignedUsernames ?: string[];
 
 
-  constructor(id: number, date: Date, complete: boolean, title: string, description: string, xLocation: number,
+  constructor(id: number | undefined, date: Date, complete: boolean, title: string, description: string, xLocation: number,
               yLocation: number, color:string, ownerUsername:string, event_id?:number, eventName?: string,
               assignedUsernames?: string[]) {
     this.id = id;

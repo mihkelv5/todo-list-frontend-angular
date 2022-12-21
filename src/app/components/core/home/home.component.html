@@ -22,12 +22,12 @@
               <div class="event-description">
                 <span>{{event.description}}</span>
               </div>
-
             </div>
-
           </div>
         </div>
       </div>
+
+
       <div class="my-item">
         <div class="header">
           <span class="headline">My tasks</span>
@@ -39,7 +39,7 @@
             <li class="event-picker">
               <button (click)="prev()"  class="current-event-buttons"> < </button>
               <div class="current-event">
-                <span>{{this.events[this.activeEvent].title}}</span>
+                <span *ngIf="this.events.length>0">{{this.events[activeEvent].title}}</span>
               </div>
               <button (click)="next()" class="current-event-buttons"> > </button>
             </li>

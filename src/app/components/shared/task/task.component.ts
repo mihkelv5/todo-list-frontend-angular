@@ -42,6 +42,7 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   //checks if task is dragged or clicked, so it wouldn't open popup if task is dragged
   cdkDragging: boolean = false;
+  canCdkDrag = true;
 
   //brings task in front of others when moved or has popup open
   taskZIndex: number = 0;
@@ -126,12 +127,14 @@ export class TaskComponent implements OnInit, OnDestroy{
   }
 
   completeTask(isComplete: boolean) {
-    this.subscriptions.push(
-      this.taskService.taskSetComplete(this.task.id, isComplete).subscribe(response => {
-        this.task = response;
-        this.refreshTasksEmitter.emit();
-      })
-    )
+    if(this.task.id){
+      this.subscriptions.push(
+            this.taskService.taskSetComplete(this.task.id, isComplete).subscribe(response => {
+              this.task = response;
+              this.refreshTasksEmitter.emit();
+            })
+          )
+    }
   }
 
 
@@ -144,6 +147,11 @@ export class TaskComponent implements OnInit, OnDestroy{
   taskDropped(task: TaskModel, dropPoint: CdkDragEnd) {
     task.xLocation = dropPoint.source.getFreeDragPosition().x
     task.yLocation = dropPoint.source.getFreeDragPosition().y
+    this.canCdkDrag = false;
+    setTimeout( () => {
+
+      this.canCdkDrag = true;
+    },1000)
     if(task.xLocation < 400){
       this.styles.right = "-410px";
     }
@@ -164,10 +172,12 @@ export class TaskComponent implements OnInit, OnDestroy{
   }
 
   deleteTask() {
-    this.subscriptions.push(
-      this.taskService.deleteTask(this.task.id).subscribe(() => {
-        this.refreshTasksEmitter.emit();
-      }));
+    if(this.task.id) {
+      this.subscriptions.push(
+        this.taskService.deleteTask(this.task.id).subscribe(() => {
+          this.refreshTasksEmitter.emit();
+        }));
+    }
   }
 
   editTask() {
@@ -186,7 +196,7 @@ export class TaskComponent implements OnInit, OnDestroy{
   }
 
   assignUsersToTask($event: string[]) {
-    if($event){
+    if($event && this.task.id){
       this.subscriptions.push(
         this.taskService.assignUsersToTask($event, this.task.id).subscribe(() => {
           this.task.assignedUsernames = $event;
@@ -202,4 +212,14 @@ export class TaskComponent implements OnInit, OnDestroy{
     }
     return false;
   }
+
+  /*import { fromEvent, throttleTime, map, scan } from 'rxjs'; //to stop users from spamming the move
+
+fromEvent(document, 'click')
+  .pipe(
+    throttleTime(1000),
+    map((event) => event.clientX),
+    scan((count, clientX) => count + clientX, 0)
+  )
+  .subscribe((count) => console.log(count));;*/
 }

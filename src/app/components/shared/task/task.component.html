@@ -5,7 +5,8 @@
     [cdkDragData]="task" (cdkDragEnded)="taskDropped(task, $event)"
        (cdkDragStarted)="taskDragStarted()"
     [cdkDragFreeDragPosition]="getTaskLocation(task)"
-       [cdkDragStartDelay]="100"
+       [cdkDragStartDelay]="30"
+       [cdkDragDisabled]="!canCdkDrag"
     cdkDragBoundary="#board"
     cdkDrag>
     <div class="task-content" (click)="togglePopUp()"  cdkDragHandle>

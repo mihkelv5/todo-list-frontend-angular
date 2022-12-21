@@ -18,7 +18,7 @@ export class EditTaskComponent implements  OnInit, OnDestroy{
   subscription: Subscription | undefined;
   constructor(private route: ActivatedRoute, private location: Location, private taskService: TaskService) {
     this.task = new TaskModel(
-      0,
+      undefined,
       new Date(),
       false,
       "",
@@ -54,7 +54,7 @@ export class EditTaskComponent implements  OnInit, OnDestroy{
   //if task id is 0, then it is a new task, that does not exist in db. Otherwise, updates task and sends it to server.
 
   onSubmit(task: TaskModel) {
-    if(this.task.id == 0){
+    if(!this.task.id){
       if(!task.color){
         task.color = this.getRandomColor();
       }
