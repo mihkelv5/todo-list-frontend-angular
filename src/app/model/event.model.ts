@@ -1,12 +1,12 @@
 export class EventModel {
 
-  id: number;
+  id: string;
   title: string;
   description?: string;
   eventUsernames?: string[];
 
 
-  constructor(id: number, title: string, description: string, eventUsernames?: string[]) {
+  constructor(id: string, title: string, description: string, eventUsernames?: string[]) {
     this.id = id;
     this.title = title;
     this.description = description;

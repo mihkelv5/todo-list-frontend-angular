@@ -13,12 +13,12 @@ import { Location } from '@angular/common'
 export class EditTaskComponent implements  OnInit, OnDestroy{
 
 
-  private eventId: number | undefined;
+  private eventId: string | undefined;
   task: TaskModel;
   subscription: Subscription | undefined;
   constructor(private route: ActivatedRoute, private location: Location, private taskService: TaskService) {
     this.task = new TaskModel(
-      undefined,
+      null,
       new Date(),
       false,
       "",
@@ -36,11 +36,11 @@ export class EditTaskComponent implements  OnInit, OnDestroy{
     const taskId = this.route.snapshot.paramMap.get("taskId");
     const eventId = this.route.snapshot.paramMap.get("eventId");
     if(eventId && eventId != "nan") {
-      this.eventId = +eventId;
+      this.eventId = eventId;
     }
 
     if (taskId && taskId != "new") { //
-      this.subscription =  this.taskService.findTaskById(+taskId).subscribe(response => {
+      this.subscription =  this.taskService.findTaskById(taskId).subscribe(response => {
         this.task = response;
       })
     }
@@ -51,36 +51,34 @@ export class EditTaskComponent implements  OnInit, OnDestroy{
   }
 
 
-  //if task id is 0, then it is a new task, that does not exist in db. Otherwise, updates task and sends it to server.
-
-  onSubmit(task: TaskModel) {
+  onSubmit(formTask: TaskModel) {
     if(!this.task.id){
-      if(!task.color){
-        task.color = this.getRandomColor();
+      if(!formTask.color){
+        formTask.color = this.getRandomColor();
       }
-      this.taskService.addTask(task, this.eventId).subscribe(() => {
+      this.taskService.addTask(formTask, this.eventId).subscribe(() => {
         this.location.back();
       });
     }
     else {
-      const newTask = this.task;
-      if(task.title){
-        newTask.title = task.title;
+      const updatedTask = this.task;
+      if(formTask.title){
+        updatedTask.title = formTask.title;
       }
-      if(task.description){
-        newTask.description = task.description;
+      if(formTask.description){
+        updatedTask.description = formTask.description;
       }
-      if(task.date){
-        newTask.date = task.date;
+      if(formTask.date){
+        updatedTask.date = formTask.date;
       }
-      if(task.color) {
-        if(task.color.toLowerCase() === "random"){
-          newTask.color = this.getRandomColor();
+      if(formTask.color) {
+        if(formTask.color.toLowerCase() === "random"){
+          updatedTask.color = this.getRandomColor();
         } else {
-          newTask.color = task.color;
+          updatedTask.color = formTask.color;
         }
       }
-      this.taskService.updateTask(newTask).subscribe(() => {
+      this.taskService.updateTask(updatedTask).subscribe(() => {
         this.location.back();
       });
     }

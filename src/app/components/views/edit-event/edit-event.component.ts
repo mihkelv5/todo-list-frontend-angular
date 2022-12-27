@@ -20,7 +20,7 @@ export class EditEventComponent implements OnInit, OnDestroy{
 
 
   constructor(private route: ActivatedRoute, private eventService: EventService, private router: Router, private location: Location) {
-    this.currentEvent = new EventModel(0, "", "");
+    this.currentEvent = new EventModel("", "", "");
 
   }
 
@@ -37,7 +37,7 @@ export class EditEventComponent implements OnInit, OnDestroy{
     if(eventId && eventId != "new"){
       this.eventId = +eventId;
       this.subscriptions.push(
-        this.eventService.findEventById(+eventId).subscribe(response => {
+        this.eventService.findEventById(eventId).subscribe(response => {
           this.currentEvent = response;
         }));
     }
@@ -53,7 +53,7 @@ export class EditEventComponent implements OnInit, OnDestroy{
     }
 
 
-    if(this.currentEvent.id == 0){
+    if(this.currentEvent.id == ""){
 
       this.subscriptions.push(
         this.eventService.addEvent(this.currentEvent).subscribe(response => {

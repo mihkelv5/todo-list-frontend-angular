@@ -35,13 +35,12 @@ import { RegisterComponent } from './components/views/register/register.componen
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { EventViewComponent } from './components/views/event-view/event-view.component';
 import { TaskComponent } from './components/shared/task/task.component';
-import { EventTasksComponent } from "./components/shared/event-tasks/event-tasks.component";
 import { EditTaskComponent } from './components/views/edit-task/edit-task.component';
 import { EditEventComponent } from './components/views/edit-event/edit-event.component';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import { InviteUserComponent } from './components/smaller-components/invite-user/invite-user.component';
 import { InviteComponent } from './components/shared/invite/invite.component';
-import { AssignUserComponent } from './components/shared/task/assign-user/assign-user.component';
+import { AssignUserComponent } from './components/shared/assign-user/assign-user.component';
 
 
 @NgModule({
@@ -56,7 +55,6 @@ import { AssignUserComponent } from './components/shared/task/assign-user/assign
     EventViewComponent,
     TaskComponent,
     EditTaskComponent,
-    EventTasksComponent,
     EditEventComponent,
     InviteUserComponent,
     InviteComponent,

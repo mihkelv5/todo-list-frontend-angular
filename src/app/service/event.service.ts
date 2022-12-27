@@ -21,15 +21,15 @@ export class EventService {
     return this.http.post<EventModel>(this.host + "/add", event);
   }
 
-  public deleteEvent(eventId: number) {
+  public deleteEvent(eventId: string) {
     return this.http.delete(this.host + "/delete/" + eventId );
   }
 
   public updateEvent(event: EventModel): Observable<EventModel> {
-    return this.http.put<EventModel>(this.host + "/" + event.id + "/update/" , event);
+    return this.http.put<EventModel>(this.host +  "/update" , event);
   }
 
-  public findEventById(eventId: number): Observable<EventModel> {
+  public findEventById(eventId: string): Observable<EventModel> {
     return this.http.get<EventModel>(this.host + "/find/" + eventId)
   }
 
@@ -38,7 +38,7 @@ export class EventService {
   }
 
 
-  public findUsersByEvent(eventId: number): Observable<UserModel[]> {
+  public findUsersByEvent(eventId: string): Observable<UserModel[]> {
     return this.http.get<UserModel[]>(this.host + "/" + eventId + "/users");
   }
 

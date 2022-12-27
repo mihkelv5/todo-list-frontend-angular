@@ -1,8 +1,0 @@
-
-<div id="board">
-  <div *ngFor="let task of tasks">
-        <task-component [task]="task" [event]="event" [isInEventView]="true" (refreshTasks)="loadTasks()" ></task-component>
-  </div>
-</div>
-
-

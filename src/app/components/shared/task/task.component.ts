@@ -33,10 +33,10 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   @Input("task") task!: TaskModel;
   @Input("event") event?: EventModel;
-  @Input("isInEventView") isInEventView = false; //assigning users button will only be available if the task is viewed in event page.
   @Output("refreshTasks") refreshTasksEmitter: EventEmitter<any> = new EventEmitter()
 
   taskPopupWindow: boolean = false;
+  isInEventView: boolean = false; //assigning users button will only be available if the task is viewed in event page.
   assignUsersWindow = false; //opens and closes assign user view
 
 
@@ -61,6 +61,10 @@ export class TaskComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
+    if(this.event){
+      console.log("is in eventview")
+      this.isInEventView = true;
+    }
     this.currentUser = this.authService.getUserFromLocalCache().username;
     this.findDueDate();
     if(this.task.xLocation < 400){

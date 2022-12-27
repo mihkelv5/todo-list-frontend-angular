@@ -4,13 +4,13 @@
 
       <form #taskForm="ngForm" class="task-form">
       <span>TaskItem title:</span>
-      <input type="text" class="task-data-wrapper" name="title" placeholder="Title" maxlength="20" value="{{task.title}}"
+      <input type="text" class="task-data-wrapper" name="title" placeholder="Title" maxlength="20" [value]=task.title
       ngModel #titleInput="ngModel" required>
 
       <span>Pick a date:</span>
       <mat-form-field class="task-date-form" appearance="fill"  >
         <mat-label>DD/MM/YYYY</mat-label>
-        <input matInput [matDatepicker]="picker" name="date" ngModel #dateInput="ngModel"  value="{{task.date}}" required>
+        <input matInput [matDatepicker]="picker" name="date" ngModel #dateInput="ngModel"  [value]=task.date required>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
@@ -26,7 +26,7 @@
 
       <div class="task-form-buttons">
         <button type="submit"
-        [disabled]="taskForm.invalid && task.id == 0" (click)="onSubmit(taskForm.value); taskForm.resetForm()">Save</button>
+        [disabled]="taskForm.invalid && task == null" (click)="onSubmit(taskForm.value); taskForm.resetForm()">Save</button>
         <button (click)="taskForm.resetForm(); onCancel()" >cancel</button>
 
       </div>

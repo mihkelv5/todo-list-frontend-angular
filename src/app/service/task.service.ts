@@ -30,20 +30,20 @@ export class TaskService {
     return this.http.get<TaskModel[]>(this.host + "/user/private");
   }
 
-  public loadTasksByEvent(eventId: number): Observable<TaskModel[]> {
+  public loadTasksByEvent(eventId: string): Observable<TaskModel[]> {
      return this.http.get<TaskModel[]>(this.host + "/event/" + eventId);
   }
 
-  findTaskById(taskId: number):Observable<TaskModel>  {
+  findTaskById(taskId: string):Observable<TaskModel>  {
     return this.http.get<TaskModel>(this.host + "/find/" + taskId);
   }
 
-  assignUsersToTask(usernames: string[], taskId: number) {
+  assignUsersToTask(usernames: string[], taskId: string) {
     return this.http.put(this.host + "/assign/" + taskId, usernames);
   }
 
 
-  public addTask(task: TaskModel, eventId: number | undefined ): Observable<TaskModel> {
+  public addTask(task: TaskModel, eventId: string | undefined ): Observable<TaskModel> {
     if(eventId){
       return this.http.post<TaskModel>(this.host + "/add/event/" + eventId, task);
     }
@@ -54,8 +54,8 @@ export class TaskService {
     return this.http.put<TaskModel>(this.host + "/update/" + task.id, task);
   }
 
-  public deleteTask(id: number) {
-    return this.http.delete(this.host + "/delete/" + id);
+  public deleteTask(taskId: string) {
+    return this.http.delete(this.host + "/delete/" + taskId);
   }
 
 
@@ -64,7 +64,7 @@ export class TaskService {
     return this.http.put<TaskModel>(this.host + "/moveTask/" + task.id , coords)
   }
 
-  public taskSetComplete(id: number, isComplete: boolean): Observable<TaskModel> {
-    return this.http.put<TaskModel>(this.host + "/complete/" + id, isComplete);
+  public taskSetComplete(taskId: string, isComplete: boolean): Observable<TaskModel> {
+    return this.http.put<TaskModel>(this.host + "/complete/" + taskId, isComplete);
   }
 }

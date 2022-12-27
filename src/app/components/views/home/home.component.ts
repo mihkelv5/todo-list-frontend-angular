@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     )
   }
 
-  clickedOnEvent(eventId: number) {
+  clickedOnEvent(eventId: string) {
     this.router.navigateByUrl("/event/" + eventId); //TODO: add guard that checks if event exists.
   }
 
@@ -71,7 +71,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.filterTasks(4, this.events[this.activeEvent].id);
   }
 
-  filterTasks(selectedTask: TaskFilterEnum, eventId?: number){
+  filterTasks(selectedTask: TaskFilterEnum, eventId?: string){
     this.tasksComponent.loadTasksWithFilter(selectedTask, eventId);
   }
 

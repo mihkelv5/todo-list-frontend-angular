@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {TaskService} from "../../../service/task.service";
 import {TaskModel} from "../../../model/task.model";
 import {Subscription} from "rxjs";
@@ -6,6 +6,7 @@ import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {AuthenticationService} from "../../../service/authentication.service";
 import {TaskFilterEnum} from "../../../enum/task-filter.enum";
 import {Router} from "@angular/router";
+import {EventModel} from "../../../model/event.model";
 
 @Component({
   selector: 'app-user-tasks',
@@ -15,21 +16,25 @@ import {Router} from "@angular/router";
 export class UserTasksComponent implements OnInit, OnDestroy {
   faPlus = faPlus;
 
-  tasksViewFilter !: TaskFilterEnum;
+  @Input("event") event?: EventModel;
 
+  tasksViewFilter !: TaskFilterEnum;
   private subscriptions: Subscription[] = [];
   tasks: TaskModel[] = [];
   viewTaskComponentOpen = false; //enables or disables task create/edit component
-  taskId = 0; //used when a task view is initialized
   username = "";
 
   constructor(private taskService: TaskService, private authenticationService: AuthenticationService, private router: Router) {
   }
 
   ngOnInit(): void {
-    const user = this.authenticationService.getUserFromLocalCache()
-    this.username = user.username;
-    this.loadTasksWithFilter(TaskFilterEnum.ALL_TASKS);
+    if(this.event){
+      this.loadTasksWithFilter(TaskFilterEnum.BY_EVENT, this.event.id)
+    } else {
+      const user = this.authenticationService.getUserFromLocalCache()
+      this.username = user.username;
+      this.loadTasksWithFilter(TaskFilterEnum.ALL_TASKS);
+    }
   }
 
   ngOnDestroy(): void {
@@ -38,12 +43,12 @@ export class UserTasksComponent implements OnInit, OnDestroy {
     this.username = "";
   }
 
-  loadTasksWithFilter(tasksViewFilter: TaskFilterEnum, eventId?: number) {
+  loadTasksWithFilter(tasksViewFilter: TaskFilterEnum, eventId?: string) {
     this.tasksViewFilter = tasksViewFilter;
     this.loadTasks(eventId);
   }
 
-  loadTasks(eventId?: number){
+  loadTasks(eventId?: string){
     switch (this.tasksViewFilter) {
       case TaskFilterEnum.MY_TASKS: {
         this.subscriptions.push(

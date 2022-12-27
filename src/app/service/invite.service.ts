@@ -14,7 +14,7 @@ export class InviteService {
 
   private host = environment.apiBaseUrl + "/invite";
 
-  public inviteUserToEvent(eventId: number, username: string) {
+  public inviteUserToEvent(eventId: string, username: string) {
     return this.http.post(this.host + "/event/" + eventId + "/user/" + username,"");
   }
 
@@ -31,7 +31,7 @@ export class InviteService {
     return this.http.delete(this.host + "/decline/" + invite.id)
   }
 
-  public findUsernamesToInvite(eventId: number): Observable<string[]> {
+  public findUsernamesToInvite(eventId: string): Observable<string[]> {
     return this.http.get<string[]>(environment.apiBaseUrl + "/user/event/" + eventId + "/all");
   }
 }

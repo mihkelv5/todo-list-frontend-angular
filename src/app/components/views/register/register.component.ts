@@ -34,7 +34,8 @@ export class RegisterComponent implements OnDestroy{
   register(user: UserModel) {
     this.registerErrorMessage = "";
     user.enabled = true; //TODO: add email confirmation to backend
-    user.roles = "ROLE_USER"
+    user.roles = "ROLE_USER";
+    user.email = Date.now().toString() + "@mail.ee";
     this.showLoading = true;
     this.subscriptions.push(
       this.authenticationService.register(user).subscribe(

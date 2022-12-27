@@ -25,7 +25,7 @@ export class EventViewComponent implements OnInit, OnDestroy {
 
 
   isEventLoaded = false;
-  eventId!: number;
+  eventId!: string;
   event!: EventModel;
   subscriptions: Subscription[] = [];
   tasks: TaskModel[] = [];
@@ -40,7 +40,7 @@ export class EventViewComponent implements OnInit, OnDestroy {
     const routeId = this.route.snapshot.paramMap.get("eventId");
     if (routeId) {
       this.subscriptions.push(
-        this.eventService.findEventById(+routeId).subscribe(response => {
+        this.eventService.findEventById(routeId).subscribe(response => {
           this.event = response;
           this.isEventLoaded = true;
         })
@@ -85,7 +85,7 @@ export class EventViewComponent implements OnInit, OnDestroy {
       $event.forEach(username => {
         this.subscriptions.push(
           this.inviteService.inviteUserToEvent(this.event.id, username).subscribe(response => {
-            console.log(response);
+            //console.log(response);
             //TODO: confirmation notification
           })
         )
