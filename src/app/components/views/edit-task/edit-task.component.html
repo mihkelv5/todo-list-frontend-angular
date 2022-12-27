@@ -3,7 +3,7 @@
     <div class="task-container">'
 
       <form #taskForm="ngForm" class="task-form">
-      <span>TaskModel title:</span>
+      <span>TaskItem title:</span>
       <input type="text" class="task-data-wrapper" name="title" placeholder="Title" maxlength="20" value="{{task.title}}"
       ngModel #titleInput="ngModel" required>
 
@@ -15,7 +15,7 @@
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
-      <span>TaskModel description:</span>
+      <span>TaskItem description:</span>
       <textarea type="text" class="task-data-wrapper task-textarea" maxlength="255" name="description" placeholder="description"
       ngModel #descriptionInput="ngModel" [value]=task.description  required
       ></textarea>

@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {InviteService} from "../../../../service/invite.service";
+import {InviteService} from "../../../service/invite.service";
 import {FormControl} from "@angular/forms";
 import {map, Observable, startWith, Subscription} from "rxjs";
 import {faXmark, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import {faUser} from "@fortawesome/free-regular-svg-icons";
-import {EventModel} from "../../../../model/event.model";
+import {EventModel} from "../../../model/event.model";
 
 
 @Component({

@@ -20,8 +20,6 @@ export class UserTasksComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   tasks: TaskModel[] = [];
   viewTaskComponentOpen = false; //enables or disables task create/edit component
-
-
   taskId = 0; //used when a task view is initialized
   username = "";
 

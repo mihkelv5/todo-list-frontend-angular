@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {TaskFilterEnum} from "../../../enum/task-filter.enum";
-import {UserTasksComponent} from "../../shared/user-tasks/user-tasks.component";
+import {UserTasksComponent} from "../../smaller-components/user-tasks/user-tasks.component";
 import {Router} from "@angular/router";
 import {EventModel} from "../../../model/event.model";
 import {EventService} from "../../../service/event.service";

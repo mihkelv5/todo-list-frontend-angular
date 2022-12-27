@@ -4,6 +4,8 @@ import {TaskModel} from "../../../model/task.model";
 import {Subscription} from "rxjs";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {EventModel} from "../../../model/event.model";
+import {Store} from "@ngrx/store";
+import {addTask} from "../../../store/actions/task.actions";
 
 @Component({
   selector: 'app-event-tasks',
@@ -19,11 +21,12 @@ export class EventTasksComponent implements OnInit, OnDestroy {
 
 
   @Input("event") event!: EventModel;
-  constructor(private taskService: TaskService) {
+  constructor(private taskService: TaskService, private store: Store) {
   }
 
   ngOnInit(): void {
     this.loadTasks();
+    this.store.dispatch(addTask({title: "test", description: "test"}))
   }
 
   loadTasks(): void {

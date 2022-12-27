@@ -28,18 +28,18 @@ import {ClickedOutsideDirective} from "./directive/ClickedOutside.directive";
 
 //components
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/core/home/home.component';
-import { UserTasksComponent } from './components/shared/user-tasks/user-tasks.component';
-import { LoginComponent } from './components/core/login/login.component';
-import { RegisterComponent } from './components/core/register/register.component';
+import { HomeComponent } from './components/views/home/home.component';
+import { UserTasksComponent } from './components/smaller-components/user-tasks/user-tasks.component';
+import { LoginComponent } from './components/views/login/login.component';
+import { RegisterComponent } from './components/views/register/register.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
-import { EventViewComponent } from './components/feature/event-view/event-view.component';
+import { EventViewComponent } from './components/views/event-view/event-view.component';
 import { TaskComponent } from './components/shared/task/task.component';
 import { EventTasksComponent } from "./components/shared/event-tasks/event-tasks.component";
-import { EditTaskComponent } from './components/feature/edit-task/edit-task.component';
-import { EditEventComponent } from './components/feature/edit-event/edit-event.component';
+import { EditTaskComponent } from './components/views/edit-task/edit-task.component';
+import { EditEventComponent } from './components/views/edit-event/edit-event.component';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import { InviteUserComponent } from './components/feature/event-view/invite-user/invite-user.component';
+import { InviteUserComponent } from './components/smaller-components/invite-user/invite-user.component';
 import { InviteComponent } from './components/shared/invite/invite.component';
 import { AssignUserComponent } from './components/shared/task/assign-user/assign-user.component';
 
@@ -60,7 +60,7 @@ import { AssignUserComponent } from './components/shared/task/assign-user/assign
     EditEventComponent,
     InviteUserComponent,
     InviteComponent,
-    AssignUserComponent
+    AssignUserComponent,
   ],
   imports: [
 
