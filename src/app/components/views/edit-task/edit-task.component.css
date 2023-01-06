@@ -29,6 +29,7 @@ input:-webkit-autofill:active{
   width: 100%;
 }
 
+
 .task-data-wrapper {
   display: flex;
   flex-wrap: nowrap;

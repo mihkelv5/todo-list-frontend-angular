@@ -38,15 +38,12 @@ export class TaskService {
     return this.http.get<TaskModel>(this.host + "/find/" + taskId);
   }
 
-  assignUsersToTask(usernames: string[], taskId: string) {
-    return this.http.put(this.host + "/assign/" + taskId, usernames);
+  assignUsersToTask(usernames: string[], taskId: string, eventId: string) {
+    return this.http.put(this.host + "/assign/" + taskId + "/event/" + eventId, usernames);
   }
 
 
-  public addTask(task: TaskModel, eventId: string | undefined ): Observable<TaskModel> {
-    if(eventId){
-      return this.http.post<TaskModel>(this.host + "/add/event/" + eventId, task);
-    }
+  public addTask(task: TaskModel): Observable<TaskModel> {
     return this.http.post<TaskModel>(this.host + "/add", task);
   }
 

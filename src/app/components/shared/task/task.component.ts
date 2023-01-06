@@ -33,7 +33,7 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   @Input("task") task!: TaskModel;
   @Input("event") event?: EventModel;
-  @Output("refreshTasks") refreshTasksEmitter: EventEmitter<any> = new EventEmitter()
+  @Output("refreshTasks") refreshTasksEmitter: EventEmitter<string> = new EventEmitter()
 
   taskPopupWindow: boolean = false;
   isInEventView: boolean = false; //assigning users button will only be available if the task is viewed in event page.
@@ -62,7 +62,6 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     if(this.event){
-      console.log("is in eventview")
       this.isInEventView = true;
     }
     this.currentUser = this.authService.getUserFromLocalCache().username;
@@ -134,8 +133,7 @@ export class TaskComponent implements OnInit, OnDestroy{
     if(this.task.id){
       this.subscriptions.push(
             this.taskService.taskSetComplete(this.task.id, isComplete).subscribe(response => {
-              this.task = response;
-              this.refreshTasksEmitter.emit();
+              this.task.complete = response.complete;
             })
           )
     }
@@ -200,9 +198,9 @@ export class TaskComponent implements OnInit, OnDestroy{
   }
 
   assignUsersToTask($event: string[]) {
-    if($event && this.task.id){
+    if($event && this.task.id && this.event){
       this.subscriptions.push(
-        this.taskService.assignUsersToTask($event, this.task.id).subscribe(() => {
+        this.taskService.assignUsersToTask($event, this.task.id, this.event.id).subscribe(() => {
           this.task.assignedUsernames = $event;
         })
       );

@@ -12,7 +12,7 @@
     <div class="task-content" (click)="togglePopUp()"  cdkDragHandle>
       <h3>{{task.title}}</h3>
       <div class="task-complete">
-        <p *ngIf="!task.complete">{{task.date}}</p>
+        <p *ngIf="!task.complete">Due: {{task.date | date: 'd. MMM'}}</p>
 
         <fa-icon *ngIf="task.complete" [icon]="faCircleCheck"></fa-icon>
       </div>
@@ -37,7 +37,7 @@
 
         <li *ngIf="isInEventView && currentUser == task.ownerUsername">
           <fa-icon [icon]="faPeopleGroup" class="assign-users cursor-pointer" (click)="assignUsersWindow = true"></fa-icon>
-          <assign-user-component *ngIf="assignUsersWindow" [usernames]="getEventUsers()" [assignedUsernames]="task.assignedUsernames"
+          <assign-user-component *ngIf="assignUsersWindow" [usersInEvent]="getEventUsers()" [alreadyAssignedUsers]="task.assignedUsernames"
                                  (assignUsers)="assignUsersToTask($event)">
 
           </assign-user-component>

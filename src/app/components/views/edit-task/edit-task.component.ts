@@ -56,7 +56,8 @@ export class EditTaskComponent implements  OnInit, OnDestroy{
       if(!formTask.color){
         formTask.color = this.getRandomColor();
       }
-      this.taskService.addTask(formTask, this.eventId).subscribe(() => {
+      formTask.eventId = this.eventId;
+      this.taskService.addTask(formTask).subscribe(() => {
         this.location.back();
       });
     }
