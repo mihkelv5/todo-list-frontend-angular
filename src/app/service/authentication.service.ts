@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpResponse} from "@angular/common/http";
-import {environment} from "../../environments/environment";
+import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {UserModel} from "../model/user.model";
 import {JwtHelperService} from "@auth0/angular-jwt";
@@ -10,7 +9,7 @@ import {JwtHelperService} from "@auth0/angular-jwt";
   providedIn: 'root'
 })
 export class AuthenticationService {
-  host = environment.apiBaseUrl;
+  host = "http://127.0.0.1:8081";
   private token = "";
   private loggedInUsername = "";
   private jwtHelper = new JwtHelperService();
@@ -18,9 +17,9 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {}
 
-  public login(user: UserModel) : Observable<HttpResponse<UserModel>> {
-
-    return this.http.post<UserModel>(this.host + "/auth/login", user, {observe: "response"});
+  public login(user: UserModel) : Observable<any> {
+    const headers = new HttpHeaders().set("username", user.username).set("password", user.password)
+    return this.http.get<any>(this.host + "/auth/login", {observe: "response", headers: headers, withCredentials: true});
   }
 
 
@@ -37,7 +36,6 @@ export class AuthenticationService {
     localStorage.removeItem("user");
   }
 
-  //TODO: save data in cookies instead of localstorage
 
   public saveToken(token: string): void {
     this.token = token;
