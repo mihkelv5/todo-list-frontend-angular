@@ -4,6 +4,8 @@ import {Observable} from "rxjs";
 import {UserModel} from "../model/user.model";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {CookieService} from "ngx-cookie-service";
+import {HeaderType} from "../enum/header-type.enum";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,7 @@ export class AuthenticationService {
   private jwtHelper = new JwtHelperService();
 
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {}
+  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) {}
 
   public getRefreshToken(user: UserModel) : Observable<HttpResponse<string>>{
     const headers = new HttpHeaders().set("username", user.username).set("password", user.password)
@@ -49,6 +51,7 @@ export class AuthenticationService {
   }
 
 
+
   public saveToken(token: string): void {
     this.token = token;
     sessionStorage.setItem("token", token);
@@ -77,6 +80,23 @@ export class AuthenticationService {
   public isUserLoggedIn() {
     const cookie = this.cookieService.get("Login-Cookie")
     if(cookie){
+
+      const token = sessionStorage.getItem("token")
+
+      //if cookie exists, but access token is missing (e.g. new session) or token is about to expire
+      if(!token || this.jwtHelper.isTokenExpired(token, 60)) {
+        const sub = this.getAccessToken(cookie.valueOf()).subscribe(
+          (response) => {
+            const accessToken = response.headers.get(HeaderType.JWT_TOKEN);
+            if(accessToken && response.body){
+              this.saveToken(accessToken);
+              this.addUserToLocalCache(response.body);
+              window.location.reload();
+            }
+            sub.unsubscribe();
+          }
+        )
+      }
       return true;
     }
     this.logout();
