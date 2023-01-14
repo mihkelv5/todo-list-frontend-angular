@@ -37,9 +37,9 @@ export class AuthenticationService {
   public logout() {
     this.token = "";
     this.loggedInUsername = "";
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
     if(this.cookieService.check("Login-Cookie")){
       this.cookieService.delete("Login-Cookie")
       const sub = this.http.get<string>(this.host + "/auth/logout", {observe: "response", withCredentials: true}).subscribe(
@@ -51,23 +51,23 @@ export class AuthenticationService {
 
   public saveToken(token: string): void {
     this.token = token;
-    localStorage.setItem("token", token);
+    sessionStorage.setItem("token", token);
   }
   public getTokenExpiryDate(): Date | null {
     return this.jwtHelper.getTokenExpirationDate(this.getToken())
   }
 
   public addUserToLocalCache(user: UserModel): void {
-    localStorage.setItem("user", JSON.stringify(user));
+    sessionStorage.setItem("user", JSON.stringify(user));
   }
 
   public getUserFromLocalCache(): UserModel {
-      return JSON.parse(localStorage.getItem("user") || "{}")
+      return JSON.parse(sessionStorage.getItem("user") || "{}")
   }
 
 
   public loadToken(): void {
-    this.token = localStorage.getItem("token") || "";
+    this.token = sessionStorage.getItem("token") || "";
   }
 
   public getToken() : string {

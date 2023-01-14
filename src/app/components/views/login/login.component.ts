@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit, OnDestroy{
 
     /*first gets refresh token, then if successful
     gets access token with refresh token.
-
     */
     this.subscriptions.push(
       this.authenticationService.getRefreshToken(user).subscribe(
@@ -50,33 +49,43 @@ export class LoginComponent implements OnInit, OnDestroy{
               const username = response.headers.get("username")
               console.log(username)
               if(username){
-                this.setCookie(username)
-                this.authenticationService.getAccessToken(user.username).subscribe(
-                (response2: HttpResponse<UserModel>) => {
-                        const accessToken = response2.headers.get(HeaderType.JWT_TOKEN);
-                        if (accessToken != null && response2.body) {
-                          this.loginErrorMessage = "";
-                          this.authenticationService.saveToken(accessToken);
-                          this.authenticationService.addUserToLocalCache(response2.body);
-                          this.router.navigateByUrl("/home");
-                          this.showLoading = false;
-                        }});
+                this.setCookie(username) //local cookie to check if user is logged in, as browser cant read server side cookies with httponly
+
+                //after receiving refresh token make another call to backend to receive access token.
+                this.subscriptions.push(
+                  this.authenticationService.getAccessToken(user.username).subscribe(
+                  (response2: HttpResponse<UserModel>) => {
+                          const accessToken = response2.headers.get(HeaderType.JWT_TOKEN);
+                          if (accessToken != null && response2.body) {
+                            this.loginErrorMessage = "";
+                            this.authenticationService.saveToken(accessToken);
+                            this.authenticationService.addUserToLocalCache(response2.body);
+                            this.router.navigateByUrl("/home");
+                            this.showLoading = false;
+                            return;
+                        }}));
+              } else {
+                this.loginErrorMessage = "Something went wrong, please try again"
               }
         }, (error: any) => {
           if(error.status == "403"){
             this.loginErrorMessage = "Invalid username or password";
+            this.showLoading = false;
+            return;
           } else {
             this.loginErrorMessage = "Something went wrong, please try again"
           }
-          this.showLoading = false;
+
         }
       )
     )
+    this.showLoading = false;
   }
 
   setCookie(username: string) {
     const expiryDate = new Date();
-    expiryDate.setDate(expiryDate.getDate() + 7)
+    expiryDate.setDate(expiryDate.getDate() + 5)
+    //login lasts 5 days. Bad implementation as if cookie lifespan is changed in backend, this will start causing issues
     this.cookieService.set(
       "Login-Cookie",
       username,
