@@ -18,7 +18,7 @@ export class InviteService {
     return this.http.post(this.host + "/event/" + eventId + "/user/" + username,"");
   }
 
-  public getAllInvitationsByUsername(): Observable<EventInvitationModel[]> {
+  public getUserInvitations(): Observable<EventInvitationModel[]> {
     return this.http.get<EventInvitationModel[]>(this.host + "/get/all");
   }
 

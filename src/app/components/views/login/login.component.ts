@@ -8,6 +8,8 @@ import {HttpResponse} from "@angular/common/http";
 import {HeaderType} from "../../../enum/header-type.enum";
 import {faEnvelope} from "@fortawesome/free-solid-svg-icons";
 import {faLock, faArrowRightLong} from "@fortawesome/free-solid-svg-icons";
+import {CookieService} from "ngx-cookie-service";
+
 
 @Component({
   selector: 'app-login',
@@ -23,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy{
   loginErrorMessage = ""
   private subscriptions: Subscription[] = [];
 
-  constructor(private router: Router, private authenticationService: AuthenticationService) {
+  constructor(private router: Router, private authenticationService: AuthenticationService, private cookieService: CookieService) {
 
   }
 
@@ -31,25 +33,35 @@ export class LoginComponent implements OnInit, OnDestroy{
   ngOnInit() {
     if(this.authenticationService.isUserLoggedIn()){
       this.router.navigateByUrl("/home");
-    } else {
-      this.router.navigateByUrl("/login"); // just to be safe
     }
   }
 
   onLogin(user: UserModel) {
-
     this.showLoading = true;
+
+
+    /*first gets refresh token, then if successful
+    gets access token with refresh token.
+
+    */
     this.subscriptions.push(
-      this.authenticationService.login(user).subscribe(
-        (response: HttpResponse<UserModel>) => {
-          const token = response.headers.get(HeaderType.JWT_TOKEN);
-          if (token != null && response.body) {
-            this.loginErrorMessage = "";
-            this.authenticationService.saveToken(token);
-            this.authenticationService.addUserToLocalCache(response.body);
-            this.router.navigateByUrl("/home");
-            this.showLoading = false;
-          }
+      this.authenticationService.getRefreshToken(user).subscribe(
+        (response: HttpResponse<string>) => {
+              const username = response.headers.get("username")
+              console.log(username)
+              if(username){
+                this.setCookie(username)
+                this.authenticationService.getAccessToken(user.username).subscribe(
+                (response2: HttpResponse<UserModel>) => {
+                        const accessToken = response2.headers.get(HeaderType.JWT_TOKEN);
+                        if (accessToken != null && response2.body) {
+                          this.loginErrorMessage = "";
+                          this.authenticationService.saveToken(accessToken);
+                          this.authenticationService.addUserToLocalCache(response2.body);
+                          this.router.navigateByUrl("/home");
+                          this.showLoading = false;
+                        }});
+              }
         }, (error: any) => {
           if(error.status == "403"){
             this.loginErrorMessage = "Invalid username or password";
@@ -57,10 +69,23 @@ export class LoginComponent implements OnInit, OnDestroy{
             this.loginErrorMessage = "Something went wrong, please try again"
           }
           this.showLoading = false;
-
         }
       )
     )
+  }
+
+  setCookie(username: string) {
+    const expiryDate = new Date();
+    expiryDate.setDate(expiryDate.getDate() + 7)
+    this.cookieService.set(
+      "Login-Cookie",
+      username,
+      expiryDate,
+      "",
+      "",
+      false,
+      "Lax"
+      )
   }
 
   ngOnDestroy() {

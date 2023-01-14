@@ -16,7 +16,8 @@ export class AppComponent {
   }
 
   isLoggedIn(){
-    return this.authService.isUserLoggedIn();
+    return true;
+    //return this.authService.isUserLoggedIn(); //makes a ton of calls if implemented this way
   }
 
 }

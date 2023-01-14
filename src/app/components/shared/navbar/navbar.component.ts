@@ -5,7 +5,7 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {faMagnifyingGlass, faGear, faArrowRightFromBracket, faUsers, faHouse} from "@fortawesome/free-solid-svg-icons";
 import {faUser, faBell} from "@fortawesome/free-regular-svg-icons";
 import {InviteService} from "../../../service/invite.service";
-import {Subscription} from "rxjs";
+import {BehaviorSubject, Subscription} from "rxjs";
 import {EventInvitationModel} from "../../../model/eventInvitation.model";
 
 @Component({
@@ -23,7 +23,7 @@ export class NavbarComponent implements OnInit, OnDestroy{
   faHome = faHouse;
   faBell = faBell;
 
-
+  navbarVisible$ = new BehaviorSubject<boolean>(true);
   userMenuVisible = false;
   notificationMenuVisible = false;
 
@@ -39,7 +39,6 @@ export class NavbarComponent implements OnInit, OnDestroy{
 
   constructor(private authService: AuthenticationService, private router: Router,
               private inviteService: InviteService) {
-
   }
 
 
@@ -48,12 +47,16 @@ export class NavbarComponent implements OnInit, OnDestroy{
 
   }
 
+  //subscribes to router events to decide if navbar should be shown.
+  //And loads data if user has
+
   subscribeToRouter(){
     this.subscriptions.push(
       this.router.events.subscribe(event => {
         if(event instanceof NavigationEnd){
           if(event.urlAfterRedirects.toLowerCase() != "/login"
             && event.urlAfterRedirects.toLowerCase() != "/register"){
+            this.navbarVisible$.next(true)
             if(!this.username){
               this.username = this.authService.getUserFromLocalCache().username;
             }
@@ -61,6 +64,8 @@ export class NavbarComponent implements OnInit, OnDestroy{
               this.loadInvitesFromDB();
               this.areInvitesLoaded = true;
             }
+          } else { //user is either on login or register page
+            this.navbarVisible$.next(false)
           }
         }
       })
@@ -69,7 +74,7 @@ export class NavbarComponent implements OnInit, OnDestroy{
 
   loadInvitesFromDB(){
     this.subscriptions.push(
-      this.inviteService.getAllInvitationsByUsername().subscribe(response => {
+      this.inviteService.getUserInvitations().subscribe(response => {
         this.invites = response;
       })
     )
@@ -82,6 +87,7 @@ export class NavbarComponent implements OnInit, OnDestroy{
 
 
   logout(){
+
     this.closeUserAndNotificationMenu();
     this.authService.logout();
     this.invites = [];
@@ -90,9 +96,7 @@ export class NavbarComponent implements OnInit, OnDestroy{
     this.username = "";
 
   }
-  isLoggedIn(){
-    return this.authService.isUserLoggedIn();
-  }
+
 
   searchTasks() {
     console.log(this.searchForm.get("search")?.value);
