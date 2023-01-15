@@ -1,11 +1,20 @@
 import {Component, OnDestroy} from '@angular/core';
 import {Location} from "@angular/common";
 import {UserModel} from "../../../model/user.model";
-import {faEnvelope} from "@fortawesome/free-solid-svg-icons";
+import {faEnvelope, faUser} from "@fortawesome/free-solid-svg-icons";
 import {faLock, faArrowLeftLong} from "@fortawesome/free-solid-svg-icons";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../service/authentication.service";
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from "@angular/forms";
 
 @Component({
   selector: 'app-register',
@@ -14,6 +23,7 @@ import {AuthenticationService} from "../../../service/authentication.service";
 })
 export class RegisterComponent implements OnDestroy{
 
+  faUser = faUser;
   faArrowLeft = faArrowLeftLong;
   faEnvelope = faEnvelope;
   faLock = faLock;
@@ -23,22 +33,77 @@ export class RegisterComponent implements OnDestroy{
 
   private subscriptions: Subscription[] = [];
 
+  registerForm: FormGroup;
 
-  constructor(private location: Location, private router: Router, private authenticationService: AuthenticationService) {
+
+
+  constructor(private location: Location, private router: Router,
+              private authenticationService: AuthenticationService, private formBuilder: FormBuilder) {
+    this.registerForm = this.formBuilder.group({
+      usernameInput: new FormControl('', Validators.compose([Validators.minLength(6), Validators.maxLength(20), Validators.required])),
+      emailInput: new FormControl('', Validators.compose([Validators.minLength(6), Validators.maxLength(30), Validators.required, Validators.email])),
+      passwordInput: new FormControl('', Validators.compose([Validators.minLength(4), Validators.maxLength(30), Validators.required])),
+      passwordAgainInput: new FormControl('', Validators.required),
+    },
+      {
+        validators: this.mustMatch("passwordInput", "passwordAgainInput")
+      })
+  }
+
+  //confirms passwords in form
+  mustMatch(password: any, confirmPassword: any){
+    return (formGroup: FormGroup) => {
+      const passwordControl = formGroup.controls[password];
+      const confirmPasswordControl = formGroup.controls[confirmPassword];
+
+      if(confirmPasswordControl.errors && !confirmPasswordControl.errors['mustMatch']) {
+        return;
+      }
+      if(passwordControl.value !== confirmPasswordControl.value){
+        confirmPasswordControl.setErrors({mustMatch:true});
+      } else {
+        confirmPasswordControl.setErrors(null);
+      }
+    }
+  }
+
+  //used for html to show error messages when needed
+  get usernameInput(){
+    return this.registerForm.get('usernameInput');
+  }
+  get emailInput(){
+    return this.registerForm.get('emailInput');
+  }
+  get passwordInput(){
+    return this.registerForm.get('passwordInput')
+  }
+  get passwordAgainInput(){
+    return this.registerForm.get('passwordAgainInput')
   }
 
   returnToLastPage() {
     this.location.back();
   }
 
-  register(user: UserModel) {
-    this.registerErrorMessage = "";
-    user.enabled = true; //TODO: add email confirmation to backend
-    user.roles = "ROLE_USER";
-    user.email = Date.now().toString() + "@mail.ee";
-    this.showLoading = true;
-    this.subscriptions.push(
-      this.authenticationService.register(user).subscribe(
+  register() {
+    const username = this.registerForm.get("usernameInput");
+    const email = this.registerForm.get("emailInput");
+    const password = this.registerForm.get("passwordInput");
+
+    if(username && email && password){
+
+      const user = new UserModel(
+        "",
+        username.value,
+        email.value,
+        password.value,
+        false,
+        "ROLE_USER"
+      )
+      console.log(user)
+      this.showLoading = true;
+      this.subscriptions.push(
+        this.authenticationService.register(user).subscribe(
           () => {
             this.registerMessage = "Account successfully created"
 
@@ -56,6 +121,15 @@ export class RegisterComponent implements OnDestroy{
               this.registerErrorMessage = "Something went wrong, please try again";
             }
           }));
+    }
+
+
+
+    /*this.registerErrorMessage = "";
+    user.enabled = false; //TODO: add email confirmation to backend
+    user.roles = "ROLE_USER";
+    user.email = Date.now().toString() + "@mail.ee";
+    */
   }
 
 

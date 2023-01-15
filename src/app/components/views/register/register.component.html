@@ -6,19 +6,31 @@
     <div class="login-container">
       <div class="login-wrapper">
         <span class="title">Register new account</span>
-        <form #registerForm="ngForm" (ngSubmit)="register(registerForm.value)" class="login-form">
+        <form [formGroup]="registerForm" (ngSubmit)="register()" class="login-form">
+          <div class="login-data-wrapper">
+            <fa-icon [icon]="faUser"></fa-icon>
+            <input type="text" class="login-data" name="username" placeholder="Username" formControlName="usernameInput"
+                    required>
+          </div>
+          <span *ngIf="usernameInput?.invalid && (usernameInput?.touched || usernameInput?.dirty)" class="invalid-details">Username must contain at least 6 characters</span>
           <div class="login-data-wrapper">
             <fa-icon [icon]="faEnvelope"></fa-icon>
-            <input type="text" class="login-data" name="username" placeholder="Username"
-                   ngModel #usernameInput="ngModel" required>
+            <input type="text" class="login-data" name="email" placeholder="Email"
+                    required formControlName="emailInput">
           </div>
-          <span *ngIf="usernameInput.invalid && usernameInput.touched" class="invalid-details">Please enter a username</span>
+          <span *ngIf="emailInput?.invalid && (emailInput?.touched || emailInput?.dirty)" class="invalid-details">Please enter a valid email</span>
           <div class="login-data-wrapper">
             <fa-icon [icon]="faLock"></fa-icon>
             <input type="password" class="login-data" name="password" placeholder="Password"
-                   ngModel #passwordInput="ngModel" required>
+                    formControlName="passwordInput" required>
           </div>
-          <span *ngIf="passwordInput.invalid && passwordInput.touched" class="invalid-details">Please enter a password</span>
+          <div class="login-data-wrapper">
+            <fa-icon [icon]="faLock"></fa-icon>
+            <input type="password" class="login-data" name="password" placeholder="Confirm password"
+                    formControlName="passwordAgainInput" required>
+          </div>
+          <span *ngIf="passwordInput?.invalid && (passwordInput?.touched || passwordInput?.dirty)" class="invalid-details">Password must be at least 4 characters</span>
+          <span *ngIf="passwordAgainInput?.getError('mustMatch')!=null" class="invalid-details">Passwords do not match</span>
 
           <span class="valid-details">{{registerMessage}}</span>
           <span class="invalid-details">{{registerErrorMessage}}</span>
