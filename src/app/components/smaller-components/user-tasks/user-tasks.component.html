@@ -2,6 +2,10 @@
 
 
 <div id="board">
+  <div *ngIf="tasks.length == 0" class="create-task-message">
+    <span>click here to create a new task</span>
+    <span class="icon"></span>
+  </div>
   <div *ngFor="let task of tasks">
         <task-component [task]="task" [event]="event" (refreshTasks)="loadTasks($event)"></task-component>
   </div>

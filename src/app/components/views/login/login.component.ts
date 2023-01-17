@@ -46,10 +46,11 @@ export class LoginComponent implements OnInit, OnDestroy{
     this.subscriptions.push(
       this.authenticationService.getRefreshToken(user).subscribe(
         (response: HttpResponse<string>) => {
-              const username = response.headers.get("username")
+              const username = response.headers.get("username");
+              const validDays  = response.headers.get("Valid-Days"); //server sets a header that tells how many days the refresh token is valid
               console.log(username)
-              if(username){
-                this.setCookie(username) //local cookie to check if user is logged in, as browser cant read server side cookies with httponly
+              if(username && validDays){
+                this.setCookie(username, +validDays) //local cookie to check if user is logged in, as browser cant read server side cookies with httponly
 
                 //after receiving refresh token make another call to backend to receive access token.
                 this.subscriptions.push(
@@ -82,10 +83,10 @@ export class LoginComponent implements OnInit, OnDestroy{
     this.showLoading = false;
   }
 
-  setCookie(username: string) {
+  setCookie(username: string, validDays: number) {
     const expiryDate = new Date();
-    expiryDate.setDate(expiryDate.getDate() + 5)
-    //login lasts 5 days. Bad implementation as if cookie lifespan is changed in backend, this will start causing issues
+    expiryDate.setDate(expiryDate.getDate() + validDays)
+
     this.cookieService.set(
       "Login-Cookie",
       username,
