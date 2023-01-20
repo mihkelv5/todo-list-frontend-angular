@@ -8,6 +8,9 @@ import {faPencil, faTrash, faPeopleGroup, faSquare, faUserLock, faUsers} from "@
 import {faCalendar, faCalendarCheck, faCircleCheck, faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import {EventModel} from "../../../model/event.model";
 import {AuthenticationService} from "../../../service/authentication.service";
+import {PublicUserModel} from "../../../model/publicUser.model";
+import {Store} from "@ngrx/store";
+import * as TasksActions from "../../../ngrx-store/actions/tasksActions";
 
 @Component({
   selector: 'task-component',
@@ -29,7 +32,7 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   timeUntilDue = 0;
   dueDateMessage = "";
-  currentUser = "";
+  currentUser: PublicUserModel;
 
   @Input("task") task!: TaskModel;
   @Input("event") event?: EventModel;
@@ -57,14 +60,18 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   subscriptions: Subscription[] = [];
 
-  constructor(private taskService: TaskService, private router: Router, private authService: AuthenticationService) {
+  constructor(private taskService: TaskService, private router: Router, private authService: AuthenticationService, private store: Store) {
+    const username = this.authService.getUserFromLocalCache().username
+    this.currentUser = new PublicUserModel(username); //hacky solution until I move to RxJS store
+
   }
 
   ngOnInit(): void {
+    console.log(this.event)
     if(this.event){
       this.isInEventView = true;
     }
-    this.currentUser = this.authService.getUserFromLocalCache().username;
+
     this.findDueDate();
     if(this.task.xLocation < 400){
       this.styles.right = "-410px";
@@ -73,7 +80,7 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
-    this.currentUser = "";
+    this.currentUser = new PublicUserModel("");
   }
 
    findDueDate(){
@@ -110,7 +117,7 @@ export class TaskComponent implements OnInit, OnDestroy{
   closePopUp(){
     if(!this.assignUsersWindow){
       this.taskZIndex = 0;
-      this.taskPopupWindow = false;3
+      this.taskPopupWindow = false;
 
     }
   }
@@ -131,11 +138,8 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   completeTask(isComplete: boolean) {
     if(this.task.id){
-      this.subscriptions.push(
-            this.taskService.taskSetComplete(this.task.id, isComplete).subscribe(response => {
-              this.task.complete = response.complete;
-            })
-          )
+      const taskId = this.task.id;
+      this.store.dispatch(TasksActions.completeTask({taskId, isComplete}))
     }
   }
 
@@ -147,8 +151,9 @@ export class TaskComponent implements OnInit, OnDestroy{
   }
 
   taskDropped(task: TaskModel, dropPoint: CdkDragEnd) {
-    task.xLocation = dropPoint.source.getFreeDragPosition().x
-    task.yLocation = dropPoint.source.getFreeDragPosition().y
+    const xLocation = dropPoint.source.getFreeDragPosition().x
+    const yLocation = dropPoint.source.getFreeDragPosition().y
+    const taskId: string = task.id || "";
     this.canCdkDrag = false;
     setTimeout( () => {
 
@@ -160,12 +165,8 @@ export class TaskComponent implements OnInit, OnDestroy{
     else {
       this.styles.right = "calc(100% + 10px)";
     }
-    this.subscriptions.push(this.taskService.moveTask(task).subscribe(() => {
-      if(!this.taskPopupWindow){
-        this.taskZIndex = 0;
-      }
-      this.cdkDragging = false
-    }));
+    const isEvent = this.event == undefined;
+    this.store.dispatch(TasksActions.moveTask({taskId, xLocation, yLocation, isEvent}))
   }
 
 
@@ -175,10 +176,8 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   deleteTask() {
     if(this.task.id) {
-      this.subscriptions.push(
-        this.taskService.deleteTask(this.task.id).subscribe(() => {
-          this.refreshTasksEmitter.emit();
-        }));
+      const taskId = this.task.id
+      this.store.dispatch(TasksActions.deleteTask({taskId}))
     }
   }
 
@@ -190,18 +189,18 @@ export class TaskComponent implements OnInit, OnDestroy{
     }
   }
 
-  getEventUsers(): string[] {
+  getEventUsers(): PublicUserModel[] {
     if(this.event?.eventUsernames){
       return this.event?.eventUsernames
     }
     return [];
   }
 
-  assignUsersToTask($event: string[]) {
+  assignUsersToTask($event: PublicUserModel[]) {
     if($event && this.task.id && this.event){
       this.subscriptions.push(
-        this.taskService.assignUsersToTask($event, this.task.id, this.event.id).subscribe(() => {
-          this.task.assignedUsernames = $event;
+        this.taskService.assignUsersToTask($event, this.task.id, this.event.id).subscribe((response) => {
+          this.task.assignedUsers = response.assignedUsers;
         })
       );
     }
@@ -209,19 +208,11 @@ export class TaskComponent implements OnInit, OnDestroy{
   }
 
   isUserInTask():boolean {
-    if(this.task.assignedUsernames){
-      return this.currentUser == this.task.ownerUsername || this.task.assignedUsernames?.includes(this.currentUser);
+    if(this.task.assignedUsers){
+      //moved from username to just being a string to a public user object.
+      return this.currentUser.username == this.task.owner.username || this.task.assignedUsers?.map(user => user.username).includes(this.currentUser.username);
     }
     return false;
   }
 
-  /*import { fromEvent, throttleTime, map, scan } from 'rxjs'; //to stop users from spamming the move
-
-fromEvent(document, 'click')
-  .pipe(
-    throttleTime(1000),
-    map((event) => event.clientX),
-    scan((count, clientX) => count + clientX, 0)
-  )
-  .subscribe((count) => console.log(count));;*/
 }

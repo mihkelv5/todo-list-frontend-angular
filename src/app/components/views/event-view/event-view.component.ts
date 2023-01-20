@@ -8,7 +8,8 @@ import {EventModel} from "../../../model/event.model";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import {faPencil, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {InviteService} from "../../../service/invite.service";
-
+import {Store} from "@ngrx/store";
+import * as TasksActions from "../../../ngrx-store/actions/tasksActions";
 
 
 @Component({
@@ -31,9 +32,10 @@ export class EventViewComponent implements OnInit, OnDestroy {
   tasks: TaskModel[] = [];
   deleteEventConfirmation = false;
 
-  constructor(private eventService: EventService, private taskService: TaskService,
+  constructor(private eventService: EventService,
               private route: ActivatedRoute, private router: Router,
-              private inviteService: InviteService) {}
+              private inviteService: InviteService,
+              private store: Store) {}
 
 
   ngOnInit(): void {
@@ -45,6 +47,7 @@ export class EventViewComponent implements OnInit, OnDestroy {
           this.isEventLoaded = true;
         })
       )
+    this.store.dispatch(TasksActions.getEventTasks({eventId: routeId}))
     }
   }
 

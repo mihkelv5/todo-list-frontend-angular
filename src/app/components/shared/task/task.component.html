@@ -17,6 +17,8 @@
         <fa-icon *ngIf="task.complete" [icon]="faCircleCheck"></fa-icon>
       </div>
     </div>
+
+    <!--task popup window, will make it a separate component later-->
     <div *ngIf="taskPopupWindow" class="task-popup" [ngStyle]="styles">
       <ul class="task-buttons">
 
@@ -31,19 +33,22 @@
           </div>
         </li>
 
-        <li class="cursor-pointer" *ngIf="currentUser == task.ownerUsername">
+        <!--edit button-->
+        <li class="cursor-pointer" *ngIf="currentUser.username == task.owner.username">
           <fa-icon [icon]="faPencil" (click)="editTask()"></fa-icon>
         </li>
 
-        <li *ngIf="isInEventView && currentUser == task.ownerUsername">
+        <!--assign users button-->
+        <li *ngIf="isInEventView && currentUser.username == task.owner.username">
           <fa-icon [icon]="faPeopleGroup" class="assign-users cursor-pointer" (click)="assignUsersWindow = true"></fa-icon>
-          <assign-user-component *ngIf="assignUsersWindow" [usersInEvent]="getEventUsers()" [alreadyAssignedUsers]="task.assignedUsernames"
+          <assign-user-component *ngIf="assignUsersWindow" [usersInEvent]="getEventUsers()" [alreadyAssignedUsers]="task.assignedUsers"
                                  (assignUsers)="assignUsersToTask($event)">
 
           </assign-user-component>
         </li>
 
-        <li class="cursor-pointer" *ngIf="currentUser == task.ownerUsername">
+        <!--delete users button-->
+        <li class="cursor-pointer" *ngIf="currentUser.username == task.owner.username">
           <fa-icon [icon]="faTrash" (click)="deleteTask()">del</fa-icon>
         </li>
 
@@ -58,14 +63,14 @@
         </li>
         <li *ngIf="task.eventId">
           <fa-icon [icon]="faUserLock"></fa-icon>
-          <span>Owner: {{task.ownerUsername}}</span>
+          <span>Owner: {{task.owner.username}}</span>
         </li>
         <li *ngIf="task.eventId" >
           <fa-icon [icon]="faUsers"></fa-icon>
           <span>Assigned to:</span>
           <div class="assigned-users">
 
-            <span *ngFor="let assignedUser of task.assignedUsernames">{{assignedUser}}</span>
+            <span *ngFor="let assignedUser of task.assignedUsers">{{assignedUser.username}}</span>
           </div>
         </li>
         <li *ngIf="!task.eventId">

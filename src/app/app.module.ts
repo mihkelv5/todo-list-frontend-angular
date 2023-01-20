@@ -41,6 +41,11 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import { InviteUserComponent } from './components/smaller-components/invite-user/invite-user.component';
 import { InviteComponent } from './components/shared/invite/invite.component';
 import { AssignUserComponent } from './components/shared/assign-user/assign-user.component';
+import {StoreModule} from "@ngrx/store";
+import {tasksReducers} from "./ngrx-store/reducers/tasks.reducer";
+import {StoreDevtoolsModule} from "@ngrx/store-devtools";
+import {EffectsModule} from "@ngrx/effects";
+import {TasksEffects} from "./ngrx-store/effects/tasks.effects";
 
 
 @NgModule({
@@ -74,7 +79,11 @@ import { AssignUserComponent } from './components/shared/assign-user/assign-user
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    StoreModule.forRoot({}),
+    StoreModule.forFeature('tasks', tasksReducers),
+    StoreDevtoolsModule.instrument({maxAge: 15}),
+    EffectsModule.forRoot([TasksEffects])
 
   ],
   providers: [AuthenticationGuard, TaskService, AuthenticationService,

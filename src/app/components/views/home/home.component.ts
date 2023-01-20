@@ -8,6 +8,8 @@ import {EventService} from "../../../service/event.service";
 import {Subscription} from "rxjs";
 import {AuthenticationService} from "../../../service/authentication.service";
 import {faImage} from "@fortawesome/free-regular-svg-icons";
+import {Store} from "@ngrx/store";
+import * as TasksActions from "../../../ngrx-store/actions/tasksActions";
 
 
 @Component({
@@ -28,13 +30,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private authService: AuthenticationService, private eventService: EventService, private router: Router) {}
+  constructor(private authService: AuthenticationService, private eventService: EventService, private router: Router, private store: Store) {}
 
 
   ngOnInit(): void {
     const user = this.authService.getUserFromLocalCache();
     this.username = user.username;
     this.loadEvents();
+    this.store.dispatch(TasksActions.getUserTasks())
   }
 
   ngOnDestroy(): void {
@@ -72,7 +75,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   filterTasks(selectedTask: TaskFilterEnum, eventId?: string){
-    this.tasksComponent.loadTasksWithFilter(selectedTask, eventId);
+    //this.tasksComponent.loadTasksWithFilter(selectedTask, eventId);
   }
 
 

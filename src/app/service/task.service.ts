@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {TaskModel} from '../model/task.model'
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
+import {PublicUserModel} from "../model/publicUser.model";
 
 
 @Injectable({
@@ -38,8 +39,9 @@ export class TaskService {
     return this.http.get<TaskModel>(this.host + "/find/" + taskId);
   }
 
-  assignUsersToTask(usernames: string[], taskId: string, eventId: string) {
-    return this.http.put(this.host + "/assign/" + taskId + "/event/" + eventId, usernames);
+  assignUsersToTask(users: PublicUserModel[], taskId: string, eventId: string): Observable<TaskModel> {
+    const usernames = users.map(user => user.username); //for now only username is needed.
+    return this.http.put<TaskModel>(this.host + "/assign/" + taskId + "/event/" + eventId, usernames);
   }
 
 
@@ -56,9 +58,9 @@ export class TaskService {
   }
 
 
-  public moveTask(task: TaskModel){
-    const coords: number[] = [task.xLocation, task.yLocation]
-    return this.http.put<TaskModel>(this.host + "/moveTask/" + task.id , coords)
+  public moveTask(taskId: string, xLocation: number, yLocation: number){
+    const coords: number[] = [xLocation, yLocation]
+    return this.http.put<TaskModel>(this.host + "/moveTask/" + taskId , coords)
   }
 
   public taskSetComplete(taskId: string, isComplete: boolean): Observable<TaskModel> {

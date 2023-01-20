@@ -8,16 +8,16 @@
         <li>
           <span class="list-header">Available: </span>
         </li>
-        <li *ngFor="let username of canBeAssigned" (click)="assignUser(username)">
-          {{username}}
+        <li *ngFor="let user of canBeAssigned" (click)="assignUser(user)">
+          {{user.username}}
         </li>
       </ul>
       <ul class="assigned-users">
         <li class="">
           <span class="list-header">Assigned:</span>
         </li>
-        <li *ngFor="let username of assignedUsers" (click)="removeUser(username)">
-          {{username}}
+        <li *ngFor="let user of assignedUsers" (click)="removeUser(user)">
+          {{user.username}}
         </li>
       </ul>
     </div>

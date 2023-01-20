@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
+import {PublicUserModel} from "../../../model/publicUser.model";
 
 
 @Component({
@@ -10,14 +11,14 @@ import {faXmark} from "@fortawesome/free-solid-svg-icons";
 
 
 export class AssignUserComponent implements OnInit{
-  @Input("usersInEvent") usersInEvent?: string[];
-  @Input("alreadyAssignedUsers") alreadyAssignedUsers?: string[]; //usernames that are assigned before changes
-  canBeAssigned: string[] = [];
-  assignedUsers: string [] = []; //usernames that are assigned after changes
+  @Input("usersInEvent") usersInEvent?: PublicUserModel[];
+  @Input("alreadyAssignedUsers") alreadyAssignedUsers?: PublicUserModel[]; //usernames that are assigned before changes
+  canBeAssigned: PublicUserModel[] = [];
+  assignedUsers: PublicUserModel[] = []; //usernames that are assigned after changes
   canCloseWindow = false; //used so clickedOutside directive wouldn't close window instantly when opened
 
-  @Output("assignUsers") closeAssignWindow: EventEmitter<string[]>
-    = new EventEmitter<string[]>();
+  @Output("assignUsers") closeAssignWindow: EventEmitter<PublicUserModel[]>
+    = new EventEmitter<PublicUserModel[]>();
 
   faXmark = faXmark;
 
@@ -46,7 +47,7 @@ export class AssignUserComponent implements OnInit{
     }
   }
 
-  assignUser(selected: string) {
+  assignUser(selected: PublicUserModel) {
     this.canCloseWindow = false; //workaround for (clickedOutside) directive, so it wouldn't close window when assigning users
     setTimeout(() => {
       this.canCloseWindow = true;
@@ -57,7 +58,7 @@ export class AssignUserComponent implements OnInit{
 
   }
 
-  removeUser(selected: string) {
+  removeUser(selected: PublicUserModel) {
     this.canCloseWindow = false; //workaround for (clickedOutside) directive, so it wouldn't close window when assigning users
     setTimeout(() => {
       this.canCloseWindow = true;

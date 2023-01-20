@@ -34,7 +34,7 @@ export class EventService {
   }
 
   public findEventsByUser(): Observable<EventModel[]> {
-    return this.http.get<EventModel[]>(this.host + "/user/all");
+    return this.http.get<EventModel[]>(this.host + "/all");
   }
 
 

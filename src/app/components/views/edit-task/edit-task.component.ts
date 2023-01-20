@@ -4,6 +4,7 @@ import {TaskModel} from "../../../model/task.model";
 import {TaskService} from "../../../service/task.service";
 import {Subscription} from "rxjs";
 import { Location } from '@angular/common'
+import {PublicUserModel} from "../../../model/publicUser.model";
 
 @Component({
   selector: 'app-edit-task',
@@ -26,8 +27,8 @@ export class EditTaskComponent implements  OnInit, OnDestroy{
       0,
       0,
       "white",
-      "",
-      undefined,
+      new PublicUserModel(""),
+      [],
       undefined
     );
   }
