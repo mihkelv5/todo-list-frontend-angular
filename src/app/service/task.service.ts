@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {TaskModel} from '../model/task.model'
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {environment} from "../../environments/environment";
 import {PublicUserModel} from "../model/publicUser.model";
 
@@ -64,6 +64,7 @@ export class TaskService {
   }
 
   public taskSetComplete(taskId: string, isComplete: boolean): Observable<TaskModel> {
+
     return this.http.put<TaskModel>(this.host + "/complete/" + taskId, isComplete);
   }
 }

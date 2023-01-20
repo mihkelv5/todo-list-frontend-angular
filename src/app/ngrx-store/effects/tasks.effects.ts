@@ -10,14 +10,23 @@ export class TasksEffects {
 
   constructor(private actions$: Actions, private taskService: TaskService) {}
 
-  getTasks$ = createEffect(() =>
+  getUserTasks$ = createEffect(() =>
   this.actions$.pipe(ofType(TasksActions.getUserTasks),
     exhaustMap(() => {
       return this.taskService.loadUserTasks().pipe(map(
         tasks => TasksActions.getUserTasksSuccess({tasks}),
-
       ))
     })));
+
+  getEventTasks$ = createEffect(() =>
+    this.actions$.pipe(ofType(TasksActions.getEventTasks),
+      exhaustMap((action) => {
+        return this.taskService.loadTasksByEvent(action.eventId).pipe(map(
+          eventTasks => TasksActions.getEventTasksSuccess({eventTasks})
+        ))
+      })
+      )
+  )
 
 
 
@@ -25,15 +34,16 @@ export class TasksEffects {
   this.actions$.pipe(ofType(TasksActions.completeTask),
     concatMap((action) => {
       return this.taskService.taskSetComplete(action.taskId, action.isComplete).pipe(map(
-        task => TasksActions.completeTaskSuccess({task})
+        task => TasksActions.completeTaskSuccess({task, eventId: action.eventId})
       ))
     })));
 
   moveTask$ = createEffect(() =>
     this.actions$.pipe(ofType(TasksActions.moveTask),
       concatMap((action) => {
+
         return this.taskService.moveTask(action.taskId, action.xLocation, action.yLocation).pipe(map(
-          task => TasksActions.moveTaskSuccess({task})
+          task => TasksActions.moveTaskSuccess({task, eventId: action.eventId})
         ))
       })));
 
@@ -41,7 +51,7 @@ export class TasksEffects {
     this.actions$.pipe(ofType(TasksActions.deleteTask),
       mergeMap( action => {
         return this.taskService.deleteTask(action.taskId).pipe(map(
-          () => TasksActions.deleteTaskSuccess({taskId: action.taskId})
+          () => TasksActions.deleteTaskSuccess({taskId: action.taskId, eventId: action.eventId})
         ))
       })
       ))

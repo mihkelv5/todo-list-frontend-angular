@@ -8,17 +8,18 @@ export class TasksActions {
 export const getUserTasks = createAction('[Tasks] Get tasks');
 
 export const getUserTasksSuccess = createAction('[Tasks] Get Tasks Success',
-  props<{ tasks: TaskModel[]}>()
+  props<{ tasks: TaskModel[] }>()
 );
-
-export const getEventTasks = createAction('[Tasks] Get Event Tasks',
-  props<{eventId: string}>());
-
-export const getEventTasksSuccess = createAction('[Tasks] Get Event Tasks Success',
-  props<{eventTasks: TaskModel[]}>())
 
 export const getTasksFailure = createAction('[Tasks] Get Tasks Failure',
   props<{ error: string}>()
+);
+
+export const getEventTasks = createAction('[Event Tasks] Get Event tasks',
+  props<{eventId: string}>()
+);
+export const getEventTasksSuccess = createAction('[Event Tasks] Get Event tasks Success',
+  props<{eventTasks: TaskModel[]}>()
 );
 
 export const addTask = createAction('[Tasks] Add task',
@@ -26,29 +27,29 @@ export const addTask = createAction('[Tasks] Add task',
 );
 
 export const addTaskSuccess = createAction('[Tasks] Add Task Success',
-  props<{task: TaskModel}>()
+  props<{task: TaskModel, eventId: string}>()
 );
 
 export const deleteTask = createAction('[Tasks] Delete task',
-  props<{taskId: string}>()
+  props<{taskId: string, eventId: string}>()
 );
 
 export const deleteTaskSuccess = createAction('[Tasks] Delete task',
-  props<{taskId: string}>()
+  props<{taskId: string, eventId: string}>()
 );
 
 export const completeTask = createAction('[Tasks] Complete Task',
-  props<{ taskId: string, isComplete: boolean}>()
+  props<{ taskId: string, isComplete: boolean, eventId: string}>()
 );
 
 export const completeTaskSuccess = createAction('[Tasks] Complete Task Success',
-  props<{ task: TaskModel}>()
+  props<{ task: TaskModel, eventId: string}>()
 );
 
 export const moveTask = createAction('[Tasks] Move Task',
-  props<{taskId: string, xLocation: number, yLocation: number, isEvent: boolean}>()
+  props<{taskId: string, xLocation: number, yLocation: number, eventId: string}>()
 );
 
 export const moveTaskSuccess = createAction('[Tasks] Move Task Success',
-  props<{task: TaskModel}>()
+  props<{task: TaskModel, eventId: string}>()
 );

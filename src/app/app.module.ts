@@ -46,6 +46,8 @@ import {tasksReducers} from "./ngrx-store/reducers/tasks.reducer";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {EffectsModule} from "@ngrx/effects";
 import {TasksEffects} from "./ngrx-store/effects/tasks.effects";
+import {eventsReducers} from "./ngrx-store/reducers/events.reducer";
+import {EventsEffects} from "./ngrx-store/effects/events.effects";
 
 
 @NgModule({
@@ -81,9 +83,10 @@ import {TasksEffects} from "./ngrx-store/effects/tasks.effects";
     MatNativeDateModule,
     MatSlideToggleModule,
     StoreModule.forRoot({}),
-    StoreModule.forFeature('tasks', tasksReducers),
+    StoreModule.forFeature('userTasks', tasksReducers),
+    StoreModule.forFeature('userEvents', eventsReducers),
     StoreDevtoolsModule.instrument({maxAge: 15}),
-    EffectsModule.forRoot([TasksEffects])
+    EffectsModule.forRoot([TasksEffects, EventsEffects])
 
   ],
   providers: [AuthenticationGuard, TaskService, AuthenticationService,

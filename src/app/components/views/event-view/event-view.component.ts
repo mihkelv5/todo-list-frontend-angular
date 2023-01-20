@@ -1,16 +1,19 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {EventService} from "../../../service/event.service";
-import {Subscription} from "rxjs";
+import {map, Observable, of, Subscription} from "rxjs";
 import {TaskService} from "../../../service/task.service";
 import {TaskModel} from "../../../model/task.model";
 import {EventModel} from "../../../model/event.model";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import {faPencil, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {InviteService} from "../../../service/invite.service";
-import {Store} from "@ngrx/store";
+import {select, Store} from "@ngrx/store";
 import * as TasksActions from "../../../ngrx-store/actions/tasksActions";
-
+import * as EventActions from "../../../ngrx-store/actions/eventActions";
+import * as EventSelectors from "../../../ngrx-store/selectors/events.selector"
+import * as EventsSelectors from "../../../ngrx-store/selectors/events.selector";
+import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 
 @Component({
   selector: 'app-event-view',
@@ -31,24 +34,36 @@ export class EventViewComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   tasks: TaskModel[] = [];
   deleteEventConfirmation = false;
+  currentEvent$: Observable<EventModel | null>;
+
 
   constructor(private eventService: EventService,
               private route: ActivatedRoute, private router: Router,
               private inviteService: InviteService,
-              private store: Store) {}
+              private store: Store<AppStateInterface>) {
+    const routeId = this.route.snapshot.paramMap.get("eventId");
+    if (routeId) {
+
+      this.store.dispatch(EventActions.getCurrentEvent({eventId: routeId}))
+
+    }
+
+    this.currentEvent$ = this.store.pipe(select(EventsSelectors.getCurrentEventSelector))
+  }
 
 
   ngOnInit(): void {
-    const routeId = this.route.snapshot.paramMap.get("eventId");
-    if (routeId) {
-      this.subscriptions.push(
-        this.eventService.findEventById(routeId).subscribe(response => {
-          this.event = response;
+    this.subscriptions.push(
+    this.currentEvent$.subscribe(
+      event => {
+        if(event){
+          this.event = event;
           this.isEventLoaded = true;
-        })
-      )
-    this.store.dispatch(TasksActions.getEventTasks({eventId: routeId}))
-    }
+          this.store.dispatch(TasksActions.getEventTasks({eventId: event.id}))
+        }
+      }
+    ))
+
   }
 
 

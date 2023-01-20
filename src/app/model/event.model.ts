@@ -7,15 +7,13 @@ export class EventModel {
   title: string;
   description: string;
   eventUsernames?: PublicUserModel[];
-  tasks?: TaskModel[]
 
-
-  constructor(id: string, title: string, description: string, eventUsernames?: PublicUserModel[], tasks?: TaskModel[]) {
+  constructor(id: string, title: string, description: string, eventUsernames?: PublicUserModel[]) {
     this.id = id;
     this.title = title;
     this.description = description;
     this.eventUsernames = eventUsernames;
-    this.tasks = tasks;
+
   }
 
 }

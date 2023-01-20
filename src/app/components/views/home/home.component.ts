@@ -5,11 +5,12 @@ import {UserTasksComponent} from "../../smaller-components/user-tasks/user-tasks
 import {Router} from "@angular/router";
 import {EventModel} from "../../../model/event.model";
 import {EventService} from "../../../service/event.service";
-import {Subscription} from "rxjs";
+import {Observable, of, Subscription} from "rxjs";
 import {AuthenticationService} from "../../../service/authentication.service";
 import {faImage} from "@fortawesome/free-regular-svg-icons";
 import {Store} from "@ngrx/store";
 import * as TasksActions from "../../../ngrx-store/actions/tasksActions";
+import * as EventActions from "../../../ngrx-store/actions/eventActions";
 
 
 @Component({
@@ -38,6 +39,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.username = user.username;
     this.loadEvents();
     this.store.dispatch(TasksActions.getUserTasks())
+    this.store.dispatch(EventActions.getCurrentEvent({eventId: ""}))
   }
 
   ngOnDestroy(): void {
@@ -55,7 +57,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   clickedOnEvent(eventId: string) {
+
     this.router.navigateByUrl("/event/" + eventId); //TODO: add guard that checks if event exists.
+
   }
 
   prev() {

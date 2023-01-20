@@ -35,8 +35,9 @@ export class TaskComponent implements OnInit, OnDestroy{
   currentUser: PublicUserModel;
 
   @Input("task") task!: TaskModel;
-  @Input("event") event?: EventModel;
+  @Input("event") event!: EventModel | null;
   @Output("refreshTasks") refreshTasksEmitter: EventEmitter<string> = new EventEmitter()
+  eventId: string = "";
 
   taskPopupWindow: boolean = false;
   isInEventView: boolean = false; //assigning users button will only be available if the task is viewed in event page.
@@ -67,9 +68,9 @@ export class TaskComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    console.log(this.event)
     if(this.event){
       this.isInEventView = true;
+      this.eventId = this.event.id
     }
 
     this.findDueDate();
@@ -139,7 +140,9 @@ export class TaskComponent implements OnInit, OnDestroy{
   completeTask(isComplete: boolean) {
     if(this.task.id){
       const taskId = this.task.id;
-      this.store.dispatch(TasksActions.completeTask({taskId, isComplete}))
+
+      this.store.dispatch(TasksActions.completeTask({taskId, isComplete, eventId: this.eventId}))
+
     }
   }
 
@@ -165,8 +168,8 @@ export class TaskComponent implements OnInit, OnDestroy{
     else {
       this.styles.right = "calc(100% + 10px)";
     }
-    const isEvent = this.event == undefined;
-    this.store.dispatch(TasksActions.moveTask({taskId, xLocation, yLocation, isEvent}))
+
+    this.store.dispatch(TasksActions.moveTask({taskId, xLocation, yLocation, eventId: this.eventId}))
   }
 
 
@@ -175,9 +178,13 @@ export class TaskComponent implements OnInit, OnDestroy{
   }
 
   deleteTask() {
+    let eventId = ""
+    if(this.event) {
+      eventId = this.event.id
+    }
     if(this.task.id) {
       const taskId = this.task.id
-      this.store.dispatch(TasksActions.deleteTask({taskId}))
+      this.store.dispatch(TasksActions.deleteTask({taskId, eventId: eventId}))
     }
   }
 

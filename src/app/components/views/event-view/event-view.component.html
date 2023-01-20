@@ -9,7 +9,7 @@
     </div>
 
     <div class="event-board">
-      <app-user-tasks [event]="event" ></app-user-tasks>
+      <app-user-tasks [event]="currentEvent$ | async" ></app-user-tasks>
       <div class="add-task-btn" (click)="createTask()">
         <fa-icon [icon]="faPenToSquare" ></fa-icon>
         <span>Create new task</span>

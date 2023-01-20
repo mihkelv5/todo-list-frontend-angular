@@ -3,7 +3,7 @@ import {EventStateInterface} from "./EventStateInterface";
 import {TasksStateInterface} from "./TasksStateInterface";
 
 export interface AppStateInterface {
-  tasks: TasksStateInterface,
-  events: EventStateInterface,
-  currentUser: CurrentUserStateInterface
+  userTasks: TasksStateInterface,
+  userEvents: EventStateInterface,
+  currentUser: CurrentUserStateInterface,
 }
