@@ -1,10 +1,11 @@
 import {EventStateInterface} from "../state/EventStateInterface";
 import {createReducer, on} from "@ngrx/store";
-import * as EventActions from "../actions/eventActions";
+import * as EventActions from "../actions/events.actions";
+import {EventModel} from "../../model/event.model";
 
 export const initialState: EventStateInterface = {
   events: [],
-  currentEvent: null,
+  currentEvent: new EventModel("", "", ""),
 }
 
 export const eventsReducers = createReducer(initialState,
@@ -14,5 +15,11 @@ export const eventsReducers = createReducer(initialState,
     ...state,
     currentEvent: action.currentEvent
   })),
+  on(EventActions.getAllEventsSuccess, (state, action) => {
+    return{
+      ...state,
+      events: action.events
+    }
+  })
 
 )

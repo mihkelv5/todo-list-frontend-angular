@@ -1,7 +1,7 @@
-import {CurrentUserStateInterface} from "../state/currentUserStateInterface";
+import {UsersStateInterface} from "../state/usersStateInterface";
 import {createReducer, on} from "@ngrx/store";
 import {TasksStateInterface} from "../state/TasksStateInterface";
-import * as TasksActions from "../actions/tasksActions";
+import * as TasksActions from "../actions/tasks.actions";
 
 
 export  const initialState: TasksStateInterface = {
@@ -12,7 +12,6 @@ export  const initialState: TasksStateInterface = {
 
 export const tasksReducers = createReducer(initialState,
   on(TasksActions.getUserTasksSuccess, (state, action) => {
-    console.log("eventTasksSuccess")
     return {
       ...state,
       tasks: action.tasks,
@@ -20,8 +19,9 @@ export const tasksReducers = createReducer(initialState,
   }),
 
   on(TasksActions.getEventTasksSuccess, (state, action) => {
-    console.log("eventTasksSuccess")
-    return {
+    console.log(action.eventTasks)
+      return {
+
       ...state,
       eventTasks: action.eventTasks
     }

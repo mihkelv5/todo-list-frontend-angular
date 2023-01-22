@@ -1,11 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {UserModel} from "../model/user.model";
+import {UserModel} from "../model/user/user.model";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {CookieService} from "ngx-cookie-service";
 import {HeaderType} from "../enum/header-type.enum";
 import {Router} from "@angular/router";
+import {Store} from "@ngrx/store";
+import {AppStateInterface} from "../ngrx-store/state/appState.interface";
+import * as UsersActions from "../ngrx-store/actions/users.actions";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +20,7 @@ export class AuthenticationService {
   private jwtHelper = new JwtHelperService();
 
 
-  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) {}
+  constructor(private http: HttpClient, private cookieService: CookieService, private store: Store<AppStateInterface>) {}
 
   public getRefreshToken(user: UserModel) : Observable<HttpResponse<string>>{
     const headers = new HttpHeaders().set("username", user.username).set("password", user.password)
@@ -43,25 +46,26 @@ export class AuthenticationService {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("user");
     if(this.cookieService.check("Login-Cookie")){
-      this.cookieService.delete("Login-Cookie")
       const sub = this.http.get<string>(this.host + "/auth/logout", {observe: "response", withCredentials: true}).subscribe(
         () => sub.unsubscribe()
       )
     }
+    this.cookieService.delete("Login-Cookie")
   }
 
 
 
   public saveToken(token: string): void {
     this.token = token;
-    sessionStorage.setItem("token", token);
+      sessionStorage.setItem("token", token);
   }
   public getTokenExpiryDate(): Date | null {
     return this.jwtHelper.getTokenExpirationDate(this.getToken())
   }
 
   public addUserToLocalCache(user: UserModel): void {
-    sessionStorage.setItem("user", JSON.stringify(user));
+      sessionStorage.setItem("user", JSON.stringify(user));
+      this.store.dispatch(UsersActions.getUserData());
   }
 
   public getUserFromLocalCache(): UserModel {
@@ -84,14 +88,16 @@ export class AuthenticationService {
       const token = sessionStorage.getItem("token")
 
       //if cookie exists, but access token is missing (e.g. new session) or token is about to expire
-      if(!token || this.jwtHelper.isTokenExpired(token, 60)) {
+      if(!token || this.jwtHelper.isTokenExpired(token)) {
+          console.log(token)
         const sub = this.getAccessToken(cookie.valueOf()).subscribe(
           (response) => {
             const accessToken = response.headers.get(HeaderType.JWT_TOKEN);
             if(accessToken && response.body){
-              this.saveToken(accessToken);
-              this.addUserToLocalCache(response.body);
-              window.location.reload();
+                this.saveToken(accessToken);
+                this.addUserToLocalCache(response.body);
+                console.log("access token")
+                window.location.reload();
             }
             sub.unsubscribe();
           }

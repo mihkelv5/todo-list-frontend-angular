@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {TaskModel} from '../model/task.model'
 import {Observable, of} from "rxjs";
 import {environment} from "../../environments/environment";
-import {PublicUserModel} from "../model/publicUser.model";
+import {PublicUserModel} from "../model/user/publicUser.model";
 
 
 @Injectable({

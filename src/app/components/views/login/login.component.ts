@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../service/authentication.service";
-import {UserModel} from "../../../model/user.model";
+import {UserModel} from "../../../model/user/user.model";
 import {Subscription} from "rxjs";
 
 import {HttpResponse} from "@angular/common/http";
@@ -9,6 +9,9 @@ import {HeaderType} from "../../../enum/header-type.enum";
 import {faEnvelope} from "@fortawesome/free-solid-svg-icons";
 import {faLock, faArrowRightLong} from "@fortawesome/free-solid-svg-icons";
 import {CookieService} from "ngx-cookie-service";
+import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
+import {Store} from "@ngrx/store";
+import * as UsersActions from "../../../ngrx-store/actions/users.actions"
 
 
 @Component({
@@ -25,7 +28,7 @@ export class LoginComponent implements OnInit, OnDestroy{
   loginErrorMessage = ""
   private subscriptions: Subscription[] = [];
 
-  constructor(private router: Router, private authenticationService: AuthenticationService, private cookieService: CookieService) {
+  constructor(private router: Router, private authenticationService: AuthenticationService, private cookieService: CookieService, private store: Store<AppStateInterface>) {
 
   }
 
@@ -48,7 +51,6 @@ export class LoginComponent implements OnInit, OnDestroy{
         (response: HttpResponse<string>) => {
               const username = response.headers.get("username");
               const validDays  = response.headers.get("Valid-Days"); //server sets a header that tells how many days the refresh token is valid
-              console.log(username)
               if(username && validDays){
                 this.setCookie(username, +validDays) //local cookie to check if user is logged in, as browser cant read server side cookies with httponly
 
@@ -57,10 +59,12 @@ export class LoginComponent implements OnInit, OnDestroy{
                   this.authenticationService.getAccessToken(user.username).subscribe(
                   (response2: HttpResponse<UserModel>) => {
                           const accessToken = response2.headers.get(HeaderType.JWT_TOKEN);
-                          if (accessToken != null && response2.body) {
+
+                      if (accessToken != null && response2.body) {
                             this.loginErrorMessage = "";
                             this.authenticationService.saveToken(accessToken);
                             this.authenticationService.addUserToLocalCache(response2.body);
+
                             this.router.navigateByUrl("/home");
                             this.showLoading = false;
                             return;

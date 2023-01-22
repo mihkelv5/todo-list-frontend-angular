@@ -8,10 +8,14 @@ import {EventService} from "../../../service/event.service";
 import {Observable, of, Subscription} from "rxjs";
 import {AuthenticationService} from "../../../service/authentication.service";
 import {faImage} from "@fortawesome/free-regular-svg-icons";
-import {Store} from "@ngrx/store";
-import * as TasksActions from "../../../ngrx-store/actions/tasksActions";
-import * as EventActions from "../../../ngrx-store/actions/eventActions";
-
+import {select, Store} from "@ngrx/store";
+import * as TasksActions from "../../../ngrx-store/actions/tasks.actions";
+import * as EventActions from "../../../ngrx-store/actions/events.actions";
+import {PrivateUserModel} from "../../../model/user/privateUser.model";
+import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
+import * as UserSelector from "../../../ngrx-store/selectors/userData.selector";
+import * as EventsSelector from "../../../ngrx-store/selectors/events.selector";
+import * as UsersActions from "../../../ngrx-store/actions/users.actions";
 
 @Component({
   selector: 'app-home',
@@ -20,71 +24,32 @@ import * as EventActions from "../../../ngrx-store/actions/eventActions";
 })
 
 
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent {
 
-  faImage=faImage;
-  @ViewChild(UserTasksComponent) tasksComponent!: UserTasksComponent;
-  faPlus = faPlus;
-  events: EventModel[] = [];
-  activeEvent = 0;
-  private username = "";
-
-  private subscriptions: Subscription[] = [];
-
-  constructor(private authService: AuthenticationService, private eventService: EventService, private router: Router, private store: Store) {}
+    faImage=faImage;
+    faPlus = faPlus;
+    events$: Observable<EventModel[]>
+    currentUser$: Observable<PrivateUserModel>
 
 
-  ngOnInit(): void {
-    const user = this.authService.getUserFromLocalCache();
-    this.username = user.username;
-    this.loadEvents();
-    this.store.dispatch(TasksActions.getUserTasks())
-    this.store.dispatch(EventActions.getCurrentEvent({eventId: ""}))
+
+  constructor(private authService: AuthenticationService, private eventService: EventService, private router: Router, private store: Store<AppStateInterface>) {
+    this.store.dispatch(TasksActions.getUserTasks());
+    this.store.dispatch(EventActions.getCurrentEvent({eventId: ""}));
+    this.store.dispatch(EventActions.getAllEvents());
+
+    this.currentUser$ = this.store.pipe(select(UserSelector.getUserDataSelector));
+    this.events$ = this.store.pipe(select(EventsSelector.getEventsSelector));
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
-    this.events = [];
-    this.username = "";
-  }
-
-  private loadEvents() {
-    this.subscriptions.push(
-      this.eventService.findEventsByUser().subscribe(response => {
-        this.events = response;
-      })
-    )
-  }
 
   clickedOnEvent(eventId: string) {
-
     this.router.navigateByUrl("/event/" + eventId); //TODO: add guard that checks if event exists.
-
-  }
-
-  prev() {
-    this.activeEvent -= 1;
-    if(this.activeEvent < 0){
-      this.activeEvent = this.events.length - 1
-    }
-    this.filterTasks(4, this.events[this.activeEvent].id);
-  }
-
-  next() {
-    this.activeEvent += 1;
-    if(this.activeEvent == this.events.length){
-      this.activeEvent = 0;
-    }
-    this.filterTasks(4, this.events[this.activeEvent].id);
-  }
-
-  filterTasks(selectedTask: TaskFilterEnum, eventId?: string){
-    //this.tasksComponent.loadTasksWithFilter(selectedTask, eventId);
   }
 
 
   createNewTask() {
-    this.tasksComponent.createNewTask();
+      this.router.navigateByUrl("/task/new/nan/nan")
   }
 
   createNewEvent() {

@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {TaskModel} from "../../../model/task.model";
-import {Observable, of, Subscription} from "rxjs";
+import {Observable, of, Subscription, tap} from "rxjs";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {TaskFilterEnum} from "../../../enum/task-filter.enum";
 import {Router} from "@angular/router";
@@ -20,20 +20,14 @@ export class UserTasksComponent implements OnInit, OnDestroy {
   faPlus = faPlus;
 
   @Input("event") event!: EventModel | null;
-
-  tasksViewFilter !: TaskFilterEnum;
-  viewTaskComponentOpen = false; //enables or disables task create/edit component
-  username = "";
   tasks$: Observable<TaskModel[]>
-  events$: Observable<EventModel[]>
 
   constructor(private router: Router, private store: Store<AppStateInterface>) {
       this.tasks$ = of([])
-      this.events$ = this.store.pipe(select(EventsSelectors.getEventsSelector))
-  }
+    }
 
   ngOnInit(): void {
-    console.log(this.event)
+
     if(this.event){
       this.tasks$ = this.store.pipe(select(TasksSelectors.getEventTasksSelector))
     } else {
@@ -46,7 +40,4 @@ export class UserTasksComponent implements OnInit, OnDestroy {
 
 
 
-  createNewTask() {
-    this.router.navigateByUrl("/task/new/nan/nan")
-  }
 }

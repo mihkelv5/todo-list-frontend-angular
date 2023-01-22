@@ -1,4 +1,4 @@
-import {PublicUserModel} from "./publicUser.model";
+import {PublicUserModel} from "./user/publicUser.model";
 import {TaskModel} from "./task.model";
 
 export class EventModel {

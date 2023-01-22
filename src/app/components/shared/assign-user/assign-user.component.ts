@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
-import {PublicUserModel} from "../../../model/publicUser.model";
+import {PublicUserModel} from "../../../model/user/publicUser.model";
 
 
 @Component({

@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="event-board user-events">
-          <div *ngFor="let event of events">
+          <div *ngFor="let event of events$ | async">
             <div class="event" (click)="clickedOnEvent(event.id)">
               <fa-icon [icon]="faImage" class="event-image"></fa-icon>
 
@@ -32,17 +32,6 @@
         <div class="header">
           <span class="headline">My tasks</span>
           <ul class="header-buttons">
-            <li class="pointer-cursor" (click)="filterTasks(0)"> All tasks </li>
-            <li class="pointer-cursor" (click)="filterTasks(1)"> My tasks</li>
-            <li class="pointer-cursor" (click)="filterTasks(2)"> This week </li>
-            <li class="pointer-cursor" (click)="filterTasks(3)"> Completed </li>
-            <li class="event-picker">
-              <button (click)="prev()"  class="current-event-buttons"> < </button>
-              <div class="current-event">
-                <span *ngIf="this.events.length>0">{{this.events[activeEvent].title}}</span>
-              </div>
-              <button (click)="next()" class="current-event-buttons"> > </button>
-            </li>
             <li class="add-task-btn pointer-cursor" (click)="createNewTask()">
               <fa-icon [icon]="faPlus"></fa-icon>
             </li>

@@ -1,6 +1,6 @@
 import {Component, OnDestroy} from '@angular/core';
 import {Location} from "@angular/common";
-import {UserModel} from "../../../model/user.model";
+import {UserModel} from "../../../model/user/user.model";
 import {faEnvelope, faUser} from "@fortawesome/free-solid-svg-icons";
 import {faLock, faArrowLeftLong} from "@fortawesome/free-solid-svg-icons";
 import {Subscription} from "rxjs";

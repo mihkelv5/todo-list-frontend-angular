@@ -9,8 +9,8 @@ import { faPenToSquare, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import {faPencil, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {InviteService} from "../../../service/invite.service";
 import {select, Store} from "@ngrx/store";
-import * as TasksActions from "../../../ngrx-store/actions/tasksActions";
-import * as EventActions from "../../../ngrx-store/actions/eventActions";
+import * as TasksActions from "../../../ngrx-store/actions/tasks.actions";
+import * as EventActions from "../../../ngrx-store/actions/events.actions";
 import * as EventSelectors from "../../../ngrx-store/selectors/events.selector"
 import * as EventsSelectors from "../../../ngrx-store/selectors/events.selector";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
@@ -43,11 +43,9 @@ export class EventViewComponent implements OnInit, OnDestroy {
               private store: Store<AppStateInterface>) {
     const routeId = this.route.snapshot.paramMap.get("eventId");
     if (routeId) {
-
       this.store.dispatch(EventActions.getCurrentEvent({eventId: routeId}))
-
+        this.store.dispatch(TasksActions.getEventTasks({eventId: routeId}))
     }
-
     this.currentEvent$ = this.store.pipe(select(EventsSelectors.getCurrentEventSelector))
   }
 
@@ -59,7 +57,7 @@ export class EventViewComponent implements OnInit, OnDestroy {
         if(event){
           this.event = event;
           this.isEventLoaded = true;
-          this.store.dispatch(TasksActions.getEventTasks({eventId: event.id}))
+
         }
       }
     ))

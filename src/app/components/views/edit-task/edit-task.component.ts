@@ -4,7 +4,7 @@ import {TaskModel} from "../../../model/task.model";
 import {TaskService} from "../../../service/task.service";
 import {Subscription} from "rxjs";
 import { Location } from '@angular/common'
-import {PublicUserModel} from "../../../model/publicUser.model";
+import {PublicUserModel} from "../../../model/user/publicUser.model";
 
 @Component({
   selector: 'app-edit-task',

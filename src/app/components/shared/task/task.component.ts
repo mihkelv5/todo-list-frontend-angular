@@ -2,15 +2,19 @@ import {Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output}
 import {TaskModel} from "../../../model/task.model";
 import {CdkDragEnd} from "@angular/cdk/drag-drop";
 import {TaskService} from "../../../service/task.service";
-import {Subscription} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {faPencil, faTrash, faPeopleGroup, faSquare, faUserLock, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {faCalendar, faCalendarCheck, faCircleCheck, faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import {EventModel} from "../../../model/event.model";
 import {AuthenticationService} from "../../../service/authentication.service";
-import {PublicUserModel} from "../../../model/publicUser.model";
-import {Store} from "@ngrx/store";
-import * as TasksActions from "../../../ngrx-store/actions/tasksActions";
+import {PublicUserModel} from "../../../model/user/publicUser.model";
+import {select, Store} from "@ngrx/store";
+import * as TasksActions from "../../../ngrx-store/actions/tasks.actions";
+import * as UserDataSelectors from "../../../ngrx-store/selectors/userData.selector"
+import {PrivateUserModel} from "../../../model/user/privateUser.model";
+import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
+import {UserTasksComponent} from "../../smaller-components/user-tasks/user-tasks.component";
 
 @Component({
   selector: 'task-component',
@@ -32,7 +36,7 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   timeUntilDue = 0;
   dueDateMessage = "";
-  currentUser: PublicUserModel;
+  currentUser$: Observable<PrivateUserModel>
 
   @Input("task") task!: TaskModel;
   @Input("event") event!: EventModel | null;
@@ -61,9 +65,8 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   subscriptions: Subscription[] = [];
 
-  constructor(private taskService: TaskService, private router: Router, private authService: AuthenticationService, private store: Store) {
-    const username = this.authService.getUserFromLocalCache().username
-    this.currentUser = new PublicUserModel(username); //hacky solution until I move to RxJS store
+  constructor(private taskService: TaskService, private router: Router, private authService: AuthenticationService, private store: Store<AppStateInterface>) {
+    this.currentUser$ = this.store.pipe(select(UserDataSelectors.getUserDataSelector))
 
   }
 
@@ -81,13 +84,13 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
-    this.currentUser = new PublicUserModel("");
+
   }
 
-   findDueDate(){
-     const dueDate = new Date(this.task.date).getTime();
-     const date = new Date().getTime()
-     this.timeUntilDue = Math.floor((dueDate - date) / (1000 * 3600 * 24) + 1)
+     findDueDate(){
+         const dueDate = new Date(this.task.date).getTime();
+         const date = new Date().getTime()
+         this.timeUntilDue = Math.floor((dueDate - date) / (1000 * 3600 * 24) + 1)
      //takes 2 timestamps and subtracts one from another to show how many days left for task due date
 
     switch (true){
@@ -214,12 +217,8 @@ export class TaskComponent implements OnInit, OnDestroy{
     this.assignUsersWindow = false;
   }
 
-  isUserInTask():boolean {
-    if(this.task.assignedUsers){
-      //moved from username to just being a string to a public user object.
-      return this.currentUser.username == this.task.owner.username || this.task.assignedUsers?.map(user => user.username).includes(this.currentUser.username);
-    }
-    return false;
+  canUserCompleteTask(username: string){
+      return this.task.owner.username === username || this.task.assignedUsers.find(user => user.username === username)
   }
 
 }

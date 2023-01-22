@@ -2,7 +2,7 @@ import {createAction, props} from "@ngrx/store";
 import {TaskModel} from "../../model/task.model";
 import {EventModel} from "../../model/event.model";
 
-export class EventActions {
+export class EventsActions {
 
 }
 
@@ -18,14 +18,13 @@ export const getCurrentEvent = createAction('[Event] Get Current Event',
 );
 
 export const getCurrentEventSuccess = createAction('[Event] Get Current Event Success',
-  props<{currentEvent: EventModel | null}>()
+  props<{currentEvent: EventModel}>()
 );
 
-export const getEventTasks = createAction('[EventTask] Get Event Tasks',
-  props<{eventId: string}>()
-);
-export const getEventTasksSuccess = createAction('[EventTask] Get Event Tasks Success',
-  props<{ eventTasks: TaskModel[]}>()
-);
+export const deleteEvent = createAction('[Event] Delete Current Event',
+    props<{eventId: string}>());
+
+export const deleteEventSuccess = createAction('[Event] Delete Current Event Success',
+    props<{eventId: string}>());
 
 
