@@ -21,7 +21,6 @@ export class TasksEffects {
   getEventTasks$ = createEffect(() =>
     this.actions$.pipe(ofType(TasksActions.getEventTasks),
       exhaustMap((action) => {
-          console.log(action.eventId)
         return this.taskService.loadTasksByEvent(action.eventId).pipe(map(
             (tasks) => TasksActions.getEventTasksSuccess({eventTasks: tasks})
         ))

@@ -1,7 +1,7 @@
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {EventService} from "../../service/event.service";
 import * as EventActions from "../actions/events.actions";
-import {exhaustMap, of, map} from "rxjs";
+import {exhaustMap, of, map, mergeMap} from "rxjs";
 import {Injectable} from "@angular/core";
 import {TaskService} from "../../service/task.service";
 import {EventModel} from "../../model/event.model";
@@ -34,6 +34,14 @@ export class EventsEffects{
           events => EventActions.getAllEventsSuccess({events})
         ))
       }))
-  )
+  );
+
+    deleteCurrentEvent$ = createEffect(() =>
+        this.actions$.pipe(ofType(EventActions.deleteEvent),
+            mergeMap((action) => {
+                return this.eventService.deleteEvent(action.eventId).pipe(map(
+                    () => EventActions.deleteEventSuccess({eventId: action.eventId})
+                ))
+    })));
 
 }

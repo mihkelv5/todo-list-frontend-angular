@@ -1,6 +1,5 @@
 
-
-  <div *ngIf="isEventLoaded" class="limiter">
+  <div *ngIf="currentEvent$ | async; let event" class="limiter">
 
     <div  class="event-details">
       <span class="headline">{{event.title}}</span>
@@ -43,10 +42,12 @@
     </div>
   </div>
 
-  <app-invite-users *ngIf="openParticipatorsWindow"
-              [event]="event"
-              class="participators-window"
-              (closeWindowEvent)="toggleParticipatorWindow(false)"
-  (inviteUsers)="inviteUsers($event)">
-  </app-invite-users>
+      <app-invite-users *ngIf="openParticipatorsWindow "
+                        [event]="currentEvent"
+                        class="participators-window"
+                        (closeWindowEvent)="toggleParticipatorWindow(false)"
+                        (inviteUsers)="inviteUsers($event)">
+      </app-invite-users>
+
+
 

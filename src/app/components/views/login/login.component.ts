@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../service/authentication.service";
 import {UserModel} from "../../../model/user/user.model";
-import {Subscription} from "rxjs";
+import {Subscription, take} from "rxjs";
 
 import {HttpResponse} from "@angular/common/http";
 import {HeaderType} from "../../../enum/header-type.enum";
@@ -19,14 +19,13 @@ import * as UsersActions from "../../../ngrx-store/actions/users.actions"
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit, OnDestroy{
+export class LoginComponent implements OnInit{
   loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
   faArrowRight = faArrowRightLong;
   faEnvelope = faEnvelope;
   faLock = faLock;
   showLoading = false;
   loginErrorMessage = ""
-  private subscriptions: Subscription[] = [];
 
   constructor(private router: Router, private authenticationService: AuthenticationService, private cookieService: CookieService, private store: Store<AppStateInterface>) {
 
@@ -34,7 +33,7 @@ export class LoginComponent implements OnInit, OnDestroy{
 
 
   ngOnInit() {
-    if(this.authenticationService.isUserLoggedIn()){
+    if(this.cookieService.get("Login-Cookie")){
       this.router.navigateByUrl("/home");
     }
   }
@@ -46,8 +45,8 @@ export class LoginComponent implements OnInit, OnDestroy{
     /*first gets refresh token, then if successful
     gets access token with refresh token.
     */
-    this.subscriptions.push(
-      this.authenticationService.getRefreshToken(user).subscribe(
+
+      this.authenticationService.getRefreshToken(user).pipe(take(1)).subscribe(
         (response: HttpResponse<string>) => {
               const username = response.headers.get("username");
               const validDays  = response.headers.get("Valid-Days"); //server sets a header that tells how many days the refresh token is valid
@@ -55,8 +54,8 @@ export class LoginComponent implements OnInit, OnDestroy{
                 this.setCookie(username, +validDays) //local cookie to check if user is logged in, as browser cant read server side cookies with httponly
 
                 //after receiving refresh token make another call to backend to receive access token.
-                this.subscriptions.push(
-                  this.authenticationService.getAccessToken(user.username).subscribe(
+
+                  this.authenticationService.getAccessToken(user.username).pipe(take(1)).subscribe(
                   (response2: HttpResponse<UserModel>) => {
                           const accessToken = response2.headers.get(HeaderType.JWT_TOKEN);
 
@@ -66,7 +65,7 @@ export class LoginComponent implements OnInit, OnDestroy{
                             this.router.navigateByUrl("/home");
                             this.showLoading = false;
                             return;
-                        }}));
+                        }});
               } else {
                 this.loginErrorMessage = "Something went wrong, please try again"
               }
@@ -81,7 +80,7 @@ export class LoginComponent implements OnInit, OnDestroy{
 
         }
       )
-    )
+
     this.showLoading = false;
   }
 
@@ -100,9 +99,6 @@ export class LoginComponent implements OnInit, OnDestroy{
       )
   }
 
-  ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
-  }
 
 
 }

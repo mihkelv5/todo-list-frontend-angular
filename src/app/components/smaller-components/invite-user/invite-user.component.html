@@ -40,8 +40,8 @@
             </span>
           </li>
           <li class="already-invited">Already in event:</li>
-          <li *ngFor="let eventUser of event.eventUsernames" class="result-entry">
-            <span>{{eventUser}}</span>
+          <li *ngFor="let eventUser of event.eventUsers" class="result-entry">
+            <span>{{eventUser.username}}</span>
           </li>
         </ul>
       </div>

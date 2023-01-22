@@ -200,8 +200,8 @@ export class TaskComponent implements OnInit, OnDestroy{
   }
 
   getEventUsers(): PublicUserModel[] {
-    if(this.event?.eventUsernames){
-      return this.event?.eventUsernames
+    if(this.event?.eventUsers){
+      //return this.event?.eventUsers
     }
     return [];
   }

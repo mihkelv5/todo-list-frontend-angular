@@ -1,4 +1,3 @@
-import {UsersStateInterface} from "../state/usersStateInterface";
 import {createReducer, on} from "@ngrx/store";
 import {TasksStateInterface} from "../state/TasksStateInterface";
 import * as TasksActions from "../actions/tasks.actions";
@@ -19,7 +18,6 @@ export const tasksReducers = createReducer(initialState,
   }),
 
   on(TasksActions.getEventTasksSuccess, (state, action) => {
-    console.log(action.eventTasks)
       return {
 
       ...state,
@@ -42,6 +40,7 @@ export const tasksReducers = createReducer(initialState,
     }
 
   }),
+
   on(TasksActions.completeTaskSuccess, (state, action) => {
     if(!action.task.id){
       return state
@@ -52,7 +51,7 @@ export const tasksReducers = createReducer(initialState,
     if(action.eventId !== ""){
       const id = state.eventTasks.findIndex(task => task.id === action.task.id);
       //console.log(action.eventId)
-      console.log(id)
+
       return {
         ...state, //everything else will stay the same
         eventTasks: //creates new array with:
@@ -65,7 +64,7 @@ export const tasksReducers = createReducer(initialState,
       }
     } else {
       const id = state.tasks.findIndex(task => task.id === action.task.id);
-      console.log(id)
+
       return {
         ...state, //everything else will stay the same
         tasks: //creates new array with:

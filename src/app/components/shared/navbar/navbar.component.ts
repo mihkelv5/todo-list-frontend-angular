@@ -7,6 +7,7 @@ import {faUser, faBell} from "@fortawesome/free-regular-svg-icons";
 import {InviteService} from "../../../service/invite.service";
 import {BehaviorSubject, Subscription} from "rxjs";
 import {EventInvitationModel} from "../../../model/eventInvitation.model";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-navbar',
@@ -38,7 +39,7 @@ export class NavbarComponent implements OnInit, OnDestroy{
   });
 
   constructor(private authService: AuthenticationService, private router: Router,
-              private inviteService: InviteService) {
+              private inviteService: InviteService, private cookieService: CookieService) {
   }
 
 
@@ -57,10 +58,8 @@ export class NavbarComponent implements OnInit, OnDestroy{
           if(event.urlAfterRedirects.toLowerCase() != "/login"
             && event.urlAfterRedirects.toLowerCase() != "/register"){
             this.navbarVisible$.next(true)
-            if(!this.username){
-              this.username = this.authService.getUserFromLocalCache().username;
-            }
-            if(this.username && !this.areInvitesLoaded){
+
+            if(this.cookieService.get("Login-Cookie") && !this.areInvitesLoaded){
               this.loadInvitesFromDB();
               this.areInvitesLoaded = true;
             }

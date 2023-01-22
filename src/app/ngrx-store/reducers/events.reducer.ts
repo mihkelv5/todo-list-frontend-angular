@@ -20,6 +20,13 @@ export const eventsReducers = createReducer(initialState,
       ...state,
       events: action.events
     }
-  })
+  }),
+
+    on(EventActions.deleteEventSuccess, (state, action) => {
+        return {
+            ...state,
+            events: [...state.events.filter(event => event.id !== action.eventId)],
+            currentEvent: new EventModel("", "", "")
+        }})
 
 )

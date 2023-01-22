@@ -6,14 +6,15 @@ export class EventModel {
   id: string;
   title: string;
   description: string;
-  eventUsernames?: PublicUserModel[];
+  eventUsers?: PublicUserModel[];
+  invitedUsers?: PublicUserModel[];
 
-  constructor(id: string, title: string, description: string, eventUsernames?: PublicUserModel[]) {
+  constructor(id: string, title: string, description: string, eventUsers?: PublicUserModel[], invitedUsers?: PublicUserModel[]) {
     this.id = id;
     this.title = title;
     this.description = description;
-    this.eventUsernames = eventUsernames;
-
+    this.eventUsers = eventUsers;
+    this.eventUsers = invitedUsers;
   }
 
 }

@@ -28,7 +28,7 @@ export class InviteUserComponent {
   searchValue = "";
   canClose = false;
 
-  @Input("event") event !: EventModel;
+  @Input("event") event!: EventModel;
   @Output() closeWindowEvent = new EventEmitter<void>;
   @Output() inviteUsers = new EventEmitter<string[]>;
 

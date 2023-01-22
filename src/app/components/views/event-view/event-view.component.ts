@@ -1,7 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {EventService} from "../../../service/event.service";
-import {map, Observable, of, Subscription} from "rxjs";
+import {map, Observable, of, Subscription, take, tap} from "rxjs";
 import {TaskService} from "../../../service/task.service";
 import {TaskModel} from "../../../model/task.model";
 import {EventModel} from "../../../model/event.model";
@@ -29,12 +29,12 @@ export class EventViewComponent implements OnInit, OnDestroy {
 
 
   isEventLoaded = false;
-  eventId!: string;
-  event!: EventModel;
+
+  currentEvent!: EventModel;
   subscriptions: Subscription[] = [];
   tasks: TaskModel[] = [];
   deleteEventConfirmation = false;
-  currentEvent$: Observable<EventModel | null>;
+  currentEvent$: Observable<EventModel>;
 
 
   constructor(private eventService: EventService,
@@ -52,17 +52,21 @@ export class EventViewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-    this.currentEvent$.subscribe(
-      event => {
-        if(event){
-          this.event = event;
-          this.isEventLoaded = true;
+        this.currentEvent$.subscribe(
+        currentEvent => {
+            if(currentEvent.id !== ""){
+                this.currentEvent = currentEvent;
+                this.isEventLoaded = true;
 
+            }
         }
-      }
-    ))
+    )
+)
+
+
 
   }
+
 
 
   ngOnDestroy(): void {
@@ -71,21 +75,18 @@ export class EventViewComponent implements OnInit, OnDestroy {
 
 
   createTask() {
-    this.router.navigateByUrl("/task/new/" + this.event.id + "/" + this.event.title)
+    this.router.navigateByUrl("/task/new/" + this.currentEvent.id + "/" + this.currentEvent.title)
   }
 
-
   editEvent() {
-    this.router.navigateByUrl("/event/edit/" + this.event.id)
+    this.router.navigateByUrl("/event/edit/" + this.currentEvent.id)
   }
 
   deleteEvent() {
-    this.subscriptions.push(
-      this.eventService.deleteEvent(this.event.id).subscribe(() => {
-        this.deleteEventConfirmation = false;
-        this.router.navigateByUrl("/home");
-        //TODO: add toggle to ask if all tasks should be deleted with it too.
-      }));
+    this.store.dispatch(EventActions.deleteEvent({eventId: this.currentEvent.id}));
+    this.deleteEventConfirmation = false;
+    this.router.navigateByUrl("/home");
+
   }
 
   toggleDeleteEventConfirmation(bool: boolean){
@@ -97,16 +98,17 @@ export class EventViewComponent implements OnInit, OnDestroy {
   }
 
   inviteUsers($event: string[]) {
-    if($event.length != 0){
+    /*if($event.length != 0){
       $event.forEach(username => {
         this.subscriptions.push(
-          this.inviteService.inviteUserToEvent(this.event.id, username).subscribe(response => {
+          this.inviteService.inviteUserToEvent(this.currentEvent.id, username).subscribe(response => {
             //console.log(response);
             //TODO: confirmation notification
           })
         )
       })
-    }
+    }*/
+
     this.openParticipatorsWindow = false;
   }
 }
