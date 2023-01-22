@@ -63,8 +63,6 @@ export class LoginComponent implements OnInit, OnDestroy{
                       if (accessToken != null && response2.body) {
                             this.loginErrorMessage = "";
                             this.authenticationService.saveToken(accessToken);
-                            this.authenticationService.addUserToLocalCache(response2.body);
-
                             this.router.navigateByUrl("/home");
                             this.showLoading = false;
                             return;

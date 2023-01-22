@@ -22,6 +22,23 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient, private cookieService: CookieService, private store: Store<AppStateInterface>) {}
 
+    //gets triggered when app is opened for the first time
+    loadData() {
+        const cookie = this.cookieService.get("Login-Cookie")
+        if(cookie){
+            const username = cookie.valueOf();
+            const sub =  this.getAccessToken(username).subscribe(
+                response => {
+                    const token = response.headers.get(HeaderType.JWT_TOKEN);
+                    if(token) {
+                        this.saveToken(token)
+                        this.store.dispatch(UsersActions.getUserData())
+                    }
+                }
+            )
+        }
+    }
+
   public getRefreshToken(user: UserModel) : Observable<HttpResponse<string>>{
     const headers = new HttpHeaders().set("username", user.username).set("password", user.password)
     return this.http.get<string>(this.host + "/auth/login", {observe: "response", headers: headers, withCredentials: true})
@@ -40,17 +57,16 @@ export class AuthenticationService {
   }
 
   public logout() {
-    this.token = "";
-    this.loggedInUsername = "";
-    sessionStorage.removeItem("user");
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("user");
-    if(this.cookieService.check("Login-Cookie")){
+      this.cookieService.delete("Login-Cookie")
+      this.token = "";
+      this.loggedInUsername = "";
+      sessionStorage.removeItem("user");
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("user");
+
       const sub = this.http.get<string>(this.host + "/auth/logout", {observe: "response", withCredentials: true}).subscribe(
         () => sub.unsubscribe()
       )
-    }
-    this.cookieService.delete("Login-Cookie")
   }
 
 
@@ -65,7 +81,7 @@ export class AuthenticationService {
 
   public addUserToLocalCache(user: UserModel): void {
       sessionStorage.setItem("user", JSON.stringify(user));
-      this.store.dispatch(UsersActions.getUserData());
+
   }
 
   public getUserFromLocalCache(): UserModel {
@@ -88,15 +104,13 @@ export class AuthenticationService {
       const token = sessionStorage.getItem("token")
 
       //if cookie exists, but access token is missing (e.g. new session) or token is about to expire
-      if(!token || this.jwtHelper.isTokenExpired(token)) {
+      if(!token || this.jwtHelper.isTokenExpired(token, 60)) {
           console.log(token)
         const sub = this.getAccessToken(cookie.valueOf()).subscribe(
           (response) => {
             const accessToken = response.headers.get(HeaderType.JWT_TOKEN);
             if(accessToken && response.body){
                 this.saveToken(accessToken);
-                this.addUserToLocalCache(response.body);
-                console.log("access token")
                 window.location.reload();
             }
             sub.unsubscribe();
@@ -108,4 +122,5 @@ export class AuthenticationService {
     this.logout();
     return false;
   }
+
 }
