@@ -27,6 +27,23 @@ export const eventsReducers = createReducer(initialState,
             ...state,
             events: [...state.events.filter(event => event.id !== action.eventId)],
             currentEvent: new EventModel("", "", "")
-        }})
+        }}),
+
+    on(EventActions.inviteUsersToEventSuccess, (state, action) => {
+        return {
+            ...state,
+            currentEvent: {...state.currentEvent,
+                invitedUsers: state.currentEvent.invitedUsers.concat(action.invitedUsers) }
+        }
+    }),
+
+    on(EventActions.removeAlreadyInvitedUserSuccess, (state, action) => {
+        return {
+            ...state,
+            currentEvent: {...state.currentEvent,
+                invitedUsers: [...state.currentEvent.invitedUsers.filter(user => user.username != action.removedUser.username)]
+            }
+        }
+    })
 
 )

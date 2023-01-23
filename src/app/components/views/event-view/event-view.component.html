@@ -42,8 +42,8 @@
     </div>
   </div>
 
-      <app-invite-users *ngIf="openParticipatorsWindow "
-                        [event]="currentEvent"
+      <app-invite-users *ngIf="openParticipatorsWindow && (currentEvent$ | async); let event"
+                        [event]="event"
                         class="participators-window"
                         (closeWindowEvent)="toggleParticipatorWindow(false)"
                         (inviteUsers)="inviteUsers($event)">

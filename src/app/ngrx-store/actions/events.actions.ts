@@ -1,6 +1,7 @@
 import {createAction, props} from "@ngrx/store";
 import {TaskModel} from "../../model/task.model";
 import {EventModel} from "../../model/event.model";
+import {PublicUserModel} from "../../model/user/publicUser.model";
 
 export class EventsActions {
 
@@ -28,3 +29,14 @@ export const deleteEventSuccess = createAction('[Event] Delete Current Event Suc
     props<{eventId: string}>());
 
 
+export const inviteUsersToEvent = createAction('[Event] Invite Users To Event',
+    props<{eventId: string, invitedUsers: string[]}>());
+
+export const inviteUsersToEventSuccess = createAction('[Event] Invite Users To Event Success',
+    props<{invitedUsers: PublicUserModel[]}>());
+
+export const removeAlreadyInvitedUser = createAction('[Event] Remove Invited User',
+    props<{eventId: string, invitedUsername: string}>());
+
+export const removeAlreadyInvitedUserSuccess = createAction('[Event] Remove Invited User Success',
+    props<{removedUser: PublicUserModel}>());

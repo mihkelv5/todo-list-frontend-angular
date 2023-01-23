@@ -6,15 +6,25 @@ export class EventModel {
   id: string;
   title: string;
   description: string;
-  eventUsers?: PublicUserModel[];
-  invitedUsers?: PublicUserModel[];
+  eventUsers: PublicUserModel[];
+  invitedUsers: PublicUserModel[];
+  canBeInvited: PublicUserModel[];
 
   constructor(id: string, title: string, description: string, eventUsers?: PublicUserModel[], invitedUsers?: PublicUserModel[]) {
     this.id = id;
     this.title = title;
-    this.description = description;
-    this.eventUsers = eventUsers;
-    this.eventUsers = invitedUsers;
+    this.description = description
+      if(eventUsers) {
+        this.eventUsers = eventUsers;
+      } else {
+          this.eventUsers = [];
+      }
+      if(invitedUsers){
+          this.invitedUsers = invitedUsers;
+      } else {
+          this.invitedUsers = [];
+      }
+      this.canBeInvited = [];
   }
 
 }

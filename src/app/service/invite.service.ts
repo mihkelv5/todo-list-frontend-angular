@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
 import {EventInvitationModel} from "../model/eventInvitation.model";
+import {PublicUserModel} from "../model/user/publicUser.model";
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,8 @@ export class InviteService {
 
   private host = environment.apiBaseUrl + "/invite";
 
-  public inviteUserToEvent(eventId: string, username: string) {
-    return this.http.post(this.host + "/event/" + eventId + "/user/" + username,"");
+  public inviteUserToEvent(eventId: string, usernames: string[]): Observable<PublicUserModel[]> {
+    return this.http.post<PublicUserModel[]>(this.host + "/event/" + eventId, usernames);
   }
 
   public getUserInvitations(): Observable<EventInvitationModel[]> {
@@ -31,7 +32,12 @@ export class InviteService {
     return this.http.delete(this.host + "/decline/" + invite.id)
   }
 
-  public findUsernamesToInvite(eventId: string): Observable<string[]> {
-    return this.http.get<string[]>(environment.apiBaseUrl + "/user/notIn/event/" + eventId );
+  public deleteInvite( eventId: string, username: string): Observable<PublicUserModel>{
+      return this.http.delete<PublicUserModel>(this.host + "/delete/" + eventId + "/user/" + username)
   }
+
+  public findUsersToInvite(eventId: string): Observable<PublicUserModel[]> {
+    return this.http.get<PublicUserModel[]>(environment.apiBaseUrl + "/user/notIn/event/" + eventId );
+  }
+
 }

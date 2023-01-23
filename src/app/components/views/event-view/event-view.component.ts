@@ -14,6 +14,7 @@ import * as EventActions from "../../../ngrx-store/actions/events.actions";
 import * as EventSelectors from "../../../ngrx-store/selectors/events.selector"
 import * as EventsSelectors from "../../../ngrx-store/selectors/events.selector";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
+import {PublicUserModel} from "../../../model/user/publicUser.model";
 
 @Component({
   selector: 'app-event-view',
@@ -97,18 +98,18 @@ export class EventViewComponent implements OnInit, OnDestroy {
     this.openParticipatorsWindow = bool;
   }
 
-  inviteUsers($event: string[]) {
-    /*if($event.length != 0){
-      $event.forEach(username => {
-        this.subscriptions.push(
-          this.inviteService.inviteUserToEvent(this.currentEvent.id, username).subscribe(response => {
+  inviteUsers($event: PublicUserModel[]) {
+    if($event.length != 0){ //if nothing is changed then don't let user make an empty request
+        const usernames = $event.map(user => user.username)
+          this.inviteService.inviteUserToEvent(this.currentEvent.id, usernames).subscribe(response => {
             //console.log(response);
             //TODO: confirmation notification
+              this.openParticipatorsWindow = false;
           })
-        )
-      })
-    }*/
 
-    this.openParticipatorsWindow = false;
+
+    }
+
+
   }
 }
