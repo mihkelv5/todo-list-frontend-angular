@@ -44,8 +44,9 @@ export class EventViewComponent implements OnInit, OnDestroy {
               private store: Store<AppStateInterface>) {
     const routeId = this.route.snapshot.paramMap.get("eventId");
     if (routeId) {
-      this.store.dispatch(EventActions.getCurrentEvent({eventId: routeId}))
         this.store.dispatch(TasksActions.getEventTasks({eventId: routeId}))
+        this.store.dispatch(EventActions.getCurrentEvent({eventId: routeId}))
+        this.store.dispatch(EventActions.getUsersThatCanBeInvited({eventId: routeId}))
     }
     this.currentEvent$ = this.store.pipe(select(EventsSelectors.getCurrentEventSelector))
   }

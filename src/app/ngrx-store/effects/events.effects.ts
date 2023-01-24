@@ -53,7 +53,7 @@ export class EventsEffects{
                     users => EventActions.inviteUsersToEventSuccess({invitedUsers: users})
                 ))
             }))
-    )
+    );
 
     removeUserEventInvite$ = createEffect(() =>
         this.actions$.pipe(ofType(EventActions.removeAlreadyInvitedUser),
@@ -62,5 +62,14 @@ export class EventsEffects{
                     response => EventActions.removeAlreadyInvitedUserSuccess({removedUser: response})
                 ))
             }))
-    )
+    );
+
+    getUsersThatCanBeInvited$ = createEffect(() =>
+        this.actions$.pipe(ofType(EventActions.getUsersThatCanBeInvited),
+            switchMap((action) => {
+                return this.inviteService.findUsersToInvite(action.eventId).pipe(map(
+                    users => EventActions.getUsersThatCanBeInvitedSuccess({canBeInvitedUsers: users})
+                ))
+            }))
+    );
 }

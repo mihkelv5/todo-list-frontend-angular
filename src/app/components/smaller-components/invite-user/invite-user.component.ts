@@ -25,10 +25,7 @@ export class InviteUserComponent {
 
 
     searchControl = new FormControl();
-    results: PublicUserModel[] = [];
     filteredResults$!: Observable<PublicUserModel[]>;
-    subscriptions: Subscription[] = [];
-    inviteWaitingListUsers: PublicUserModel[] = [];
 
     searchValue = "";
     canClose = false;
@@ -48,11 +45,7 @@ export class InviteUserComponent {
     }
 
     loadUsersFromDB() {
-        this.subscriptions.push(
-            this.invitationService.findUsersToInvite(this.event.id).subscribe(response => {
-                this.results = response;
-                this.searchControl.setValue("");
-            }))
+        this.searchControl.setValue("");
 
         this.filteredResults$ = this.searchControl.valueChanges.pipe(
             startWith(''),
@@ -63,31 +56,33 @@ export class InviteUserComponent {
 
     filterResults(value: string): PublicUserModel[] {
         this.searchValue = value;
-        return this.results.filter(result =>
+        return this.event.canBeInvited.filter(result =>
             result.username.toLowerCase().includes(value.toLowerCase())
         );
     }
 
 
-    addToEvent(result: PublicUserModel) {
-        this.inviteWaitingListUsers.push(result);
-        this.results = this.results.filter(name => name.username !== result.username);
+    addToEvent(user: PublicUserModel) {
 
-        //doesn't actually change the value in search bar, but forces the filteredResult to update
-        this.searchControl.setValue(this.searchValue);
+        this.store.dispatch(EventsActions.moveUserToWaitingList({addedUser: user}))
+        setTimeout(() => {
+            this.searchControl.setValue(this.searchValue);
+        }, 0) //forces the invite list to update
     }
 
     removeFromInviteList(user: PublicUserModel) {
-        this.results.push(user);
-        this.inviteWaitingListUsers = this.inviteWaitingListUsers.filter(name => name.username !== user.username);
-        //doesn't actually change the value in search bar, but forces the filteredResult to update
-        this.searchControl.setValue(this.searchValue);
+        this.store.dispatch(EventsActions.removeUserFromWaitingList({removedUser: user}))
+        setTimeout(() => {
+            this.searchControl.setValue(this.searchValue);
+        }, 0) //forces the invite list to update
+
     }
 
     unInviteFromEvent(user: PublicUserModel){
         this.store.dispatch(EventsActions.removeAlreadyInvitedUser({eventId: this.event.id, invitedUsername: user.username}))
-        this.results.push(user);
-        this.searchControl.setValue(this.searchValue);
+        setTimeout(() => {
+            this.searchControl.setValue(this.searchValue);
+        }, 50) //forces the invite list to update
     }
 
     closeWindow() {
@@ -104,8 +99,8 @@ export class InviteUserComponent {
 
 
     sendUserInvites() {
-        const invitedUsers = this.inviteWaitingListUsers.map(user => user.username)
+        const invitedUsers = this.event.waitingList.map(user => user.username);
         this.store.dispatch(EventsActions.inviteUsersToEvent({eventId: this.event.id, invitedUsers}))
-        this.inviteWaitingListUsers = [];
+
     }
 }

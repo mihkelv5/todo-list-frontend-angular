@@ -7,14 +7,14 @@
       </div>
     </div>
     <div class="body"> <!--user search-->
-      <div *ngIf="filteredResults$ | async as array" class="search">
+      <div class="search">
         <div class="search-bar">
-          <input type="text" class=""  [(ngModel)]="searchValue" />
+          <input type="text" class=""  [formControl]="searchControl" />
           <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
         </div>
           <div class="search-results"> <!--search result-->
-            <ul class="result-list">
-              <li *ngFor="let result of array" (click)="addToEvent(result)" class="result-entry">
+            <ul  class="result-list">
+              <li *ngFor="let result of filteredResults$ | async" (click)="addToEvent(result)" class="result-entry">
                 <fa-icon [icon]="faUser"></fa-icon>
                 <span >{{result.username}}</span>
               </li>
@@ -34,14 +34,14 @@
                     <fa-icon [icon]="faXmark"></fa-icon>
                 </div>
             </li>
-          <li *ngFor="let user of inviteWaitingListUsers" class="result-entry">
+          <li *ngFor="let user of event.waitingList" class="result-entry">
             <fa-icon [icon]="faUser"></fa-icon>
             <span >{{user.username}}</span>
             <div class="remove-user" (click)="removeFromInviteList(user)">
               <fa-icon [icon]="faXmark"></fa-icon>
             </div>
           </li>
-          <li *ngIf="inviteWaitingListUsers.length == 0 && event.invitedUsers.length == 0" >
+          <li *ngIf="event.waitingList.length == 0 && event.invitedUsers.length == 0" >
             <span class="no-users">
               No new users invited
             </span>
@@ -57,7 +57,7 @@
     <div class="footer">
       <button (click)="closeWindow()"
         class="cancel-button">Discard</button>
-      <button (click)="sendUserInvites()" [disabled]="this.inviteWaitingListUsers.length == 0"
+      <button (click)="sendUserInvites()" [disabled]="event.waitingList.length == 0"
         class="invite-button">Send invites</button>
     </div>
   </div>

@@ -5,7 +5,7 @@ import {EventModel} from "../../model/event.model";
 
 export const initialState: EventStateInterface = {
   events: [],
-  currentEvent: new EventModel("", "", ""),
+  currentEvent: new EventModel("", "", "" ),
 }
 
 export const eventsReducers = createReducer(initialState,
@@ -29,11 +29,24 @@ export const eventsReducers = createReducer(initialState,
             currentEvent: new EventModel("", "", "")
         }}),
 
+    on(EventActions.getUsersThatCanBeInvitedSuccess, (state, action) => {
+        return {
+            ...state,
+            currentEvent: {...state.currentEvent,
+                canBeInvited: action.canBeInvitedUsers,
+                waitingList: []
+            }
+        }
+    }),
+
     on(EventActions.inviteUsersToEventSuccess, (state, action) => {
         return {
             ...state,
             currentEvent: {...state.currentEvent,
-                invitedUsers: state.currentEvent.invitedUsers.concat(action.invitedUsers) }
+                invitedUsers: [...state.currentEvent.invitedUsers.concat(action.invitedUsers)],
+                canBeInvited: [...state.currentEvent.canBeInvited.filter(users => !action.invitedUsers.includes(users))],
+                waitingList: []
+            }
         }
     }),
 
@@ -41,9 +54,31 @@ export const eventsReducers = createReducer(initialState,
         return {
             ...state,
             currentEvent: {...state.currentEvent,
-                invitedUsers: [...state.currentEvent.invitedUsers.filter(user => user.username != action.removedUser.username)]
+                invitedUsers: [...state.currentEvent.invitedUsers.filter(user => user.username != action.removedUser.username)],
+                canBeInvited: [...state.currentEvent.canBeInvited.concat(action.removedUser)]
+            }
+        }
+    }),
+
+    on(EventActions.moveUserToWaitingList, (state, action) => {
+
+        return {
+
+            ...state,
+            currentEvent: {...state.currentEvent,
+                canBeInvited: [...state.currentEvent.canBeInvited.filter(user => user.username != action.addedUser.username)],
+                waitingList: state.currentEvent.waitingList.concat(action.addedUser)
+            }
+        }
+    }),
+
+    on(EventActions.removeUserFromWaitingList, (state, action) => {
+        return {
+            ...state,
+            currentEvent: {...state.currentEvent,
+                waitingList: [...state.currentEvent.waitingList.filter(user => user.username != action.removedUser.username)],
+                canBeInvited: state.currentEvent.canBeInvited.concat(action.removedUser)
             }
         }
     })
-
 )
