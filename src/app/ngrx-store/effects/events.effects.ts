@@ -65,9 +65,9 @@ export class EventsEffects{
     );
 
     getUsersThatCanBeInvited$ = createEffect(() =>
-        this.actions$.pipe(ofType(EventActions.getUsersThatCanBeInvited),
+        this.actions$.pipe(ofType(EventActions.getCurrentEventSuccess),
             switchMap((action) => {
-                return this.inviteService.findUsersToInvite(action.eventId).pipe(map(
+                return this.inviteService.findUsersToInvite(action.currentEvent.id).pipe(map(
                     users => EventActions.getUsersThatCanBeInvitedSuccess({canBeInvitedUsers: users})
                 ))
             }))

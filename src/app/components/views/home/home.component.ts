@@ -55,4 +55,8 @@ export class HomeComponent {
   createNewEvent() {
       this.router.navigateByUrl("/event/edit/new")
   }
+
+  orderBy(id: string){
+
+  }
 }

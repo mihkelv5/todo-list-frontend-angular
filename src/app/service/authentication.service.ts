@@ -56,7 +56,7 @@ export class AuthenticationService {
   }
 
   public logout() {
-      this.cookieService.delete("Login-Cookie")
+      this.cookieService.delete("Login-Cookie", "/")
       this.token = "";
       this.loggedInUsername = "";
       sessionStorage.removeItem("user");

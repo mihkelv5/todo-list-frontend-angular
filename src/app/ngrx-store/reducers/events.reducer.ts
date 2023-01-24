@@ -13,7 +13,10 @@ export const eventsReducers = createReducer(initialState,
 
   on(EventActions.getCurrentEventSuccess, (state, action) => ({
     ...state,
-    currentEvent: action.currentEvent
+    currentEvent: {
+        ...action.currentEvent
+
+    },
   })),
   on(EventActions.getAllEventsSuccess, (state, action) => {
     return{
@@ -78,6 +81,16 @@ export const eventsReducers = createReducer(initialState,
             currentEvent: {...state.currentEvent,
                 waitingList: [...state.currentEvent.waitingList.filter(user => user.username != action.removedUser.username)],
                 canBeInvited: state.currentEvent.canBeInvited.concat(action.removedUser)
+            }
+        }
+    }),
+
+    on(EventActions.cancelInvite, (state) => {
+        return {
+            ...state,
+            currentEvent: {...state.currentEvent,
+                canBeInvited: state.currentEvent.canBeInvited.concat(state.currentEvent.waitingList),
+                waitingList: []
             }
         }
     })

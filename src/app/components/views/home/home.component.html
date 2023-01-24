@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="event-board user-events">
-          <div *ngFor="let event of events$ | async">
+          <div *ngFor="let event of events$ | async ">
             <div class="event" (click)="clickedOnEvent(event.id)">
               <fa-icon [icon]="faImage" class="event-image"></fa-icon>
 

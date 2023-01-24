@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {EventService} from "../../../service/event.service";
-import {map, Observable, of, Subscription, take, tap} from "rxjs";
+import {map, Observable, of, pipe, Subscription, take, tap} from "rxjs";
 import {TaskService} from "../../../service/task.service";
 import {TaskModel} from "../../../model/task.model";
 import {EventModel} from "../../../model/event.model";
@@ -46,7 +46,6 @@ export class EventViewComponent implements OnInit, OnDestroy {
     if (routeId) {
         this.store.dispatch(TasksActions.getEventTasks({eventId: routeId}))
         this.store.dispatch(EventActions.getCurrentEvent({eventId: routeId}))
-        this.store.dispatch(EventActions.getUsersThatCanBeInvited({eventId: routeId}))
     }
     this.currentEvent$ = this.store.pipe(select(EventsSelectors.getCurrentEventSelector))
   }
@@ -54,17 +53,15 @@ export class EventViewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-        this.currentEvent$.subscribe(
+        this.currentEvent$.pipe().subscribe(
         currentEvent => {
             if(currentEvent.id !== ""){
                 this.currentEvent = currentEvent;
                 this.isEventLoaded = true;
 
-            }
-        }
-    )
-)
 
+            }
+        }))
 
 
   }

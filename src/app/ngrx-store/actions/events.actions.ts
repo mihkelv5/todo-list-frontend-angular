@@ -41,9 +41,6 @@ export const removeAlreadyInvitedUser = createAction('[Event] Remove Invited Use
 export const removeAlreadyInvitedUserSuccess = createAction('[Event] Remove Invited User Success',
     props<{removedUser: PublicUserModel}>());
 
-export const getUsersThatCanBeInvited = createAction('[Event] Getting Users That Can Be Invited',
-    props<{eventId: string}>())
-
 export const getUsersThatCanBeInvitedSuccess = createAction('[Event] Getting Users That Can Be Invited Success',
     props<{canBeInvitedUsers: PublicUserModel[]}>());
 
@@ -52,3 +49,5 @@ export const moveUserToWaitingList = createAction('[Event] Moved user to waiting
 
 export const removeUserFromWaitingList = createAction('[Event] Removed user from waiting list',
     props<{removedUser: PublicUserModel}>());
+
+export const cancelInvite = createAction('[Event] Canceled inviting users')

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {EventInvitationModel} from "../model/eventInvitation.model";
 import {PublicUserModel} from "../model/user/publicUser.model";
 
@@ -37,6 +37,9 @@ export class InviteService {
   }
 
   public findUsersToInvite(eventId: string): Observable<PublicUserModel[]> {
+      if(eventId == ""){
+          return of([]) //Temporary fix to situation where going back to main page will give error because api call was made to get users from event that doesn't exist.
+      }
     return this.http.get<PublicUserModel[]>(environment.apiBaseUrl + "/user/notIn/event/" + eventId );
   }
 

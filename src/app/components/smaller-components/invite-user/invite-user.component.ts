@@ -1,5 +1,5 @@
 
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InviteService} from "../../../service/invite.service";
 import {FormControl} from "@angular/forms";
 import {map, Observable, startWith, Subscription} from "rxjs";
@@ -11,13 +11,14 @@ import {UserModel} from "../../../model/user/user.model";
 import {Store} from "@ngrx/store";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import * as EventsActions from "../../../ngrx-store/actions/events.actions";
+import * as EventActions from "../../../ngrx-store/actions/events.actions";
 
 @Component({
     selector: 'app-invite-users',
     templateUrl: './invite-user.component.html',
     styleUrls: ['./invite-user.component.css']
 })
-export class InviteUserComponent {
+export class InviteUserComponent implements OnInit{
 
     faXmark = faXmark;
     faMagnifyingGlass = faMagnifyingGlass;
@@ -35,6 +36,7 @@ export class InviteUserComponent {
     @Output() inviteUsers = new EventEmitter<PublicUserModel[]>;
 
     constructor(private invitationService: InviteService, private store: Store<AppStateInterface>) {
+
     }
 
     ngOnInit() {
@@ -42,6 +44,7 @@ export class InviteUserComponent {
             this.canClose = true;
         }, 300)
         this.loadUsersFromDB()
+
     }
 
     loadUsersFromDB() {
@@ -88,6 +91,7 @@ export class InviteUserComponent {
     closeWindow() {
         if (this.canClose) {
             this.closeWindowEvent.emit();
+            this.store.dispatch(EventsActions.cancelInvite())
         }
     }
 
