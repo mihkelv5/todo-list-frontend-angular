@@ -21,21 +21,19 @@ import {PublicUserModel} from "../../../model/user/publicUser.model";
   templateUrl: './event-view.component.html',
   styleUrls: ['./event-view.component.css']
 })
-export class EventViewComponent implements OnInit, OnDestroy {
-  faPenToSquare = faPenToSquare;
-  faPencil = faPencil;
-  faUsers = faUsers;
-  faTrashCan = faTrashCan;
-  openParticipatorsWindow = false;
+export class EventViewComponent implements OnInit {
+    faPenToSquare = faPenToSquare;
+    faPencil = faPencil;
+    faUsers = faUsers;
+    faTrashCan = faTrashCan;
 
+    openParticipatorsWindow = false;
+    isEventLoaded = false;
+    deleteEventConfirmation = false;
 
-  isEventLoaded = false;
-
-  currentEvent!: EventModel;
-  subscriptions: Subscription[] = [];
-  tasks: TaskModel[] = [];
-  deleteEventConfirmation = false;
-  currentEvent$: Observable<EventModel>;
+    tasks: TaskModel[] = [];
+    currentEvent!: EventModel;
+    currentEvent$: Observable<EventModel>;
 
 
   constructor(private eventService: EventService,
@@ -52,25 +50,15 @@ export class EventViewComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.subscriptions.push(
-        this.currentEvent$.pipe().subscribe(
+
+        this.currentEvent$.pipe(take(1)).subscribe(
         currentEvent => {
             if(currentEvent.id !== ""){
                 this.currentEvent = currentEvent;
-                this.isEventLoaded = true;
-
-
-            }
-        }))
-
-
+        }})
   }
 
 
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(sub => sub.unsubscribe())
-  }
 
 
   createTask() {
@@ -96,18 +84,5 @@ export class EventViewComponent implements OnInit, OnDestroy {
     this.openParticipatorsWindow = bool;
   }
 
-  inviteUsers($event: PublicUserModel[]) {
-    if($event.length != 0){ //if nothing is changed then don't let user make an empty request
-        const usernames = $event.map(user => user.username)
-          this.inviteService.inviteUserToEvent(this.currentEvent.id, usernames).subscribe(response => {
-            //console.log(response);
-            //TODO: confirmation notification
-              this.openParticipatorsWindow = false;
-          })
 
-
-    }
-
-
-  }
 }

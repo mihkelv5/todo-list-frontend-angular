@@ -1,23 +1,22 @@
 
   <div class="limiter">
-    <div class="task-container">
-
+    <div class="task-container" *ngIf="(task$ | async) as task">
       <form #taskForm="ngForm" class="task-form">
-      <span>TaskItem title:</span>
-      <input type="text" class="task-data-wrapper" name="title" placeholder="Title" maxlength="20" [value]=task.title
+      <span>Task title:</span>
+      <input type="text" class="task-data-wrapper" name="title" placeholder="Title" maxlength="20" [ngModel]="task.title"
       ngModel #titleInput="ngModel" required>
 
       <span>Pick a date:</span>
       <mat-form-field class="task-date-form" appearance="fill"  >
         <mat-label>DD/MM/YYYY</mat-label>
-        <input matInput [matDatepicker]="picker" name="date" ngModel #dateInput="ngModel"  [value]=task.date required>
+        <input matInput [matDatepicker]="picker" name="date" ngModel #dateInput="ngModel"  [ngModel]="task.date" required>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
       <span>TaskItem description:</span>
       <textarea type="text" class="task-data-wrapper task-textarea" maxlength="255" name="description" placeholder="description"
-      ngModel #descriptionInput="ngModel" [value]=task.description  required
+      ngModel #descriptionInput="ngModel" [ngModel]="task.description"  required
       ></textarea>
 
       <span>Pick a color:</span>
@@ -28,7 +27,6 @@
         <button type="submit"
         [disabled]="taskForm.invalid && task == null" (click)="onSubmit(taskForm.value); taskForm.resetForm()">Save</button>
         <button (click)="taskForm.resetForm(); onCancel()" >cancel</button>
-
       </div>
       </form>
     </div>

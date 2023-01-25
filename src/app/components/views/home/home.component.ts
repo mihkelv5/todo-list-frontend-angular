@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {TaskFilterEnum} from "../../../enum/task-filter.enum";
 import {UserTasksComponent} from "../../smaller-components/user-tasks/user-tasks.component";
@@ -24,12 +24,12 @@ import * as UsersActions from "../../../ngrx-store/actions/users.actions";
 })
 
 
-export class HomeComponent {
+export class HomeComponent implements AfterViewInit{
 
     faImage=faImage;
     faPlus = faPlus;
     events$: Observable<EventModel[]>
-    currentUser$: Observable<PrivateUserModel>
+    currentUser$!: Observable<PrivateUserModel>
 
 
 
@@ -38,12 +38,15 @@ export class HomeComponent {
     this.store.dispatch(EventActions.getCurrentEvent({eventId: ""}));
     this.store.dispatch(EventActions.getAllEvents());
 
-    this.currentUser$ = this.store.pipe(select(UserSelector.getUserDataSelector));
+
     this.events$ = this.store.pipe(select(EventsSelector.getEventsSelector));
   }
 
+  ngAfterViewInit() {
+      this.currentUser$ = this.store.pipe(select(UserSelector.getUserDataSelector));
+  }
 
-  clickedOnEvent(eventId: string) {
+    clickedOnEvent(eventId: string) {
     this.router.navigateByUrl("/event/" + eventId); //TODO: add guard that checks if event exists.
   }
 
@@ -56,7 +59,4 @@ export class HomeComponent {
       this.router.navigateByUrl("/event/edit/new")
   }
 
-  orderBy(id: string){
-
-  }
 }

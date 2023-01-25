@@ -10,8 +10,9 @@ import {faEnvelope} from "@fortawesome/free-solid-svg-icons";
 import {faLock, faArrowRightLong} from "@fortawesome/free-solid-svg-icons";
 import {CookieService} from "ngx-cookie-service";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
-import {Store} from "@ngrx/store";
+import {select, Store} from "@ngrx/store";
 import * as UsersActions from "../../../ngrx-store/actions/users.actions"
+import * as UserSelector from "../../../ngrx-store/selectors/userData.selector";
 
 
 @Component({

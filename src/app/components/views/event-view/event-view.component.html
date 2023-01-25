@@ -45,8 +45,7 @@
       <app-invite-users *ngIf="openParticipatorsWindow && (currentEvent$ | async); let event"
                         [event]="event"
                         class="participators-window"
-                        (closeWindowEvent)="toggleParticipatorWindow(false)"
-                        (inviteUsers)="inviteUsers($event)">
+                        (closeWindowEvent)="toggleParticipatorWindow(false)">
       </app-invite-users>
 
 

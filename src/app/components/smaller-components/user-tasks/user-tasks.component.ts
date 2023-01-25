@@ -7,8 +7,7 @@ import {Router} from "@angular/router";
 import {EventModel} from "../../../model/event.model";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import {select, Store} from "@ngrx/store";
-import * as TasksSelectors from "../../../ngrx-store/selectors/userTasks.selector"
-import * as EventsSelectors from "../../../ngrx-store/selectors/events.selector"
+import * as TasksSelectors from "../../../ngrx-store/selectors/tasks.selector"
 
 
 @Component({

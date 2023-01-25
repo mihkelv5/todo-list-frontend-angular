@@ -33,7 +33,6 @@ export class InviteUserComponent implements OnInit{
 
     @Input("event") event!: EventModel;
     @Output() closeWindowEvent = new EventEmitter<void>;
-    @Output() inviteUsers = new EventEmitter<PublicUserModel[]>;
 
     constructor(private invitationService: InviteService, private store: Store<AppStateInterface>) {
 
@@ -105,6 +104,6 @@ export class InviteUserComponent implements OnInit{
     sendUserInvites() {
         const invitedUsers = this.event.waitingList.map(user => user.username);
         this.store.dispatch(EventsActions.inviteUsersToEvent({eventId: this.event.id, invitedUsers}))
-
+        this.closeWindow()
     }
 }

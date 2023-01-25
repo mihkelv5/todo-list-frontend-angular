@@ -2,58 +2,45 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {TaskModel} from "../../../model/task.model";
 import {TaskService} from "../../../service/task.service";
-import {Subscription} from "rxjs";
+import {map, Observable, of, Subscription} from "rxjs";
 import { Location } from '@angular/common'
 import {PublicUserModel} from "../../../model/user/publicUser.model";
+import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
+import {select, Store} from "@ngrx/store";
+import * as TaskSelectors from "../../../ngrx-store/selectors/tasks.selector"
+import {DateAdapter} from "@angular/material/core";
+
 
 @Component({
   selector: 'app-edit-task',
   templateUrl: './edit-task.component.html',
   styleUrls: ['./edit-task.component.css']
 })
-export class EditTaskComponent implements  OnInit, OnDestroy{
+export class EditTaskComponent implements  OnInit{
 
 
-  private eventId: string | undefined;
-  task: TaskModel;
-  subscription: Subscription | undefined;
-  constructor(private route: ActivatedRoute, private location: Location, private taskService: TaskService) {
-    this.task = new TaskModel(
-      null,
-      new Date(),
-      false,
-      "",
-      "",
-      0,
-      0,
-      "white",
-      new PublicUserModel(""),
-      [],
-      undefined
-    );
+
+  task$: Observable<TaskModel>
+
+
+  constructor(private dateAdapter: DateAdapter<Date>, private route: ActivatedRoute, private location: Location, private store: Store<AppStateInterface>) {
+
+      this.dateAdapter.setLocale('en-GB')
+      const taskId = this.route.snapshot.paramMap.get("taskId");
+      const eventId = this.route.snapshot.paramMap.get("eventId");
+      this.task$ = this.store.select(TaskSelectors.getTaskDetails(taskId, eventId))
+
   }
 
   ngOnInit(): void {
-    const taskId = this.route.snapshot.paramMap.get("taskId");
-    const eventId = this.route.snapshot.paramMap.get("eventId");
-    if(eventId && eventId != "nan") {
-      this.eventId = eventId;
-    }
 
-    if (taskId && taskId != "new") { //
-      this.subscription =  this.taskService.findTaskById(taskId).subscribe(response => {
-        this.task = response;
-      })
-    }
   }
 
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
-  }
 
 
   onSubmit(formTask: TaskModel) {
-    if(!this.task.id){
+      console.log(formTask)
+    /*if(!this.task.id){
       if(!formTask.color){
         formTask.color = this.getRandomColor();
       }
@@ -83,7 +70,7 @@ export class EditTaskComponent implements  OnInit, OnDestroy{
       this.taskService.updateTask(updatedTask).subscribe(() => {
         this.location.back();
       });
-    }
+    }*/
   }
 
   onCancel() {
