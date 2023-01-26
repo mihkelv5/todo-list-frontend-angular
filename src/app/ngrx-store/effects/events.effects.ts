@@ -17,7 +17,7 @@ export class EventsEffects{
     this.actions$.pipe(ofType(EventActions.getCurrentEvent),
       exhaustMap((action) => {
         if(action.eventId == ""){
-          return of(new EventModel("", "", "")).pipe(map(
+          return of(null).pipe(map(
             currentEvent => EventActions.getCurrentEventSuccess({currentEvent})
           ))
         } else {
@@ -67,6 +67,11 @@ export class EventsEffects{
     getUsersThatCanBeInvited$ = createEffect(() =>
         this.actions$.pipe(ofType(EventActions.getCurrentEventSuccess),
             switchMap((action) => {
+                if(!action.currentEvent){
+                    return of([]).pipe(map(
+                        users => EventActions.getUsersThatCanBeInvitedSuccess({canBeInvitedUsers: users})
+                    ))
+                }
                 return this.inviteService.findUsersToInvite(action.currentEvent.id).pipe(map(
                     users => EventActions.getUsersThatCanBeInvitedSuccess({canBeInvitedUsers: users})
                 ))

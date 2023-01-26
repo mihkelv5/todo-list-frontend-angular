@@ -19,7 +19,7 @@ export const getCurrentEvent = createAction('[Event] Get Current Event',
 );
 
 export const getCurrentEventSuccess = createAction('[Event] Get Current Event Success',
-  props<{currentEvent: EventModel}>()
+  props<{currentEvent: EventModel | null}>()
 );
 
 export const deleteEvent = createAction('[Event] Delete Current Event',

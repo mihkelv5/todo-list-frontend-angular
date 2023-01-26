@@ -11,7 +11,7 @@ import {InviteService} from "../../../service/invite.service";
 import {select, Store} from "@ngrx/store";
 import * as TasksActions from "../../../ngrx-store/actions/tasks.actions";
 import * as EventActions from "../../../ngrx-store/actions/events.actions";
-import * as EventSelectors from "../../../ngrx-store/selectors/events.selector"
+import * as TaskSelectors from "../../../ngrx-store/selectors/tasks.selector"
 import * as EventsSelectors from "../../../ngrx-store/selectors/events.selector";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import {PublicUserModel} from "../../../model/user/publicUser.model";
@@ -33,7 +33,7 @@ export class EventViewComponent implements OnInit {
 
     tasks: TaskModel[] = [];
     currentEvent!: EventModel;
-    currentEvent$: Observable<EventModel>;
+    currentEvent$: Observable<EventModel | null>;
 
 
   constructor(private eventService: EventService,
@@ -42,7 +42,17 @@ export class EventViewComponent implements OnInit {
               private store: Store<AppStateInterface>) {
     const routeId = this.route.snapshot.paramMap.get("eventId");
     if (routeId) {
-        this.store.dispatch(TasksActions.getEventTasks({eventId: routeId}))
+
+
+        this.store.select(TaskSelectors.getAreCurrentEventTasksLoaded(routeId)).pipe(take(1)).subscribe(
+            bool => {
+                if(!bool){
+                    console.log(bool)
+                    this.store.dispatch(TasksActions.getEventTasks({eventId: routeId}))
+                }
+            }
+        )
+
         this.store.dispatch(EventActions.getCurrentEvent({eventId: routeId}))
     }
     this.currentEvent$ = this.store.pipe(select(EventsSelectors.getCurrentEventSelector))
@@ -53,7 +63,7 @@ export class EventViewComponent implements OnInit {
 
         this.currentEvent$.pipe(take(1)).subscribe(
         currentEvent => {
-            if(currentEvent.id !== ""){
+            if(currentEvent){
                 this.currentEvent = currentEvent;
         }})
   }

@@ -19,7 +19,7 @@ export const getEventTasks = createAction('[Event Tasks] Get Event tasks',
   props<{eventId: string}>()
 );
 export const getEventTasksSuccess = createAction('[Event Tasks] Get Event tasks Success',
-  props<{eventTasks: TaskModel[]}>()
+  props<{eventId: string, eventTasks: TaskModel[]}>()
 );
 
 export const addTask = createAction('[Tasks] Add task',
@@ -53,3 +53,4 @@ export const moveTask = createAction('[Tasks] Move Task',
 export const moveTaskSuccess = createAction('[Tasks] Move Task Success',
   props<{task: TaskModel, eventId: string}>()
 );
+

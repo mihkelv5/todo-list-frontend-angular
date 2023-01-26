@@ -3,5 +3,5 @@ import {TaskModel} from "../../model/task.model";
 
 export interface EventStateInterface {
   events: EventModel[];
-  currentEvent: EventModel;
+  currentEvent: EventModel | null;
 }

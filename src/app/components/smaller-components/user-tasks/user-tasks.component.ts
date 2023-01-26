@@ -21,6 +21,7 @@ export class UserTasksComponent implements OnInit, OnDestroy {
   @Input("event") event!: EventModel | null;
   tasks$: Observable<TaskModel[]>
 
+
   constructor(private router: Router, private store: Store<AppStateInterface>) {
       this.tasks$ = of([])
     }
@@ -28,9 +29,10 @@ export class UserTasksComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     if(this.event){
-      this.tasks$ = this.store.pipe(select(TasksSelectors.getEventTasksSelector))
+        console.log(this.event)
+      this.tasks$ = this.store.pipe(select(TasksSelectors.getTasksSelector(this.event.id)))
     } else {
-      this.tasks$ = this.store.pipe(select(TasksSelectors.getUserTasksSelector));
+      this.tasks$ = this.store.pipe(select(TasksSelectors.getTasksSelector(null)));
     }
   }
 

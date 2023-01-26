@@ -22,7 +22,7 @@ export class TasksEffects {
     this.actions$.pipe(ofType(TasksActions.getEventTasks),
       exhaustMap((action) => {
         return this.taskService.loadTasksByEvent(action.eventId).pipe(map(
-            (tasks) => TasksActions.getEventTasksSuccess({eventTasks: tasks})
+            (tasks) => TasksActions.getEventTasksSuccess({eventId: action.eventId, eventTasks: tasks})
         ))
       })
       )

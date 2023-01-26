@@ -24,7 +24,7 @@ export class TaskService {
 
 
   public loadUserTasks(): Observable<TaskModel[]> {
-        return this.http.get<TaskModel[]>(this.host + "/user/all");
+        return this.http.get<TaskModel[]>(this.host + "/user/private");
   }
 
   loadUserTasksNoEvent(): Observable<TaskModel[]> {

@@ -5,7 +5,7 @@ import {EventModel} from "../../model/event.model";
 
 export const initialState: EventStateInterface = {
   events: [],
-  currentEvent: new EventModel("", "", "" ),
+  currentEvent: null,
 }
 
 export const eventsReducers = createReducer(initialState,
@@ -13,10 +13,8 @@ export const eventsReducers = createReducer(initialState,
 
   on(EventActions.getCurrentEventSuccess, (state, action) => ({
     ...state,
-    currentEvent: {
-        ...action.currentEvent
-
-    },
+    currentEvent: action.currentEvent
+    ,
   })),
   on(EventActions.getAllEventsSuccess, (state, action) => {
     return{
@@ -29,10 +27,13 @@ export const eventsReducers = createReducer(initialState,
         return {
             ...state,
             events: [...state.events.filter(event => event.id !== action.eventId)],
-            currentEvent: new EventModel("", "", "")
+            currentEvent: null
         }}),
 
     on(EventActions.getUsersThatCanBeInvitedSuccess, (state, action) => {
+        if(!state.currentEvent){
+            return state
+        }
         return {
             ...state,
             currentEvent: {...state.currentEvent,
@@ -43,6 +44,9 @@ export const eventsReducers = createReducer(initialState,
     }),
 
     on(EventActions.inviteUsersToEventSuccess, (state, action) => {
+        if(!state.currentEvent){
+            return state
+        }
         return {
             ...state,
             currentEvent: {...state.currentEvent,
@@ -54,6 +58,9 @@ export const eventsReducers = createReducer(initialState,
     }),
 
     on(EventActions.removeAlreadyInvitedUserSuccess, (state, action) => {
+        if(!state.currentEvent){
+            return state
+        }
         return {
             ...state,
             currentEvent: {...state.currentEvent,
@@ -64,6 +71,9 @@ export const eventsReducers = createReducer(initialState,
     }),
 
     on(EventActions.moveUserToWaitingList, (state, action) => {
+        if(!state.currentEvent){
+            return state
+        }
 
         return {
 
@@ -76,6 +86,9 @@ export const eventsReducers = createReducer(initialState,
     }),
 
     on(EventActions.removeUserFromWaitingList, (state, action) => {
+        if(!state.currentEvent){
+            return state
+        }
         return {
             ...state,
             currentEvent: {...state.currentEvent,
@@ -86,6 +99,9 @@ export const eventsReducers = createReducer(initialState,
     }),
 
     on(EventActions.cancelInvite, (state) => {
+        if(!state.currentEvent){
+            return state
+        }
         return {
             ...state,
             currentEvent: {...state.currentEvent,
