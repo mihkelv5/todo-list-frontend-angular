@@ -17,7 +17,7 @@ import {DateAdapter} from "@angular/material/core";
   templateUrl: './edit-task.component.html',
   styleUrls: ['./edit-task.component.css']
 })
-export class EditTaskComponent implements  OnInit{
+export class EditTaskComponent{
 
 
 
@@ -36,9 +36,6 @@ export class EditTaskComponent implements  OnInit{
         }
   }
 
-  ngOnInit(): void {
-
-  }
 
 
 

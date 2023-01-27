@@ -34,6 +34,7 @@ export class TasksEffects {
             concatMap((action) => {
                 return this.taskService.addTask(action.task).pipe(map(
                     task => {
+                        console.log(task)
                         return TasksActions.addTaskSuccess({task})
                     }
                 ))
@@ -64,7 +65,7 @@ export class TasksEffects {
     this.actions$.pipe(ofType(TasksActions.deleteTask),
       mergeMap( action => {
         return this.taskService.deleteTask(action.taskId).pipe(map(
-          () => TasksActions.deleteTaskSuccess({taskId: action.taskId, eventId: action.eventId})
+          () => TasksActions.deleteTaskSuccess({taskId: action.taskId})
         ))
       })
       ))

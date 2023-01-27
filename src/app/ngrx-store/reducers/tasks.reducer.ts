@@ -34,7 +34,7 @@ export const tasksReducers = createReducer(initialState,
 
       return {
         ...state,
-        tasks: [...state.tasks, action.task]
+        tasks: state.tasks.concat(action.task)
       }
 
 

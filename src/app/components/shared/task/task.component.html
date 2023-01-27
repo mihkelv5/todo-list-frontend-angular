@@ -1,5 +1,5 @@
 
-  <div class="task" (clickedOutside)="closePopUp()" *ngIf="task != null && (currentUser$ | async); let user"
+  <div class="task" (clickedOutside)="closePopUp()" *ngIf="task != null && (currentUser$ | async) as user"
 
     [ngStyle]="{'background' : task.color, 'z-index' : taskZIndex}"
     [cdkDragData]="task" (cdkDragEnded)="taskDropped(task, $event)"
@@ -20,6 +20,7 @@
 
     <!--task popup window, could be a separate component later-->
     <div *ngIf="taskPopupWindow" class="task-popup" [ngStyle]="styles">
+
       <ul class="task-buttons">
 
         <li class="task-calendar" >

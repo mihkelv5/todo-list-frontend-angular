@@ -32,11 +32,11 @@ export const addTaskSuccess = createAction('[Tasks] Add Task Success',
 );
 
 export const deleteTask = createAction('[Tasks] Delete task',
-  props<{taskId: string, eventId: string}>()
+  props<{taskId: string}>()
 );
 
 export const deleteTaskSuccess = createAction('[Tasks] Delete task',
-  props<{taskId: string, eventId: string}>()
+  props<{taskId: string}>()
 );
 
 export const completeTask = createAction('[Tasks] Complete Task',
