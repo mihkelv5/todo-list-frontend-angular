@@ -2,7 +2,7 @@ import {Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output}
 import {TaskModel} from "../../../model/task.model";
 import {CdkDragEnd} from "@angular/cdk/drag-drop";
 import {TaskService} from "../../../service/task.service";
-import {Observable, Subscription, take} from "rxjs";
+import {Observable} from "rxjs";
 import {Router} from "@angular/router";
 import {faPencil, faTrash, faPeopleGroup, faSquare, faUserLock, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {faCalendar, faCalendarCheck, faCircleCheck, faCircleXmark } from "@fortawesome/free-regular-svg-icons";
@@ -22,7 +22,7 @@ import {UserTasksComponent} from "../../smaller-components/user-tasks/user-tasks
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css']
 })
-export class TaskComponent implements OnInit, OnDestroy{
+export class TaskComponent implements OnInit{
   faPencil = faPencil;
   faTrash = faTrash;
   faPeopleGroup = faPeopleGroup;
@@ -45,25 +45,19 @@ export class TaskComponent implements OnInit, OnDestroy{
   eventId: string = "";
 
     taskPopupWindow: boolean = false;
+    assignUsersWindow = false; //opens and closes assign user view
+    cdkDragging: boolean = false; //checks if task is dragged or clicked, so it wouldn't open popup if task is dragged
+    canCdkDrag = true;
+    taskZIndex: number = 0; //brings task in front of others when moved or has popup open
 
+    styles = {"right" : "calc(100% + 10px)", "top" : "0"};//used when checking if task is clicked or dragged
 
-  assignUsersWindow = false; //opens and closes assign user view
-    //checks if task is dragged or clicked, so it wouldn't open popup if task is dragged
-    cdkDragging: boolean = false;
-
-  canCdkDrag = true;
-    //brings task in front of others when moved or has popup open
-
-  taskZIndex: number = 0;
-
-  styles = {"right" : "calc(100% + 10px)", "top" : "0"};
-    //used when checking if task is clicked or dragged
 
   mousePosition = {
     x: 0,
     y: 0
   };
-    subscriptions: Subscription[] = [];
+
 
   constructor(private taskService: TaskService, private router: Router, private authService: AuthenticationService, private store: Store<AppStateInterface>) {
     this.currentUser$ = this.store.pipe(select(UserDataSelectors.getUserDataSelector))
@@ -71,16 +65,14 @@ export class TaskComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
+      console.log(this.task)
     this.findDueDate();
     if(this.task.xLocation < 400){
       this.styles.right = "-410px";
     }
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
 
-  }
 
      findDueDate(){
          const dueDate = new Date(this.task.date).getTime();
@@ -121,7 +113,7 @@ export class TaskComponent implements OnInit, OnDestroy{
     }
   }
 
-  togglePopUp(){
+  togglePopUp(){ //check if task is being dragged, if not then open or close task popup window upon clicking task.
     if(!this.cdkDragging){
       if(this.taskPopupWindow){
         this.taskPopupWindow = false;
@@ -176,13 +168,10 @@ export class TaskComponent implements OnInit, OnDestroy{
   }
 
   deleteTask() {
-    let eventId = ""
-    if(this.task.eventId) {
-      eventId = this.task.eventId
-    }
+    console.log("deleting task")
     if(this.task.id) {
       const taskId = this.task.id
-      this.store.dispatch(TasksActions.deleteTask({taskId, eventId: eventId}))
+      this.store.dispatch(TasksActions.deleteTask({taskId}))
     }
   }
 
