@@ -48,7 +48,7 @@ export class EditTaskComponent{
 
     }
     else {
-      const updatedTask = oldTask;
+      let updatedTask = JSON.parse(JSON.stringify(oldTask)); // JSON so it would not be a reference, but a totally different variable
       if(formTask.title){
         updatedTask.title = formTask.title;
       }

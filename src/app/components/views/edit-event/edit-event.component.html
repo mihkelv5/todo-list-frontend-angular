@@ -1,20 +1,18 @@
 
 
-  <div class="limiter">
+  <div class="limiter" *ngIf="currentEvent$ | async as currentEvent">
     <div class="event-container">
       <form class="event-form" #editForm="ngForm">
 
           <label for="event-title">Event title:</label>
-          <input  type="text" value="{{currentEvent.title}}" name="title" id="event-title" class="event-data-wrapper" ngModel #titleInput="ngModel" required>
+          <input  type="text" [ngModel]="currentEvent.title" name="title" id="event-title" class="event-data-wrapper" ngModel #titleInput="ngModel" required>
 
 
           <label for="event-description">Description:</label>
-          <textarea [value]=currentEvent.description name="description" id="event-description" class="event-data-wrapper description" maxlength="255" ngModel #descriptionInput="ngModel" required></textarea>
+          <textarea [ngModel]=currentEvent.description name="description" id="event-description" class="event-data-wrapper description" maxlength="255" ngModel #descriptionInput="ngModel" required></textarea>
 
 
-
-
-          <button type="submit" (click)="submitData(editForm.value)">Save</button>
+          <button type="submit" (click)="submitData(editForm.value, currentEvent); editForm.resetForm()">Save</button>
       </form>
       <button (click)="resetForm()">Cancel</button>
     </div>

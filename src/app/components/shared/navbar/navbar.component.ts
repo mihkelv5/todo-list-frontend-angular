@@ -87,7 +87,8 @@ export class NavbarComponent implements OnInit, OnDestroy{
 
   logout(){
 
-    this.closeUserAndNotificationMenu();
+      this.subscriptions.forEach(sub => sub.unsubscribe());
+      this.closeUserAndNotificationMenu();
     this.authService.logout();
     this.invites = [];
     this.areInvitesLoaded = false;

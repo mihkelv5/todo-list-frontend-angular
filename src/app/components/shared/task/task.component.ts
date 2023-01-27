@@ -58,7 +58,7 @@ export class TaskComponent implements OnInit{
   };
 
 
-  constructor(private taskService: TaskService, private router: Router, private authService: AuthenticationService, private store: Store<AppStateInterface>) {
+  constructor(private router: Router, private store: Store<AppStateInterface>) {
     this.currentUser$ = this.store.pipe(select(UserDataSelectors.getUserDataSelector))
     this.currentEvent$ = this.store.select(EventSelectors.getCurrentEventSelector)
   }

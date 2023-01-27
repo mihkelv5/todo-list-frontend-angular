@@ -8,3 +8,4 @@ export const getEventsSelector = createSelector(eventSelectFeature, (state) => s
 
 export const getCurrentEventSelector = createSelector(eventSelectFeature, (state) => state.currentEvent);
 
+export const getCurrentEventById = (eventId: string | null) => createSelector(eventSelectFeature, (state) => state.events.find(event => event.id == eventId))

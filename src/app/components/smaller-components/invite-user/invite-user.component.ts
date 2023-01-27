@@ -32,7 +32,7 @@ export class InviteUserComponent implements OnInit{
     @Input("event") event!: EventModel;
     @Output() closeWindowEvent = new EventEmitter<void>;
 
-    constructor(private invitationService: InviteService, private store: Store<AppStateInterface>) {
+    constructor(private store: Store<AppStateInterface>) {
 
     }
 

@@ -30,6 +30,22 @@ export const eventsReducers = createReducer(initialState,
             currentEvent: null
         }}),
 
+    on(EventActions.addEventSuccess, (state, action) => {
+        return{
+            ...state,
+            events: state.events.concat(action.event),
+            currentEvent: action.event
+        }
+    }),
+
+    on(EventActions.editEventSuccess, (state, action) => {
+        return {
+            ...state,
+            events: state.events.filter(event => event.id != action.event.id).concat(action.event),
+            currentEvent: action.event
+        }
+    }),
+
     on(EventActions.getUsersThatCanBeInvitedSuccess, (state, action) => {
         if(!state.currentEvent){
             return state

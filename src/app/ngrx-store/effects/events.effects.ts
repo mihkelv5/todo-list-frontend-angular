@@ -45,6 +45,26 @@ export class EventsEffects{
                 ))
     })));
 
+    addNewEvent$ = createEffect(() =>
+        this.actions$.pipe(ofType(EventActions.addEvent),
+            switchMap((action) => {
+                return this.eventService.addEvent(action.event).pipe(map(
+                    event => EventActions.addEventSuccess({event})
+                ))
+            })
+            )
+    )
+
+    editEvent$ = createEffect(() =>
+        this.actions$.pipe(ofType(EventActions.editEvent),
+            switchMap((action) => {
+                return this.eventService.updateEvent(action.event).pipe(map(
+                    event => EventActions.editEventSuccess({event})
+                ))
+            })
+        )
+    )
+
 
     inviteUsersToEvent$ = createEffect(() =>
         this.actions$.pipe(ofType(EventActions.inviteUsersToEvent),
