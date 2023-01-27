@@ -1,8 +1,7 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {EventService} from "../../../service/event.service";
-import {map, Observable, of, pipe, Subscription, take, tap} from "rxjs";
-import {TaskService} from "../../../service/task.service";
+import {Observable, take} from "rxjs";
 import {TaskModel} from "../../../model/task.model";
 import {EventModel} from "../../../model/event.model";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-regular-svg-icons";
@@ -14,7 +13,6 @@ import * as EventActions from "../../../ngrx-store/actions/events.actions";
 import * as TaskSelectors from "../../../ngrx-store/selectors/tasks.selector"
 import * as EventsSelectors from "../../../ngrx-store/selectors/events.selector";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
-import {PublicUserModel} from "../../../model/user/publicUser.model";
 
 @Component({
   selector: 'app-event-view',

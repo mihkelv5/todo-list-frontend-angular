@@ -1,5 +1,4 @@
 import {createAction, props} from "@ngrx/store";
-import {TaskModel} from "../../model/task.model";
 import {EventModel} from "../../model/event.model";
 import {PublicUserModel} from "../../model/user/publicUser.model";
 

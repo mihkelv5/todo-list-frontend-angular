@@ -6,15 +6,7 @@ import {faLock, faArrowLeftLong} from "@fortawesome/free-solid-svg-icons";
 import {Subscription} from "rxjs";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../service/authentication.service";
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators
-} from "@angular/forms";
+import {FormBuilder,  FormControl,  FormGroup,  Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-register',

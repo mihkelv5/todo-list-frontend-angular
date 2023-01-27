@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, HostListener, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {TaskModel} from "../../../model/task.model";
 import {CdkDragEnd} from "@angular/cdk/drag-drop";
 import {TaskService} from "../../../service/task.service";
@@ -15,7 +15,6 @@ import * as UserDataSelectors from "../../../ngrx-store/selectors/userData.selec
 import * as EventSelectors from "../../../ngrx-store/selectors/events.selector"
 import {PrivateUserModel} from "../../../model/user/privateUser.model";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
-import {UserTasksComponent} from "../../smaller-components/user-tasks/user-tasks.component";
 
 @Component({
   selector: 'task-component',

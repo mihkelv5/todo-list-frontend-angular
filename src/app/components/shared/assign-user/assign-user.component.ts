@@ -1,13 +1,12 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {PublicUserModel} from "../../../model/user/publicUser.model";
 import {Store} from "@ngrx/store";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import {EventModel} from "../../../model/event.model";
-import {Observable, take} from "rxjs";
-import {TaskModel} from "../../../model/task.model";
+import {Observable} from "rxjs";
+
 import * as TasksActions from "../../../ngrx-store/actions/tasks.actions";
-import * as TaskSelectors from "../../../ngrx-store/selectors/tasks.selector"
 import * as EventSelectors from "../../../ngrx-store/selectors/events.selector"
 
 @Component({

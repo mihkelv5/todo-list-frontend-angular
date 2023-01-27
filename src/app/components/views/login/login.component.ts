@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../service/authentication.service";
 import {UserModel} from "../../../model/user/user.model";
-import {Subscription, take} from "rxjs";
+import { take} from "rxjs";
 
 import {HttpResponse} from "@angular/common/http";
 import {HeaderType} from "../../../enum/header-type.enum";
@@ -10,9 +10,7 @@ import {faEnvelope} from "@fortawesome/free-solid-svg-icons";
 import {faLock, faArrowRightLong} from "@fortawesome/free-solid-svg-icons";
 import {CookieService} from "ngx-cookie-service";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
-import {select, Store} from "@ngrx/store";
-import * as UsersActions from "../../../ngrx-store/actions/users.actions"
-import * as UserSelector from "../../../ngrx-store/selectors/userData.selector";
+import { Store} from "@ngrx/store";
 
 
 @Component({

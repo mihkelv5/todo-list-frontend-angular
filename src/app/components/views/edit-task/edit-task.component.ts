@@ -1,12 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {TaskModel} from "../../../model/task.model";
-import {TaskService} from "../../../service/task.service";
-import {map, Observable, of, Subscription} from "rxjs";
+import {Observable} from "rxjs";
 import { Location } from '@angular/common'
-import {PublicUserModel} from "../../../model/user/publicUser.model";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
-import {select, Store} from "@ngrx/store";
+import {Store} from "@ngrx/store";
 import * as TaskSelectors from "../../../ngrx-store/selectors/tasks.selector"
 import * as TaskActions from "../../../ngrx-store/actions/tasks.actions"
 import {DateAdapter} from "@angular/material/core";

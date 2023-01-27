@@ -2,16 +2,14 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {InviteService} from "../../../service/invite.service";
 import {FormControl} from "@angular/forms";
-import {map, Observable, startWith, Subscription} from "rxjs";
+import {map, Observable, startWith} from "rxjs";
 import {faXmark, faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import {faUser} from "@fortawesome/free-regular-svg-icons";
 import {EventModel} from "../../../model/event.model";
 import {PublicUserModel} from "../../../model/user/publicUser.model";
-import {UserModel} from "../../../model/user/user.model";
 import {Store} from "@ngrx/store";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import * as EventsActions from "../../../ngrx-store/actions/events.actions";
-import * as EventActions from "../../../ngrx-store/actions/events.actions";
 
 @Component({
     selector: 'app-invite-users',

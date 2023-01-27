@@ -1,8 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {TaskModel} from "../../../model/task.model";
-import {Observable, of, Subscription, tap} from "rxjs";
+import {Observable, of} from "rxjs";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import {TaskFilterEnum} from "../../../enum/task-filter.enum";
 import {Router} from "@angular/router";
 import {EventModel} from "../../../model/event.model";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";

@@ -1,11 +1,9 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import {TaskFilterEnum} from "../../../enum/task-filter.enum";
-import {UserTasksComponent} from "../../smaller-components/user-tasks/user-tasks.component";
 import {Router} from "@angular/router";
 import {EventModel} from "../../../model/event.model";
 import {EventService} from "../../../service/event.service";
-import {Observable, of, Subscription, take} from "rxjs";
+import {Observable, take} from "rxjs";
 import {AuthenticationService} from "../../../service/authentication.service";
 import {faImage} from "@fortawesome/free-regular-svg-icons";
 import {select, Store} from "@ngrx/store";
@@ -16,7 +14,6 @@ import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import * as UserSelector from "../../../ngrx-store/selectors/userData.selector";
 import * as EventsSelector from "../../../ngrx-store/selectors/events.selector";
 import * as TaskSelector from "../../../ngrx-store/selectors/tasks.selector";
-import * as UsersActions from "../../../ngrx-store/actions/users.actions";
 
 @Component({
   selector: 'app-home',
