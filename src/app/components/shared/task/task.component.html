@@ -39,10 +39,9 @@
         </li>
 
         <!--assign users button-->
-        <li *ngIf="isInEventView && user.username == task.owner.username">
+        <li *ngIf="user.username == task.owner.username && (currentEvent$ | async) as event">
           <fa-icon [icon]="faPeopleGroup" class="assign-users cursor-pointer" (click)="assignUsersWindow = true"></fa-icon>
-          <assign-user-component *ngIf="assignUsersWindow" [usersInEvent]="getEventUsers()" [alreadyAssignedUsers]="task.assignedUsers"
-                                 (assignUsers)="assignUsersToTask($event)">
+          <assign-user-component *ngIf="assignUsersWindow" [taskId]="task.id" [previouslyAssigned]="getAssignedUsers()" (closeWindow)="togglePopUp()">
 
           </assign-user-component>
         </li>

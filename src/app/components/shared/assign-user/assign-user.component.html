@@ -1,15 +1,15 @@
-<div class="wrapper" (clickedOutside)="closeWindow(false)">
+<div class="wrapper"*ngIf="(currentEvent$ | async) as event" >
   <div class="container">
     <div class="header">
       <span>Assign users to task</span>
     </div>
-    <div class="body">
-      <ul class="available-users">
+    <div class="body" >
+      <ul class="available-users"   >
         <li>
           <span class="list-header">Available: </span>
         </li>
-        <li *ngFor="let user of canBeAssigned" (click)="assignUser(user)">
-          {{user.username}}
+        <li *ngFor="let eventUser of event.eventUsers" (click)="assignUser(eventUser)">
+          {{eventUser.username}}
         </li>
       </ul>
       <ul class="assigned-users">
@@ -19,14 +19,15 @@
         <li *ngFor="let user of assignedUsers" (click)="removeUser(user)">
           {{user.username}}
         </li>
+
       </ul>
     </div>
     <div class="footer">
 
     </div>
     <div class="assign-buttons">
-      <button (click)="closeWindow(false)" class="cancel-button">Discard</button>
-      <button (click)="closeWindow(true)" class="accept-button">Assign</button>
+      <button (click)="closeWindow()" class="cancel-button">Discard</button>
+      <button (click)="confirmAssign(assignedUsers, event.id)" class="accept-button">Assign</button>
     </div>
   </div>
 </div>

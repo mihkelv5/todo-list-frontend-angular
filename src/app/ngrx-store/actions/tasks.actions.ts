@@ -1,5 +1,6 @@
 import {createAction, props} from "@ngrx/store";
 import {TaskModel} from "../../model/task.model";
+import {PublicUserModel} from "../../model/user/publicUser.model";
 
 export class TasksActions {
 
@@ -23,11 +24,11 @@ export const getEventTasksSuccess = createAction('[Event Tasks] Get Event tasks 
 );
 
 export const addTask = createAction('[Tasks] Add task',
-  props<{task: TaskModel, eventId: string}>()
+  props<{task: TaskModel}>()
 );
 
 export const addTaskSuccess = createAction('[Tasks] Add Task Success',
-  props<{task: TaskModel, eventId: string}>()
+  props<{task: TaskModel}>()
 );
 
 export const deleteTask = createAction('[Tasks] Delete task',
@@ -54,3 +55,11 @@ export const moveTaskSuccess = createAction('[Tasks] Move Task Success',
   props<{task: TaskModel, eventId: string}>()
 );
 
+
+export const saveTaskUsers = createAction('[Tasks] Saving assigned users',
+    props<{taskId: string, assignedUsers: PublicUserModel[], eventId: string}>()
+);
+
+export const saveTaskUsersSuccess = createAction('[Tasks] Save assigned users SUCCESS',
+    props<{task: TaskModel}>()
+);

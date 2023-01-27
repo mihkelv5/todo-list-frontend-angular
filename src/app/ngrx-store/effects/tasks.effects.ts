@@ -25,8 +25,21 @@ export class TasksEffects {
             (tasks) => TasksActions.getEventTasksSuccess({eventId: action.eventId, eventTasks: tasks})
         ))
       })
-      )
+    )
   )
+
+
+    addTask$ = createEffect(() =>
+        this.actions$.pipe(ofType(TasksActions.addTask),
+            concatMap((action) => {
+                return this.taskService.addTask(action.task).pipe(map(
+                    task => {
+                        return TasksActions.addTaskSuccess({task})
+                    }
+                ))
+            })
+        )
+    )
 
 
 
@@ -55,4 +68,13 @@ export class TasksEffects {
         ))
       })
       ))
+
+    assignUsers$ = createEffect(() =>
+        this.actions$.pipe(ofType(TasksActions.saveTaskUsers),
+            concatMap(action => {
+                return this.taskService.assignUsersToTask(action.assignedUsers, action.taskId, action.eventId).pipe(map(
+                    (task) => TasksActions.saveTaskUsersSuccess({task})
+                ))
+            }))
+    )
 }

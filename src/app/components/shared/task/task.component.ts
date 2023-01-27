@@ -2,7 +2,7 @@ import {Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output}
 import {TaskModel} from "../../../model/task.model";
 import {CdkDragEnd} from "@angular/cdk/drag-drop";
 import {TaskService} from "../../../service/task.service";
-import {Observable, Subscription} from "rxjs";
+import {Observable, Subscription, take} from "rxjs";
 import {Router} from "@angular/router";
 import {faPencil, faTrash, faPeopleGroup, faSquare, faUserLock, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {faCalendar, faCalendarCheck, faCircleCheck, faCircleXmark } from "@fortawesome/free-regular-svg-icons";
@@ -12,6 +12,7 @@ import {PublicUserModel} from "../../../model/user/publicUser.model";
 import {select, Store} from "@ngrx/store";
 import * as TasksActions from "../../../ngrx-store/actions/tasks.actions";
 import * as UserDataSelectors from "../../../ngrx-store/selectors/userData.selector"
+import * as EventSelectors from "../../../ngrx-store/selectors/events.selector"
 import {PrivateUserModel} from "../../../model/user/privateUser.model";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import {UserTasksComponent} from "../../smaller-components/user-tasks/user-tasks.component";
@@ -39,43 +40,37 @@ export class TaskComponent implements OnInit, OnDestroy{
   currentUser$: Observable<PrivateUserModel>
 
   @Input("task") task!: TaskModel;
-  @Input("event") event!: EventModel | null;
-  @Output("refreshTasks") refreshTasksEmitter: EventEmitter<string> = new EventEmitter()
+
+  currentEvent$: Observable<EventModel | null>;
   eventId: string = "";
 
-  taskPopupWindow: boolean = false;
-  isInEventView: boolean = false; //assigning users button will only be available if the task is viewed in event page.
+    taskPopupWindow: boolean = false;
+
+
   assignUsersWindow = false; //opens and closes assign user view
+    //checks if task is dragged or clicked, so it wouldn't open popup if task is dragged
+    cdkDragging: boolean = false;
 
-
-  //checks if task is dragged or clicked, so it wouldn't open popup if task is dragged
-  cdkDragging: boolean = false;
   canCdkDrag = true;
+    //brings task in front of others when moved or has popup open
 
-  //brings task in front of others when moved or has popup open
   taskZIndex: number = 0;
 
   styles = {"right" : "calc(100% + 10px)", "top" : "0"};
+    //used when checking if task is clicked or dragged
 
-  //used when checking if task is clicked or dragged
   mousePosition = {
     x: 0,
     y: 0
   };
-
-  subscriptions: Subscription[] = [];
+    subscriptions: Subscription[] = [];
 
   constructor(private taskService: TaskService, private router: Router, private authService: AuthenticationService, private store: Store<AppStateInterface>) {
     this.currentUser$ = this.store.pipe(select(UserDataSelectors.getUserDataSelector))
-
+    this.currentEvent$ = this.store.select(EventSelectors.getCurrentEventSelector)
   }
 
   ngOnInit(): void {
-    if(this.event){
-      this.isInEventView = true;
-      this.eventId = this.event.id
-    }
-
     this.findDueDate();
     if(this.task.xLocation < 400){
       this.styles.right = "-410px";
@@ -182,8 +177,8 @@ export class TaskComponent implements OnInit, OnDestroy{
 
   deleteTask() {
     let eventId = ""
-    if(this.event) {
-      eventId = this.event.id
+    if(this.task.eventId) {
+      eventId = this.task.eventId
     }
     if(this.task.id) {
       const taskId = this.task.id
@@ -199,26 +194,13 @@ export class TaskComponent implements OnInit, OnDestroy{
     }
   }
 
-  getEventUsers(): PublicUserModel[] {
-    if(this.event?.eventUsers){
-      //return this.event?.eventUsers
-    }
-    return [];
-  }
-
-  assignUsersToTask($event: PublicUserModel[]) {
-    if($event && this.task.id && this.event){
-      this.subscriptions.push(
-        this.taskService.assignUsersToTask($event, this.task.id, this.event.id).subscribe((response) => {
-          this.task.assignedUsers = response.assignedUsers;
-        })
-      );
-    }
-    this.assignUsersWindow = false;
-  }
 
   canUserCompleteTask(username: string){
       return this.task.owner.username === username || this.task.assignedUsers.find(user => user.username === username)
   }
 
+
+    getAssignedUsers():PublicUserModel[] {
+        return this.task.assignedUsers
+    }
 }

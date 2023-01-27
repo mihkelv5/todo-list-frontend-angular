@@ -24,13 +24,13 @@ export const getAreCurrentEventTasksLoaded = (eventId: string) => createSelector
 
 export const getUserTaskDetails = (taskId: string) => createSelector(selectFeature, (state) => state.tasks.find(task => task.id == taskId));
 
-export const getTaskDetails = (taskId: string | null, eventId: string | null) => createSelector(selectFeature, (state) => {
+export const getTaskDetails = (taskId: string | null) => createSelector(selectFeature, (state) => {
 
     let tempTask = null
     if(taskId){
-        if(!eventId || eventId == ""){
-            tempTask = state.tasks.find(task => task.id == taskId)
-        }
+
+        tempTask = state.tasks.find(task => task.id == taskId)
+
     }
     if(tempTask){
         return tempTask

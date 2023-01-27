@@ -8,6 +8,7 @@ import {PublicUserModel} from "../../../model/user/publicUser.model";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import {select, Store} from "@ngrx/store";
 import * as TaskSelectors from "../../../ngrx-store/selectors/tasks.selector"
+import * as TaskActions from "../../../ngrx-store/actions/tasks.actions"
 import {DateAdapter} from "@angular/material/core";
 
 
@@ -21,15 +22,18 @@ export class EditTaskComponent implements  OnInit{
 
 
   task$: Observable<TaskModel>
-
+    eventId: string = "";
 
   constructor(private dateAdapter: DateAdapter<Date>, private route: ActivatedRoute, private location: Location, private store: Store<AppStateInterface>) {
 
       this.dateAdapter.setLocale('en-GB')
       const taskId = this.route.snapshot.paramMap.get("taskId");
-      const eventId = this.route.snapshot.paramMap.get("eventId");
-      this.task$ = this.store.select(TaskSelectors.getTaskDetails(taskId, eventId))
+      this.task$ = this.store.select(TaskSelectors.getTaskDetails(taskId))
 
+      const eventId = this.route.snapshot.paramMap.get("eventId");
+        if(eventId && eventId != "new"){
+            this.eventId = eventId;
+        }
   }
 
   ngOnInit(): void {
@@ -38,19 +42,19 @@ export class EditTaskComponent implements  OnInit{
 
 
 
-  onSubmit(formTask: TaskModel) {
+  onSubmit(formTask: TaskModel, oldTask: TaskModel) {
       console.log(formTask)
-    /*if(!this.task.id){
+    if(!oldTask.id){
       if(!formTask.color){
         formTask.color = this.getRandomColor();
       }
       formTask.eventId = this.eventId;
-      this.taskService.addTask(formTask).subscribe(() => {
-        this.location.back();
-      });
+      this.store.dispatch(TaskActions.addTask({task: formTask}));
+      this.location.back();
+
     }
     else {
-      const updatedTask = this.task;
+      const updatedTask = oldTask;
       if(formTask.title){
         updatedTask.title = formTask.title;
       }
@@ -67,10 +71,9 @@ export class EditTaskComponent implements  OnInit{
           updatedTask.color = formTask.color;
         }
       }
-      this.taskService.updateTask(updatedTask).subscribe(() => {
+        this.store.dispatch(TaskActions.addTask({task: updatedTask}));
         this.location.back();
-      });
-    }*/
+    }
   }
 
   onCancel() {

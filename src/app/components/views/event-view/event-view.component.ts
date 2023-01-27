@@ -43,7 +43,7 @@ export class EventViewComponent implements OnInit {
     const routeId = this.route.snapshot.paramMap.get("eventId");
     if (routeId) {
 
-
+        //first time in session where user redirects from homepage to an event view
         this.store.select(TaskSelectors.getAreCurrentEventTasksLoaded(routeId)).pipe(take(1)).subscribe(
             bool => {
                 if(!bool){
@@ -61,26 +61,22 @@ export class EventViewComponent implements OnInit {
 
   ngOnInit(): void {
 
-        this.currentEvent$.pipe(take(1)).subscribe(
-        currentEvent => {
-            if(currentEvent){
-                this.currentEvent = currentEvent;
-        }})
+
   }
 
 
 
 
-  createTask() {
-    this.router.navigateByUrl("/task/new/" + this.currentEvent.id + "/" + this.currentEvent.title)
+  createTask(eventId: string, eventTitle: string) {
+    this.router.navigateByUrl("/task/new/" + eventId + "/" + eventTitle)
   }
 
-  editEvent() {
-    this.router.navigateByUrl("/event/edit/" + this.currentEvent.id)
+  editEvent(eventId: string) {
+    this.router.navigateByUrl("/event/edit/" + eventId)
   }
 
-  deleteEvent() {
-    this.store.dispatch(EventActions.deleteEvent({eventId: this.currentEvent.id}));
+  deleteEvent(eventId: string) {
+    this.store.dispatch(EventActions.deleteEvent({eventId: eventId}));
     this.deleteEventConfirmation = false;
     this.router.navigateByUrl("/home");
 

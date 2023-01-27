@@ -93,5 +93,19 @@ export const tasksReducers = createReducer(initialState,
 
   }),
 
+    on(TasksActions.saveTaskUsersSuccess, (state, action) => {
+        const id = state.tasks.findIndex(task => task.id === action.task.id);
+        return {
+            ...state, //everything else will stay the same
+            tasks: //creates new array with:
+                [...state.tasks.slice(0, id),
+                    {
+                        ...state.tasks[id],
+                        assignedUsers: action.task.assignedUsers
+                    },
+                    ...state.tasks.slice(id + 1)]
+        }
+    })
+
 
 )

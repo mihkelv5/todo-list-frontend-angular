@@ -25,7 +25,7 @@
 
       <div class="task-form-buttons">
         <button type="submit"
-        [disabled]="taskForm.invalid && task == null" (click)="onSubmit(taskForm.value); taskForm.resetForm()">Save</button>
+        [disabled]="taskForm.invalid && task == null" (click)="onSubmit(taskForm.value, task); taskForm.resetForm()">Save</button>
         <button (click)="taskForm.resetForm(); onCancel()" >cancel</button>
       </div>
       </form>

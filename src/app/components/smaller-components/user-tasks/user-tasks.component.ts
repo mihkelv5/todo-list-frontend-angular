@@ -29,7 +29,6 @@ export class UserTasksComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     if(this.event){
-        console.log(this.event)
       this.tasks$ = this.store.pipe(select(TasksSelectors.getTasksSelector(this.event.id)))
     } else {
       this.tasks$ = this.store.pipe(select(TasksSelectors.getTasksSelector(null)));

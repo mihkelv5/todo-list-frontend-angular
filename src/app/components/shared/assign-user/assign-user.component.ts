@@ -1,7 +1,14 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {PublicUserModel} from "../../../model/user/publicUser.model";
-
+import {Store} from "@ngrx/store";
+import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
+import {EventModel} from "../../../model/event.model";
+import {Observable, take} from "rxjs";
+import {TaskModel} from "../../../model/task.model";
+import * as TasksActions from "../../../ngrx-store/actions/tasks.actions";
+import * as TaskSelectors from "../../../ngrx-store/selectors/tasks.selector"
+import * as EventSelectors from "../../../ngrx-store/selectors/events.selector"
 
 @Component({
   selector: 'assign-user-component',
@@ -11,60 +18,47 @@ import {PublicUserModel} from "../../../model/user/publicUser.model";
 
 
 export class AssignUserComponent implements OnInit{
-  @Input("usersInEvent") usersInEvent?: PublicUserModel[];
-  @Input("alreadyAssignedUsers") alreadyAssignedUsers?: PublicUserModel[]; //usernames that are assigned before changes
-  canBeAssigned: PublicUserModel[] = [];
-  assignedUsers: PublicUserModel[] = []; //usernames that are assigned after changes
-  canCloseWindow = false; //used so clickedOutside directive wouldn't close window instantly when opened
+  @Input("taskId") taskId !: string | null;
+    @Input("previouslyAssigned") previouslyAssigned !: PublicUserModel[];
 
-  @Output("assignUsers") closeAssignWindow: EventEmitter<PublicUserModel[]>
-    = new EventEmitter<PublicUserModel[]>();
+    currentEvent$: Observable<EventModel | null>
+    assignedUsers: PublicUserModel[] = [];
+
+    @Output("closeWindow") closeWindowEmitter: EventEmitter<boolean> = new EventEmitter()
 
   faXmark = faXmark;
 
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.canCloseWindow = true;
-    }, 100)
-    if(this.usersInEvent && this.alreadyAssignedUsers){
-      this.canBeAssigned = this.usersInEvent?.filter(username => !this.alreadyAssignedUsers?.includes(username));
-      this.alreadyAssignedUsers.forEach(username => this.assignedUsers.push(username));
+
+    constructor(private store: Store<AppStateInterface>) {
+
+        this.currentEvent$ = this.store.select(EventSelectors.getCurrentEventSelector)
+
     }
+
+    ngOnInit(): void {
+        this.assignedUsers = this.assignedUsers.concat(this.previouslyAssigned);
   }
 
-  closeWindow(sendData: boolean) {
-    if(this.canCloseWindow){
-      const startingArray = JSON.stringify(this.alreadyAssignedUsers);
-      const finalArray = JSON.stringify(this.assignedUsers);
+  closeWindow() {
+        this.closeWindowEmitter.emit(false)
 
-
-      if(sendData && startingArray != finalArray){
-        this.closeAssignWindow.emit(this.assignedUsers);
-      }
-      else {
-        this.closeAssignWindow.emit(undefined);
-      }
-    }
   }
 
   assignUser(selected: PublicUserModel) {
-    this.canCloseWindow = false; //workaround for (clickedOutside) directive, so it wouldn't close window when assigning users
-    setTimeout(() => {
-      this.canCloseWindow = true;
-    }, 100)
-
-    this.assignedUsers.push(selected)
-    this.canBeAssigned = this.canBeAssigned.filter(username => username !== selected);
-
+        if(!this.assignedUsers.find(user => user.username == selected.username)){
+          this.assignedUsers.push(selected);
+        }
   }
 
   removeUser(selected: PublicUserModel) {
-    this.canCloseWindow = false; //workaround for (clickedOutside) directive, so it wouldn't close window when assigning users
-    setTimeout(() => {
-      this.canCloseWindow = true;
-    }, 100)
+        console.log(selected.username)
+        this.assignedUsers = this.assignedUsers.filter(user => user.username != selected.username)
+  }
 
-    this.canBeAssigned.push(selected);
-    this.assignedUsers = this.assignedUsers.filter(username => username !== selected);
+  confirmAssign(users: PublicUserModel[], eventId: string) {
+        if(this.taskId){
+            this.store.dispatch(TasksActions.saveTaskUsers({taskId: this.taskId, assignedUsers: users, eventId: eventId}))
+        }
+        this.closeWindowEmitter.emit(true);
   }
 }
