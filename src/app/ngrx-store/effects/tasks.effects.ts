@@ -33,10 +33,8 @@ export class TasksEffects {
         this.actions$.pipe(ofType(TasksActions.addTask),
             concatMap((action) => {
                 return this.taskService.addTask(action.task).pipe(map(
-                    task => {
-                        console.log(task)
-                        return TasksActions.addTaskSuccess({task})
-                    }
+                    task => TasksActions.addTaskSuccess({task})
+
                 ))
             })
         )

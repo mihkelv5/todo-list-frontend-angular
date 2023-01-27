@@ -40,7 +40,6 @@ export class EditTaskComponent{
 
 
   onSubmit(formTask: TaskModel, oldTask: TaskModel) {
-      console.log(formTask)
     if(!oldTask.id){
       if(!formTask.color){
         formTask.color = this.getRandomColor();

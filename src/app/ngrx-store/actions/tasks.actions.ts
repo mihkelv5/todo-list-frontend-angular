@@ -35,7 +35,7 @@ export const deleteTask = createAction('[Tasks] Delete task',
   props<{taskId: string}>()
 );
 
-export const deleteTaskSuccess = createAction('[Tasks] Delete task',
+export const deleteTaskSuccess = createAction('[Tasks] Delete task Success',
   props<{taskId: string}>()
 );
 

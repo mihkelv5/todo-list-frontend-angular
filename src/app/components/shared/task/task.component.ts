@@ -65,7 +65,6 @@ export class TaskComponent implements OnInit{
   }
 
   ngOnInit(): void {
-      console.log(this.task)
     this.findDueDate();
     if(this.task.xLocation < 400){
       this.styles.right = "-410px";
@@ -168,7 +167,7 @@ export class TaskComponent implements OnInit{
   }
 
   deleteTask() {
-    console.log("deleting task")
+
     if(this.task.id) {
       const taskId = this.task.id
       this.store.dispatch(TasksActions.deleteTask({taskId}))
