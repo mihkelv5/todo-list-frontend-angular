@@ -11,7 +11,7 @@ import {AuthenticationService} from "../../../service/authentication.service";
 import {PublicUserModel} from "../../../model/user/publicUser.model";
 import {select, Store} from "@ngrx/store";
 import * as TasksActions from "../../../ngrx-store/actions/tasks.actions";
-import * as UserDataSelectors from "../../../ngrx-store/selectors/userData.selector"
+import * as UserDataSelectors from "../../../ngrx-store/selectors/user.selector"
 import * as EventSelectors from "../../../ngrx-store/selectors/events.selector"
 import {PrivateUserModel} from "../../../model/user/privateUser.model";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
@@ -63,12 +63,12 @@ export class TaskComponent implements OnInit{
     this.currentEvent$ = this.store.select(EventSelectors.getCurrentEventSelector)
   }
 
-  ngOnInit(): void {
-    this.findDueDate();
-    if(this.task.xLocation < 400){
-      this.styles.right = "-410px";
-    }
-  }
+      ngOnInit(): void {
+        this.findDueDate();
+        if(this.task.xLocation < 400){
+          this.styles.right = "-410px";
+        }
+      }
 
 
 
@@ -76,30 +76,30 @@ export class TaskComponent implements OnInit{
          const dueDate = new Date(this.task.date).getTime();
          const date = new Date().getTime()
          this.timeUntilDue = Math.floor((dueDate - date) / (1000 * 3600 * 24) + 1)
-     //takes 2 timestamps and subtracts one from another to show how many days left for task due date
+        //takes 2 timestamps and subtracts one from another to show how many days left for task due date
 
-    switch (true){
-      case (this.timeUntilDue > 1): {
-        this.dueDateMessage = "Time left: " + this.timeUntilDue + " days";
-        break;
-      }
-      case (this.timeUntilDue == 1): {
-        this.dueDateMessage = "Due tomorrow";
-        break;
-      }
-      case (this.timeUntilDue == 0): {
-        this.dueDateMessage = "Due today";
-        break;
-      }
-      case (this.timeUntilDue == -1): {
-        this.dueDateMessage = "Deadline was yesterday";
-        break;
-      }
-      case (this.timeUntilDue < -1): {
-        this.dueDateMessage = "Deadline was " + Math.abs(this.timeUntilDue) + " days ago"
-      }
+        switch (true){
+          case (this.timeUntilDue > 1): {
+            this.dueDateMessage = "Time left: " + this.timeUntilDue + " days";
+            break;
+          }
+          case (this.timeUntilDue == 1): {
+            this.dueDateMessage = "Due tomorrow";
+            break;
+          }
+          case (this.timeUntilDue == 0): {
+            this.dueDateMessage = "Due today";
+            break;
+          }
+          case (this.timeUntilDue == -1): {
+            this.dueDateMessage = "Deadline was yesterday";
+            break;
+          }
+          case (this.timeUntilDue < -1): {
+            this.dueDateMessage = "Deadline was " + Math.abs(this.timeUntilDue) + " days ago"
+          }
 
-    }
+        }
    }
 
   @HostListener('document:keydown.escape', ['$event'])

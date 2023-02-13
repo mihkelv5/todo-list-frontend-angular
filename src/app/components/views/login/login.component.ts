@@ -11,7 +11,7 @@ import {faLock, faArrowRightLong} from "@fortawesome/free-solid-svg-icons";
 import {CookieService} from "ngx-cookie-service";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import { Store} from "@ngrx/store";
-
+import * as UserActions from "../../../ngrx-store/actions/users.actions";
 
 @Component({
   selector: 'app-login',
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit{
         (response: HttpResponse<string>) => {
               const username = response.headers.get("username");
               const validDays  = response.headers.get("Valid-Days"); //server sets a header that tells how many days the refresh token is valid
-              if(username && validDays){
+              if(username && validDays && response.body){
                 this.setCookie(username, +validDays) //local cookie to check if user is logged in, as browser cant read server side cookies with httponly
 
                 //after receiving refresh token make another call to backend to receive access token.
@@ -58,11 +58,12 @@ export class LoginComponent implements OnInit{
                   (response2: HttpResponse<UserModel>) => {
                           const accessToken = response2.headers.get(HeaderType.JWT_TOKEN);
 
-                      if (accessToken != null && response2.body) {
-                            this.loginErrorMessage = "";
-                            this.authenticationService.saveToken(accessToken);
-                            this.router.navigateByUrl("/home");
-                            this.showLoading = false;
+                    if (accessToken != null && response2.body) {
+                      this.authenticationService.saveToken(accessToken);
+                      this.loginErrorMessage = "";
+                      this.store.dispatch(UserActions.getUserData())
+                      this.router.navigateByUrl("/home");
+                      this.showLoading = false;
                             return;
                         }});
               } else {

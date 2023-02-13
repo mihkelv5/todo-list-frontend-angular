@@ -55,7 +55,7 @@ export class AuthenticationService {
     return this.http.get<UserModel>(this.host + "/auth/get-access", {observe: "response", headers: headers, withCredentials: true})
   }
 
-  public logout() {
+  public logout(): Observable<HttpResponse<string>> {
       this.cookieService.delete("Login-Cookie", "/")
       this.token = "";
       this.loggedInUsername = "";
@@ -63,9 +63,7 @@ export class AuthenticationService {
       sessionStorage.removeItem("token");
       sessionStorage.removeItem("user");
 
-      const sub = this.http.get<string>(this.host + "/auth/logout", {observe: "response", withCredentials: true}).subscribe(
-        () => sub.unsubscribe()
-      )
+      return this.http.get<string>(this.host + "/auth/logout", {observe: "response", withCredentials: true})
   }
 
 

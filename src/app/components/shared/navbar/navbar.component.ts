@@ -5,16 +5,21 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {faMagnifyingGlass, faGear, faArrowRightFromBracket, faUsers, faHouse} from "@fortawesome/free-solid-svg-icons";
 import {faUser, faBell} from "@fortawesome/free-regular-svg-icons";
 import {InviteService} from "../../../service/invite.service";
-import {BehaviorSubject, Subscription} from "rxjs";
+import {BehaviorSubject, Observable, Subscription} from "rxjs";
 import {EventInvitationModel} from "../../../model/eventInvitation.model";
 import {CookieService} from "ngx-cookie-service";
+import {Store} from "@ngrx/store";
+import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
+import * as UserSelector from "../../../ngrx-store/selectors/user.selector"
+import * as UserActions from "../../../ngrx-store/actions/users.actions";
+import * as UsersActions from "../../../ngrx-store/actions/users.actions";
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit, OnDestroy{
+export class NavbarComponent implements OnInit{
 
   faUser = faUser;
   faMagnifyingGlass = faMagnifyingGlass;
@@ -24,77 +29,43 @@ export class NavbarComponent implements OnInit, OnDestroy{
   faHome = faHouse;
   faBell = faBell;
 
-  navbarVisible$ = new BehaviorSubject<boolean>(true);
+  navbarVisible$: Observable<boolean>;
+  invites$: Observable<EventInvitationModel[]>
+
+
   userMenuVisible = false;
   notificationMenuVisible = false;
 
-  subscriptions: Subscription[] = [];
-  invites: EventInvitationModel[] = []
-  username: string = "";
-  areInvitesLoaded = false;
 
   searchValue = "";
   searchForm: FormGroup = new FormGroup({
     search: new FormControl("")
   });
 
-  constructor(private authService: AuthenticationService, private router: Router,
-              private inviteService: InviteService, private cookieService: CookieService) {
+  constructor(private authService: AuthenticationService, private router: Router, private store: Store<AppStateInterface>) {
+    this.navbarVisible$ = this.store.select(UserSelector.isUserLoggedIn);
+    this.invites$ = this.store.select(UserSelector.getUserInvites);
   }
 
 
   ngOnInit(): void {
-    this.subscribeToRouter()
+
 
   }
 
   //subscribes to router events to decide if navbar should be shown.
   //And loads data if user has
 
-  subscribeToRouter(){
-    this.subscriptions.push(
-      this.router.events.subscribe(event => {
-        if(event instanceof NavigationEnd){
-          if(event.urlAfterRedirects.toLowerCase() != "/login"
-            && event.urlAfterRedirects.toLowerCase() != "/register"){
-            this.navbarVisible$.next(true)
 
-            if(this.cookieService.get("Login-Cookie") && !this.areInvitesLoaded){
-              this.loadInvitesFromDB();
-              this.areInvitesLoaded = true;
-            }
-          } else { //user is either on login or register page
-            this.navbarVisible$.next(false)
-          }
-        }
-      })
-    )
-  }
 
-  loadInvitesFromDB(){
-    this.subscriptions.push(
-      this.inviteService.getUserInvitations().subscribe(response => {
-        this.invites = response;
-      })
-    )
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
-  }
 
 
 
   logout(){
 
-      this.subscriptions.forEach(sub => sub.unsubscribe());
-      this.closeUserAndNotificationMenu();
-    this.authService.logout();
-    this.invites = [];
-    this.areInvitesLoaded = false;
+    this.closeUserAndNotificationMenu();
+    this.store.dispatch(UsersActions.logout())
     this.router.navigate(["/login"]);
-    this.username = "";
-
   }
 
 
@@ -123,19 +94,8 @@ export class NavbarComponent implements OnInit, OnDestroy{
     this.notificationMenuVisible = !this.notificationMenuVisible;
   }
 
-  respondToInvite($event: boolean, invite: EventInvitationModel) {
-    if($event){
-      this.subscriptions.push(
-        this.inviteService.acceptInvite(invite).subscribe(() => {
-          this.loadInvitesFromDB();
-          this.closeUserAndNotificationMenu();
-          this.router.navigateByUrl("/");
-        }))
-    } else {
-      this.subscriptions.push(
-        this.inviteService.declineInvite(invite).subscribe(() => {
-          this.loadInvitesFromDB();
-        }))
+
+    openSettings() {
+        this.router.navigateByUrl("/profile/private")
     }
-  }
 }

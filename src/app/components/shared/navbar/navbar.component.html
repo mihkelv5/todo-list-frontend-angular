@@ -19,8 +19,8 @@
       <div class="dropdown-menu-parent">  <!--notification icon icon-->
         <div (click)="toggleNotificationDropdownMenu()" class="bell-icon pointer-item">
           <fa-icon [icon]="faBell" ></fa-icon>
-          <div *ngIf="invites.length > 0" class="bell-icon-notifications">
-            <span>{{invites.length}}</span>
+          <div *ngIf="(invites$ | async)?.length != 0" class="bell-icon-notifications">
+            <span>{{(invites$ | async)?.length}}</span>
           </div>
         </div>
         <div class="dropdown-menu " *ngIf="notificationMenuVisible">
@@ -33,14 +33,11 @@
                   <button class="new-notifications">New</button>
                 </div>-->
               </li>
-              <li *ngIf="invites.length == 0">
+              <li *ngIf="(invites$ | async)?.length == 0">
                 <span>you have no notifications</span>
               </li>
-              <li *ngFor="let invite of invites">
-                <invite-component [invite]="invite"
-                (responseEmitter)="respondToInvite($event, invite)"
-                >
-                </invite-component>
+              <li *ngFor="let invite of invites$ | async">
+                <invite-component [invite]="invite"></invite-component>
               </li>
             </ul>
         </div>
@@ -53,7 +50,7 @@
         <div class="dropdown-menu" *ngIf="userMenuVisible" >
           <ul class="dropdown-menu-list">
             <li class="dropdown-menu-item pointer-item">
-            <span>
+            <span (click)="openSettings()">
                 <fa-icon [icon]="faSettings" class="dropdown-icon fa-fw" ></fa-icon>
                 Settings
             </span>

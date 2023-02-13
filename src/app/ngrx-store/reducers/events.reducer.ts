@@ -2,6 +2,7 @@ import {EventStateInterface} from "../state/EventStateInterface";
 import {createReducer, on} from "@ngrx/store";
 import * as EventActions from "../actions/events.actions";
 import {EventModel} from "../../model/event.model";
+import * as UserActions from "../actions/users.actions";
 
 export const initialState: EventStateInterface = {
   events: [],
@@ -125,5 +126,17 @@ export const eventsReducers = createReducer(initialState,
                 waitingList: []
             }
         }
-    })
+    }),
+
+  on(UserActions.respondToInviteSuccess, (state, action) => {
+    if(action.eventModel){
+      return {
+        ...state,
+        events: state.events.concat(action.eventModel)
+      }
+    }
+    return {
+      ...state
+    }
+  })
 )

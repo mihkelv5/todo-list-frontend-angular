@@ -4,6 +4,7 @@ import {environment} from "../../environments/environment";
 import {Observable, of} from "rxjs";
 import {EventInvitationModel} from "../model/eventInvitation.model";
 import {PublicUserModel} from "../model/user/publicUser.model";
+import {EventModel} from "../model/event.model";
 
 @Injectable({
   providedIn: 'root'
@@ -24,12 +25,8 @@ export class InviteService {
   }
 
 
-  public acceptInvite(invite: EventInvitationModel) {
-    return this.http.put(this.host + "/accept/" + invite.id, "")
-  }
-
-  public declineInvite(invite: EventInvitationModel) {
-    return this.http.delete(this.host + "/decline/" + invite.id)
+  public respondToInvite(inviteId: string, isAccepted: boolean): Observable<EventModel> {
+    return this.http.put<EventModel>(this.host + "/respond/" + inviteId + "/accepted/" + isAccepted, "")
   }
 
   public deleteInvite( eventId: string, username: string): Observable<PublicUserModel>{

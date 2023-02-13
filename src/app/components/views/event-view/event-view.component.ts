@@ -36,7 +36,6 @@ export class EventViewComponent implements OnInit {
 
   constructor(private eventService: EventService,
               private route: ActivatedRoute, private router: Router,
-              private inviteService: InviteService,
               private store: Store<AppStateInterface>) {
     const routeId = this.route.snapshot.paramMap.get("eventId");
     if (routeId) {
@@ -45,7 +44,6 @@ export class EventViewComponent implements OnInit {
         this.store.select(TaskSelectors.getAreCurrentEventTasksLoaded(routeId)).pipe(take(1)).subscribe(
             bool => {
                 if(!bool){
-                    console.log(bool)
                     this.store.dispatch(TasksActions.getEventTasks({eventId: routeId}))
                 }
             }
@@ -55,11 +53,7 @@ export class EventViewComponent implements OnInit {
     }
     this.currentEvent$ = this.store.pipe(select(EventsSelectors.getCurrentEventSelector))
   }
-
-
   ngOnInit(): void {
-
-
   }
 
 

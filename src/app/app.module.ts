@@ -50,6 +50,7 @@ import {eventsReducers} from "./ngrx-store/reducers/events.reducer";
 import {EventsEffects} from "./ngrx-store/effects/events.effects";
 import {UsersEffects} from "./ngrx-store/effects/users.effects";
 import {usersReducers} from "./ngrx-store/reducers/users.reducers";
+import { UserSettingsComponent } from './components/views/user.settings/user.settings.component';
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import {usersReducers} from "./ngrx-store/reducers/users.reducers";
     InviteUserComponent,
     InviteComponent,
     AssignUserComponent,
+    UserSettingsComponent,
   ],
   imports: [
 

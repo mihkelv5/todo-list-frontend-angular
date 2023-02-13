@@ -11,7 +11,7 @@ import * as TasksActions from "../../../ngrx-store/actions/tasks.actions";
 import * as EventActions from "../../../ngrx-store/actions/events.actions";
 import {PrivateUserModel} from "../../../model/user/privateUser.model";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
-import * as UserSelector from "../../../ngrx-store/selectors/userData.selector";
+import * as UserSelector from "../../../ngrx-store/selectors/user.selector";
 import * as EventsSelector from "../../../ngrx-store/selectors/events.selector";
 import * as TaskSelector from "../../../ngrx-store/selectors/tasks.selector";
 

@@ -8,6 +8,7 @@ import {UserTasksComponent} from "./components/smaller-components/user-tasks/use
 import {EventViewComponent} from "./components/views/event-view/event-view.component";
 import {EditTaskComponent} from "./components/views/edit-task/edit-task.component";
 import {EditEventComponent} from "./components/views/edit-event/edit-event.component";
+import {UserSettingsComponent} from "./components/views/user.settings/user.settings.component";
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: "event/:eventId", component: EventViewComponent, canActivate: [AuthenticationGuard]},
   { path: "task/:taskId/:eventId/:eventName", component: EditTaskComponent, canActivate: [AuthenticationGuard]},
   { path: "event/edit/:eventId", component: EditEventComponent, canActivate: [AuthenticationGuard]},
+  { path: "profile/private", component: UserSettingsComponent, canActivate: [AuthenticationGuard]},
   { path: "", redirectTo: "/login", pathMatch: "full" },
   { path: "**", redirectTo: "/login"}
 ]
