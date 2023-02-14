@@ -3,7 +3,7 @@ import {PrivateUserModel} from "../../model/user/privateUser.model";
 import {EventInvitationModel} from "../../model/eventInvitation.model";
 import {EventModel} from "../../model/event.model";
 
-export class UsersActions {}
+export class UserActions {}
 
 export const login = createAction('[Authentication] Trying to log in');
 

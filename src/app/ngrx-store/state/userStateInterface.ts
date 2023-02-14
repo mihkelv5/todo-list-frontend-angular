@@ -2,7 +2,7 @@
 import {PrivateUserModel} from "../../model/user/privateUser.model";
 import {EventInvitationModel} from "../../model/eventInvitation.model";
 
-export interface UsersStateInterface {
+export interface UserStateInterface {
   loggedIn: boolean;
   privateUser: PrivateUserModel;
   invites: EventInvitationModel[];

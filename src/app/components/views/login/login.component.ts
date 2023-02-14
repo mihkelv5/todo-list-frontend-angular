@@ -11,7 +11,7 @@ import {faLock, faArrowRightLong} from "@fortawesome/free-solid-svg-icons";
 import {CookieService} from "ngx-cookie-service";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import { Store} from "@ngrx/store";
-import * as UserActions from "../../../ngrx-store/actions/users.actions";
+import * as UserActions from "../../../ngrx-store/actions/user.actions";
 
 @Component({
   selector: 'app-login',

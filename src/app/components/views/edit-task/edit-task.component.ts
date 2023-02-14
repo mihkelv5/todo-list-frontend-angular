@@ -5,8 +5,8 @@ import {Observable} from "rxjs";
 import { Location } from '@angular/common'
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import {Store} from "@ngrx/store";
-import * as TaskSelectors from "../../../ngrx-store/selectors/tasks.selector"
-import * as TaskActions from "../../../ngrx-store/actions/tasks.actions"
+import * as TaskSelectors from "../../../ngrx-store/selectors/task.selector"
+import * as TaskActions from "../../../ngrx-store/actions/task.actions"
 import {DateAdapter} from "@angular/material/core";
 
 

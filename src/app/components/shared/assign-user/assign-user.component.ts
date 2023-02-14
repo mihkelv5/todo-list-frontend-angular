@@ -6,8 +6,8 @@ import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import {EventModel} from "../../../model/event.model";
 import {Observable} from "rxjs";
 
-import * as TasksActions from "../../../ngrx-store/actions/tasks.actions";
-import * as EventSelectors from "../../../ngrx-store/selectors/events.selector"
+import * as TasksActions from "../../../ngrx-store/actions/task.actions";
+import * as EventSelectors from "../../../ngrx-store/selectors/event.selector"
 
 @Component({
   selector: 'assign-user-component',

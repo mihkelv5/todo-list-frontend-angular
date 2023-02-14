@@ -1,8 +1,8 @@
 import {EventStateInterface} from "../state/EventStateInterface";
 import {createReducer, on} from "@ngrx/store";
-import * as EventActions from "../actions/events.actions";
+import * as EventActions from "../actions/event.actions";
 import {EventModel} from "../../model/event.model";
-import * as UserActions from "../actions/users.actions";
+import * as UserActions from "../actions/user.actions";
 
 export const initialState: EventStateInterface = {
   events: [],

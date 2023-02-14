@@ -7,7 +7,7 @@ import {CookieService} from "ngx-cookie-service";
 import {HeaderType} from "../enum/header-type.enum";
 import {Store} from "@ngrx/store";
 import {AppStateInterface} from "../ngrx-store/state/appState.interface";
-import * as UsersActions from "../ngrx-store/actions/users.actions";
+import * as UsersActions from "../ngrx-store/actions/user.actions";
 
 @Injectable({
   providedIn: 'root'

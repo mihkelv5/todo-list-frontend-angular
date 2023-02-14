@@ -1,9 +1,9 @@
-import {UsersStateInterface} from "./usersStateInterface";
+import {UserStateInterface} from "./userStateInterface";
 import {EventStateInterface} from "./EventStateInterface";
-import {TasksStateInterface} from "./TasksStateInterface";
+import {TaskStateInterface} from "./TaskStateInterface";
 
 export interface AppStateInterface {
-  userTasks: TasksStateInterface,
+  userTasks: TaskStateInterface,
   userEvents: EventStateInterface,
-  currentUser: UsersStateInterface,
+  currentUser: UserStateInterface,
 }

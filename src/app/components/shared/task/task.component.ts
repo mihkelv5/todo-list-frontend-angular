@@ -10,9 +10,9 @@ import {EventModel} from "../../../model/event.model";
 import {AuthenticationService} from "../../../service/authentication.service";
 import {PublicUserModel} from "../../../model/user/publicUser.model";
 import {select, Store} from "@ngrx/store";
-import * as TasksActions from "../../../ngrx-store/actions/tasks.actions";
+import * as TasksActions from "../../../ngrx-store/actions/task.actions";
 import * as UserDataSelectors from "../../../ngrx-store/selectors/user.selector"
-import * as EventSelectors from "../../../ngrx-store/selectors/events.selector"
+import * as EventSelectors from "../../../ngrx-store/selectors/event.selector"
 import {PrivateUserModel} from "../../../model/user/privateUser.model";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 

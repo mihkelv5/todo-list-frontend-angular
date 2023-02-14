@@ -1,9 +1,9 @@
 import {createReducer, on} from "@ngrx/store";
-import {TasksStateInterface} from "../state/TasksStateInterface";
-import * as TasksActions from "../actions/tasks.actions";
+import {TaskStateInterface} from "../state/TaskStateInterface";
+import * as TasksActions from "../actions/task.actions";
 
 
-export  const initialState: TasksStateInterface = {
+export  const initialState: TaskStateInterface = {
   tasks: [],
     userTasksLoaded: false,
     eventIdsThatHaveTasksLoaded: []

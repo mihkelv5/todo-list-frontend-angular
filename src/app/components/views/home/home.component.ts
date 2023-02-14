@@ -7,13 +7,13 @@ import {Observable, take} from "rxjs";
 import {AuthenticationService} from "../../../service/authentication.service";
 import {faImage} from "@fortawesome/free-regular-svg-icons";
 import {select, Store} from "@ngrx/store";
-import * as TasksActions from "../../../ngrx-store/actions/tasks.actions";
-import * as EventActions from "../../../ngrx-store/actions/events.actions";
+import * as TasksActions from "../../../ngrx-store/actions/task.actions";
+import * as EventActions from "../../../ngrx-store/actions/event.actions";
 import {PrivateUserModel} from "../../../model/user/privateUser.model";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import * as UserSelector from "../../../ngrx-store/selectors/user.selector";
-import * as EventsSelector from "../../../ngrx-store/selectors/events.selector";
-import * as TaskSelector from "../../../ngrx-store/selectors/tasks.selector";
+import * as EventsSelector from "../../../ngrx-store/selectors/event.selector";
+import * as TaskSelector from "../../../ngrx-store/selectors/task.selector";
 
 @Component({
   selector: 'app-home',

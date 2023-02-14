@@ -11,15 +11,15 @@ import {CookieService} from "ngx-cookie-service";
 import {Store} from "@ngrx/store";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import * as UserSelector from "../../../ngrx-store/selectors/user.selector"
-import * as UserActions from "../../../ngrx-store/actions/users.actions";
-import * as UsersActions from "../../../ngrx-store/actions/users.actions";
+import * as UserActions from "../../../ngrx-store/actions/user.actions";
+
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent{
 
   faUser = faUser;
   faMagnifyingGlass = faMagnifyingGlass;
@@ -47,34 +47,19 @@ export class NavbarComponent implements OnInit{
     this.invites$ = this.store.select(UserSelector.getUserInvites);
   }
 
-
-  ngOnInit(): void {
-
-
-  }
-
-  //subscribes to router events to decide if navbar should be shown.
-  //And loads data if user has
-
-
-
-
-
-
   logout(){
 
     this.closeUserAndNotificationMenu();
-    this.store.dispatch(UsersActions.logout())
+    this.store.dispatch(UserActions.logout())
     this.router.navigate(["/login"]);
   }
-
 
   searchTasks() {
     console.log(this.searchForm.get("search")?.value);
     this.searchForm.setValue({"search" : ""})
   }
 
-  @HostListener('document:keydown.escape', ['$event'])
+  @HostListener('document:keydown.escape', ['$event']) //needs to be moved to special directive
   closeUserAndNotificationMenu(){
     this.userMenuVisible = false;
     this.notificationMenuVisible = false;

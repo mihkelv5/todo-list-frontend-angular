@@ -1,6 +1,6 @@
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {EventService} from "../../service/event.service";
-import * as EventActions from "../actions/events.actions";
+import * as EventActions from "../actions/event.actions";
 import {exhaustMap, of, map, mergeMap, switchMap} from "rxjs";
 import {Injectable} from "@angular/core";
 import {TaskService} from "../../service/task.service";
@@ -8,7 +8,7 @@ import {EventModel} from "../../model/event.model";
 import {InviteService} from "../../service/invite.service";
 
 @Injectable()
-export class EventsEffects{
+export class EventEffects {
 
 
   constructor(private actions$: Actions, private eventService: EventService, private inviteService: InviteService) {}

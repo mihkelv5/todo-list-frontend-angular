@@ -8,10 +8,10 @@ import { faPenToSquare, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import {faPencil, faUsers} from "@fortawesome/free-solid-svg-icons";
 import {InviteService} from "../../../service/invite.service";
 import {select, Store} from "@ngrx/store";
-import * as TasksActions from "../../../ngrx-store/actions/tasks.actions";
-import * as EventActions from "../../../ngrx-store/actions/events.actions";
-import * as TaskSelectors from "../../../ngrx-store/selectors/tasks.selector"
-import * as EventsSelectors from "../../../ngrx-store/selectors/events.selector";
+import * as TasksActions from "../../../ngrx-store/actions/task.actions";
+import * as EventActions from "../../../ngrx-store/actions/event.actions";
+import * as TaskSelectors from "../../../ngrx-store/selectors/task.selector"
+import * as EventsSelectors from "../../../ngrx-store/selectors/event.selector";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 
 @Component({

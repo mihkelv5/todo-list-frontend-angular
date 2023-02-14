@@ -5,7 +5,7 @@ import {PublicUserModel} from "../../model/user/publicUser.model";
 
 
 
-export class EventsActions {
+export class EventActions {
 
 }
 

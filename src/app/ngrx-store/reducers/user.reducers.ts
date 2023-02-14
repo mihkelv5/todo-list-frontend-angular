@@ -1,10 +1,10 @@
 
-import {UsersStateInterface} from "../state/usersStateInterface";
+import {UserStateInterface} from "../state/userStateInterface";
 import {PrivateUserModel} from "../../model/user/privateUser.model";
 import {createReducer, on} from "@ngrx/store";
-import * as UsersActions from "../actions/users.actions";
+import * as UsersActions from "../actions/user.actions";
 
-export  const initialState: UsersStateInterface = {
+export  const initialState: UserStateInterface = {
     loggedIn: false,
     privateUser: new PrivateUserModel("", "", ""),
     invites: [],
@@ -12,7 +12,7 @@ export  const initialState: UsersStateInterface = {
 
 }
 
-export const usersReducers = createReducer(initialState,
+export const userReducers = createReducer(initialState,
   on(UsersActions.getUserDataSuccess, (state, action) => {
     return {
       ...state,
@@ -37,7 +37,7 @@ export const usersReducers = createReducer(initialState,
   on(UsersActions.respondToInviteSuccess, (state, action) => {
 
       return {
-        ...state, //everything else will stay the same
+        ...state,
         invites: [...state.invites.filter(invite => invite.id !== action.inviteId)]
     }
   })

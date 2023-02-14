@@ -9,7 +9,7 @@ import {EventModel} from "../../../model/event.model";
 import {PublicUserModel} from "../../../model/user/publicUser.model";
 import {Store} from "@ngrx/store";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
-import * as EventsActions from "../../../ngrx-store/actions/events.actions";
+import * as EventsActions from "../../../ngrx-store/actions/event.actions";
 
 @Component({
     selector: 'app-invite-users',

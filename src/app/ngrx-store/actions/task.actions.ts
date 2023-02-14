@@ -2,7 +2,7 @@ import {createAction, props} from "@ngrx/store";
 import {TaskModel} from "../../model/task.model";
 import {PublicUserModel} from "../../model/user/publicUser.model";
 
-export class TasksActions {
+export class TaskActions {
 
 }
 

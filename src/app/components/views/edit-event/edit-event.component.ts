@@ -6,8 +6,8 @@ import {EventModel} from "../../../model/event.model";
 import {Location} from "@angular/common";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import {Store} from "@ngrx/store";
-import * as EventSelectors from "../../../ngrx-store/selectors/events.selector"
-import * as EventActions from "../../../ngrx-store/actions/events.actions";
+import * as EventSelectors from "../../../ngrx-store/selectors/event.selector"
+import * as EventActions from "../../../ngrx-store/actions/event.actions";
 
 
 @Component({

@@ -42,14 +42,14 @@ import { InviteUserComponent } from './components/smaller-components/invite-user
 import { InviteComponent } from './components/shared/invite/invite.component';
 import { AssignUserComponent } from './components/shared/assign-user/assign-user.component';
 import {StoreModule} from "@ngrx/store";
-import {tasksReducers} from "./ngrx-store/reducers/tasks.reducer";
+import {tasksReducers} from "./ngrx-store/reducers/task.reducer";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {EffectsModule} from "@ngrx/effects";
-import {TasksEffects} from "./ngrx-store/effects/tasks.effects";
-import {eventsReducers} from "./ngrx-store/reducers/events.reducer";
-import {EventsEffects} from "./ngrx-store/effects/events.effects";
-import {UsersEffects} from "./ngrx-store/effects/users.effects";
-import {usersReducers} from "./ngrx-store/reducers/users.reducers";
+import {TaskEffects} from "./ngrx-store/effects/task.effects";
+import {eventsReducers} from "./ngrx-store/reducers/event.reducer";
+import {EventEffects} from "./ngrx-store/effects/event.effects";
+import {UserEffects} from "./ngrx-store/effects/user.effects";
+import {userReducers} from "./ngrx-store/reducers/user.reducers";
 import { UserSettingsComponent } from './components/views/user.settings/user.settings.component';
 
 
@@ -89,9 +89,9 @@ import { UserSettingsComponent } from './components/views/user.settings/user.set
     StoreModule.forRoot({}),
     StoreModule.forFeature('userTasks', tasksReducers),
     StoreModule.forFeature('userEvents', eventsReducers),
-    StoreModule.forFeature('currentUser', usersReducers),
+    StoreModule.forFeature('currentUser', userReducers),
     StoreDevtoolsModule.instrument({maxAge: 15}),
-    EffectsModule.forRoot([TasksEffects, EventsEffects, UsersEffects]),
+    EffectsModule.forRoot([TaskEffects, EventEffects, UserEffects]),
 
   ],
   providers: [AuthenticationGuard, TaskService, AuthenticationService,

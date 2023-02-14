@@ -3,7 +3,7 @@ import {EventInvitationModel} from "../../../model/eventInvitation.model";
 import {faUser} from "@fortawesome/free-regular-svg-icons";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import {Store} from "@ngrx/store";
-import * as UserActions from "../../../ngrx-store/actions/users.actions";
+import * as UserActions from "../../../ngrx-store/actions/user.actions";
 import {Location} from "@angular/common";
 @Component({
   selector: 'invite-component',

@@ -1,12 +1,12 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import * as TasksActions from "../actions/tasks.actions"
+import * as TasksActions from "../actions/task.actions"
 import {catchError, concatMap, exhaustMap, map, mergeMap, of} from "rxjs";
 import {TaskService} from "../../service/task.service";
 
 
 @Injectable()
-export class TasksEffects {
+export class TaskEffects {
 
   constructor(private actions$: Actions, private taskService: TaskService) {}
 

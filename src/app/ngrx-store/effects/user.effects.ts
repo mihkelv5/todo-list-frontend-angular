@@ -1,13 +1,13 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {UserService} from "../../service/user.service";
-import * as UsersActions from "../actions/users.actions";
+import * as UsersActions from "../actions/user.actions";
 import {concatMap, exhaustMap, map} from "rxjs";
 import {InviteService} from "../../service/invite.service";
 import {AuthenticationService} from "../../service/authentication.service";
 
 @Injectable()
-export class UsersEffects {
+export class UserEffects {
 
   constructor(private actions$: Actions, private userService: UserService, private inviteService: InviteService,
               private authService: AuthenticationService) {}
