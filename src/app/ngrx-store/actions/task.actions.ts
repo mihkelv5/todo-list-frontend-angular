@@ -40,19 +40,19 @@ export const deleteTaskSuccess = createAction('[Tasks] Delete task Success',
 );
 
 export const completeTask = createAction('[Tasks] Complete Task',
-  props<{ taskId: string, isComplete: boolean, eventId: string}>()
+  props<{ taskId: string, isComplete: boolean, eventId: string | undefined}>()
 );
 
 export const completeTaskSuccess = createAction('[Tasks] Complete Task Success',
-  props<{ task: TaskModel, eventId: string}>()
+  props<{ task: TaskModel, eventId: string | undefined}>()
 );
 
 export const moveTask = createAction('[Tasks] Move Task',
-  props<{taskId: string, xLocation: number, yLocation: number, eventId: string}>()
+  props<{taskId: string, xLocation: number, yLocation: number, eventId: string | undefined}>()
 );
 
 export const moveTaskSuccess = createAction('[Tasks] Move Task Success',
-  props<{task: TaskModel, eventId: string}>()
+  props<{task: TaskModel, eventId: string | undefined}>()
 );
 
 

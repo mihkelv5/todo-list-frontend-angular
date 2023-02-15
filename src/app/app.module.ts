@@ -50,7 +50,8 @@ import {eventsReducers} from "./ngrx-store/reducers/event.reducer";
 import {EventEffects} from "./ngrx-store/effects/event.effects";
 import {UserEffects} from "./ngrx-store/effects/user.effects";
 import {userReducers} from "./ngrx-store/reducers/user.reducers";
-import { UserSettingsComponent } from './components/views/user.settings/user.settings.component';
+import { UserPageComponent } from './components/views/user.page/user.page.component';
+import { PublicUserCardComponent } from './components/smaller-components/public.user.card/public.user.card.component';
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import { UserSettingsComponent } from './components/views/user.settings/user.set
     InviteUserComponent,
     InviteComponent,
     AssignUserComponent,
-    UserSettingsComponent,
+    UserPageComponent,
+    PublicUserCardComponent,
   ],
   imports: [
 

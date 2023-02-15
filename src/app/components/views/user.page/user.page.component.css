@@ -1,0 +1,38 @@
+.limiter {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+
+}
+
+public-user-card {
+  margin-right: 50px;
+}
+
+.user-data > li {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.user-data > li {
+
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.user-info-card {
+
+  padding: 20px;
+  height: 90%;
+  width: 35rem;
+
+
+  background: #e3e3e3;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 5px;
+}
+
+

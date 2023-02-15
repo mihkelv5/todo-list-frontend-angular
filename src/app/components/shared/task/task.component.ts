@@ -41,7 +41,6 @@ export class TaskComponent implements OnInit{
   @Input("task") task!: TaskModel;
 
   currentEvent$: Observable<EventModel | null>;
-  eventId: string = "";
 
     taskPopupWindow: boolean = false;
     assignUsersWindow = false; //opens and closes assign user view
@@ -129,7 +128,8 @@ export class TaskComponent implements OnInit{
     if(this.task.id){
       const taskId = this.task.id;
 
-      this.store.dispatch(TasksActions.completeTask({taskId, isComplete, eventId: this.eventId}))
+
+      this.store.dispatch(TasksActions.completeTask({taskId, isComplete, eventId: this.task.eventId}))
 
     }
   }
@@ -157,7 +157,7 @@ export class TaskComponent implements OnInit{
       this.styles.right = "calc(100% + 10px)";
     }
 
-    this.store.dispatch(TasksActions.moveTask({taskId, xLocation, yLocation, eventId: this.eventId}))
+    this.store.dispatch(TasksActions.moveTask({taskId, xLocation, yLocation, eventId: this.task.eventId}))
   }
 
 

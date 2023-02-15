@@ -1,0 +1,55 @@
+.container {
+  background: #e3e3e3;
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 12rem;
+}
+
+.name {
+  font-size: 2rem;
+  align-self: flex-start;
+}
+
+.active {
+  display: flex;
+  gap: 5px;
+  color: #56a256;
+  align-self: flex-start;
+}
+
+.profile-picture {
+  height: 100px;
+  aspect-ratio: 1 / 1;
+  font-size: 100px;
+  margin-bottom: 10px;
+}
+
+.other-data {
+  position: relative;
+}
+
+.other-data:before {
+  content: "";
+  position: absolute;
+  border-top: 1px solid #bdbdbd;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+.other-data:after {
+  content: "";
+  position: absolute;
+  border-top: 1px solid #bdbdbd;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.other-data > p{
+  margin: 5px;
+}
