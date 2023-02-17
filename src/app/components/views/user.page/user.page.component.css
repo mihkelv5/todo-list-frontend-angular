@@ -9,18 +9,56 @@ public-user-card {
   margin-right: 50px;
 }
 
-.user-data > li {
-  list-style: none;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+.header {
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 15px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #5e5e5e;
+}
+
+
+.header > fa-icon:hover {
+  cursor: pointer;
+  background: #b2b2b2;
+
+}
+
+
+
+
+.header::after {
+  content: "";
+  position: absolute;
+  border-top: 1px solid #bdbdbd;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.user-data {
+  width: 50%;
 }
 
 .user-data > li {
+  font-size: 1.2rem;
+  list-style: none;
+  display: grid;
+  grid-template-columns: 4rem 10rem 2rem;
+  gap: 5px;
 
+}
+
+.user-data fa-icon{
+  margin-left: auto;
 }
 
 .bold {
   font-weight: bold;
+  justify-self: flex-end;
 }
 
 .user-info-card {

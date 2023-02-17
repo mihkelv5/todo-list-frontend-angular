@@ -4,15 +4,20 @@
   </public-user-card>
   <div class="user-info-card">
     <div class="user-info">
-      <p class="header">User info</p>
+      <div class="header">
+        <span>User info</span>
+        <fa-icon [icon]="faPenToSquare" ></fa-icon>
+      </div>
+
+
       <ul class="user-data">
         <li>
           <p class="bold">Username:</p>
           <p>JohnDoe</p>
-          <fa-icon [icon]="faPenToSquare"></fa-icon>
+        </li>
+        <li>
           <p class="bold">Email: </p>
           <p>JohnDoe</p>
-          <fa-icon [icon]="faPenToSquare"></fa-icon>
         </li>
       </ul>
     </div>
