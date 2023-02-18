@@ -4,25 +4,39 @@
   </public-user-card>
   <div class="user-info-card">
     <div class="user-info">
-      <div class="header">
-        <span>User info</span>
-        <fa-icon [icon]="faPenToSquare" ></fa-icon>
+      <div class="user-info-header">
+        <span *ngIf="isUserOwnProfile">Profile</span>
+        <span *ngIf="!isUserOwnProfile">/Username/</span>
+        <fa-icon [icon]="faPenToSquare" *ngIf="isUserOwnProfile"></fa-icon>
       </div>
 
 
       <ul class="user-data">
         <li>
-          <p class="bold">Username:</p>
-          <p>JohnDoe</p>
+          <p class="bold">Name:</p>
+          <p>John Doe</p>
         </li>
         <li>
           <p class="bold">Email: </p>
-          <p>JohnDoe</p>
+          <p>JohnDoe@mail.com</p>
         </li>
       </ul>
     </div>
-    <div class="user-activity">
+    <div class="activities-menu">
+      <mat-radio-group class="menu-selector-header"
+        [(ngModel)]="selectedMenu">
 
+        <mat-radio-button *ngFor="let item of menuSelector; let i = index" [attr.data-index]="i" [value]="i" disableRipple="true">
+          <p>{{item}}</p>
+        </mat-radio-button>
+      </mat-radio-group>
+      <p *ngIf="selectedMenu==0">Activity history</p>
+      <p *ngIf="selectedMenu==1">Friends</p>
+      <p *ngIf="selectedMenu==2">Messages</p>
+      <div class="activity">
+      </div>
+      <div class="friends"></div>
+      <div class="messages"></div>
     </div>
   </div>
 

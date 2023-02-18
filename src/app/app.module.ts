@@ -52,6 +52,7 @@ import {UserEffects} from "./ngrx-store/effects/user.effects";
 import {userReducers} from "./ngrx-store/reducers/user.reducers";
 import { UserPageComponent } from './components/views/user.page/user.page.component';
 import { PublicUserCardComponent } from './components/smaller-components/public.user.card/public.user.card.component';
+import {MatRadioModule} from "@angular/material/radio";
 
 
 @NgModule({
@@ -73,29 +74,30 @@ import { PublicUserCardComponent } from './components/smaller-components/public.
     UserPageComponent,
     PublicUserCardComponent,
   ],
-  imports: [
+    imports: [
 
-    BrowserModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    DragDropModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    FormsModule,
-    FontAwesomeModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatSlideToggleModule,
-    StoreModule.forRoot({}),
-    StoreModule.forFeature('userTasks', tasksReducers),
-    StoreModule.forFeature('userEvents', eventsReducers),
-    StoreModule.forFeature('currentUser', userReducers),
-    StoreDevtoolsModule.instrument({maxAge: 15}),
-    EffectsModule.forRoot([TaskEffects, EventEffects, UserEffects]),
+        BrowserModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        DragDropModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        FormsModule,
+        FontAwesomeModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatSlideToggleModule,
+        StoreModule.forRoot({}),
+        StoreModule.forFeature('userTasks', tasksReducers),
+        StoreModule.forFeature('userEvents', eventsReducers),
+        StoreModule.forFeature('currentUser', userReducers),
+        StoreDevtoolsModule.instrument({maxAge: 15}),
+        EffectsModule.forRoot([TaskEffects, EventEffects, UserEffects]),
+        MatRadioModule,
 
-  ],
+    ],
   providers: [AuthenticationGuard, TaskService, AuthenticationService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]

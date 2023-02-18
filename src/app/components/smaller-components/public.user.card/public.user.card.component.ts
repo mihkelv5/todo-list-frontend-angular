@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {faCheckCircle, faUserTie} from "@fortawesome/free-solid-svg-icons";
+import {Router} from "@angular/router";
 
 
 
@@ -11,7 +12,12 @@ import {faCheckCircle, faUserTie} from "@fortawesome/free-solid-svg-icons";
 })
 export class PublicUserCardComponent {
 
+  isUserOwnProfile: boolean = false;
+
+
   faCheckCircle = faCheckCircle;
   faUserTie = faUserTie;
+
+
 
 }
