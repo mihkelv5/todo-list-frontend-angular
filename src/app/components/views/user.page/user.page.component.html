@@ -23,13 +23,17 @@
       </ul>
     </div>
     <div class="activities-menu">
-      <mat-radio-group class="menu-selector-header"
-        [(ngModel)]="selectedMenu">
 
-        <mat-radio-button *ngFor="let item of menuSelector; let i = index" [attr.data-index]="i" [value]="i" disableRipple="true">
-          <p>{{item}}</p>
-        </mat-radio-button>
-      </mat-radio-group>
+      <form class="user-data-form">
+        <input type="radio" id="activity" name="user-data-cards" value="0" (click)="changeSelected(0)" checked>
+        <label for="activity" >Activity history</label>
+        <input type="radio" id="friends" name="user-data-cards" value="1" (click)="changeSelected(1)">
+        <label for="friends">Friends</label>
+        <input type="radio" id="messages" name="user-data-cards" value="2" (click)="changeSelected(2)">
+        <label for="messages">Messages</label>
+        <div class="border"></div>
+      </form>
+
       <p *ngIf="selectedMenu==0">Activity history</p>
       <p *ngIf="selectedMenu==1">Friends</p>
       <p *ngIf="selectedMenu==2">Messages</p>
@@ -39,6 +43,4 @@
       <div class="messages"></div>
     </div>
   </div>
-
-
 </div>

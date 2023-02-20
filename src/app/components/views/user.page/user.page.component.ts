@@ -26,4 +26,8 @@ export class UserPageComponent implements OnInit{
   logNumber() {
     console.log(this.selectedMenu)
   }
+
+  changeSelected(value: number){
+    this.selectedMenu = value;
+  }
 }
