@@ -6,7 +6,7 @@ import * as UsersActions from "../actions/user.actions";
 
 export  const initialState: UserStateInterface = {
     loggedIn: false,
-    privateUser: new PrivateUserModel("", "", ""),
+    privateUser: new PrivateUserModel("", "", "", ""),
     invites: [],
 
 

@@ -1,13 +1,15 @@
 <div class="container">
   <p class="name">
-      John Doe
+    {{publicUserModel.username}}
   </p>
   <div class="active">
     <fa-icon [icon]="faCheckCircle"></fa-icon>
     <p>Online</p>
   </div>
   <div class="profile-picture">
-    <fa-icon [icon]="faUserTie"></fa-icon>
+
+    <img [src]="'data:image/jpg;base64,' + this.publicUserModel.imageString" [height]="100" [width]="100">
+    <fa-icon [icon]="faPencil" class="edit-picture" *ngIf="isUserOwnProfile"></fa-icon>
   </div>
   <p class="join-date">
       Joined on:

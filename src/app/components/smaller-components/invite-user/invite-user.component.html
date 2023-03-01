@@ -1,4 +1,5 @@
-<div class="manage-users" (click)="closeWindowOutsideClick($event)">
+<div class="manage-users" (click)="closeWindowOutsideClick($event)" >
+  <public-user-card [publicUserModel]="publicUser" [isProfilePage]="false" *ngIf="publicUser != null" class="additional-user-info" [ngStyle]="styles"></public-user-card>
   <div class="container">
     <div class="header">
       <span>Invite to Workgroup</span>
@@ -14,8 +15,8 @@
         </div>
           <div class="search-results"> <!--search result-->
             <ul  class="result-list">
-              <li *ngFor="let result of filteredResults$ | async" (click)="addToEvent(result)" class="result-entry">
-                <fa-icon [icon]="faUser"></fa-icon>
+              <li *ngFor="let result of filteredResults$ | async" (click)="addToEvent(result)" class="result-entry" (mouseover)="openUserData(result, $event)" (mouseleave)="openUserData(null, $event)">
+                <img [src]="'data:image/jpg;base64,' + this.result.imageString" class="profile-picture">
                 <span >{{result.username}}</span>
               </li>
 
@@ -27,15 +28,16 @@
           <li>
             <span>Currently invited: </span>
           </li>
-            <li *ngFor="let user of event.invitedUsers" class="result-entry">
-                <fa-icon [icon]="faUser"></fa-icon>
-                <span >{{user.username}}</span>
+            <li *ngFor="let user of event.invitedUsers" class="result-entry" (mouseover)="openUserData(user, $event)" (mouseout)="openUserData(null, $event)">
+
+              <img [src]="'data:image/jpg;base64,' + this.user.imageString" class="profile-picture">
+              <span >{{user.username}}</span>
                 <div class="remove-user" (click)="unInviteFromEvent(user)">
                     <fa-icon [icon]="faXmark"></fa-icon>
                 </div>
             </li>
-          <li *ngFor="let user of event.waitingList" class="result-entry">
-            <fa-icon [icon]="faUser"></fa-icon>
+          <li *ngFor="let user of event.waitingList" class="result-entry" (mouseover)="openUserData(user, $event)" (mouseout)="openUserData(null, $event)">
+            <img [src]="'data:image/jpg;base64,' + this.user.imageString" class="profile-picture">
             <span >{{user.username}}</span>
             <div class="remove-user" (click)="removeFromInviteList(user)">
               <fa-icon [icon]="faXmark"></fa-icon>
@@ -46,8 +48,9 @@
               No new users invited
             </span>
           </li>
-          <li class="already-invited">Already in event:</li>
-          <li *ngFor="let eventUser of event.eventUsers" class="result-entry">
+          <div class="already-invited" >Already in event:</div>
+          <li *ngFor="let eventUser of event.eventUsers" class="result-entry" (mouseover)="openUserData(eventUser, $event)" (mouseout)="openUserData(null, $event)">
+            <img [src]="'data:image/jpg;base64,' + this.eventUser.imageString" class="profile-picture">
             <span>{{eventUser.username}}</span>
           </li>
         </ul>

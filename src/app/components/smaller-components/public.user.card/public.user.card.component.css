@@ -26,7 +26,28 @@
   aspect-ratio: 1 / 1;
   font-size: 100px;
   margin-bottom: 10px;
+  position: relative;
 }
+
+.edit-picture {
+  font-size: 1rem;
+  height: 20px;
+  width: 20px;
+  padding: 3px;
+  background: #e5d0c6;
+
+  border-radius: 25%;
+
+  position: absolute;
+  top:0;
+  right: -30px;
+}
+
+.edit-picture:hover {
+  cursor: pointer;
+  background: rgba(0,0,0,0.20);
+}
+
 
 .other-data {
   position: relative;

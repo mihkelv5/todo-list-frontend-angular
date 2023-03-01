@@ -1,7 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {faPenToSquare} from "@fortawesome/free-regular-svg-icons";
 import {Router} from "@angular/router";
-
+import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
+import {Store} from "@ngrx/store";
+import {Observable} from "rxjs";
+import {PrivateUserModel} from "../../../model/user/privateUser.model";
+import * as UserSelector from "../../../ngrx-store/selectors/user.selector";
+import {PublicUserModel} from "../../../model/user/publicUser.model";
 
 @Component({
   selector: 'app-user.page',
@@ -14,7 +19,10 @@ export class UserPageComponent implements OnInit{
   menuSelector: string[] = ["Activity history", "Friends", "Messages"];
   selectedMenu: number = 0;
 
-  constructor(private router: Router) {
+  currentUser$!: Observable<PrivateUserModel>
+
+  constructor(private router: Router, private store: Store<AppStateInterface>) {
+    this.currentUser$ = this.store.select(UserSelector.getUserDataSelector)
   }
 
   ngOnInit(): void {
@@ -29,5 +37,9 @@ export class UserPageComponent implements OnInit{
 
   changeSelected(value: number){
     this.selectedMenu = value;
+  }
+
+  getPublicUserModel(user: PrivateUserModel): PublicUserModel {
+    return new PublicUserModel(user.username, user.imageString);
   }
 }

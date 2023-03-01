@@ -1,9 +1,10 @@
 export class PublicUserModel {
-  username: string
-  profilePicture: string = ""; //implemented later
+  username: string;
+  imageString: string;
 
 
-  constructor(username: string) {
+  constructor(username: string, imageString: string) {
     this.username = username;
+    this.imageString = imageString;
   }
 }

@@ -29,6 +29,12 @@ export class InviteUserComponent implements OnInit{
     searchValue = "";
     canClose = false;
 
+
+    publicUser: PublicUserModel | null = null;
+    windowXLoc = 0;
+    windowYLoc = 0;
+    styles = {left : "10px", top : "0"};
+
     @Input("event") event!: EventModel;
     @Output() closeWindowEvent = new EventEmitter<void>;
 
@@ -103,5 +109,15 @@ export class InviteUserComponent implements OnInit{
         const invitedUsers = this.event.waitingList.map(user => user.username);
         this.store.dispatch(EventsActions.inviteUsersToEvent({eventId: this.event.id, invitedUsers}))
         this.closeWindow()
+    }
+
+    openUserData(user: PublicUserModel | null, event: MouseEvent) {
+
+      this.styles.left = event.clientX + "px";
+      this.styles.top = (event.clientY + 20) + "px";
+
+      //
+
+      this.publicUser = user;
     }
 }

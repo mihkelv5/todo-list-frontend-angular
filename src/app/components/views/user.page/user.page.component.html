@@ -1,24 +1,24 @@
-<div class="limiter">
+<div class="limiter" *ngIf="currentUser$ | async; let user">
 
-  <public-user-card>
+  <public-user-card [publicUserModel]="getPublicUserModel(user)" [isProfilePage]="isUserOwnProfile" *ngIf="user">
   </public-user-card>
   <div class="user-info-card">
     <div class="user-info">
       <div class="user-info-header">
         <span *ngIf="isUserOwnProfile">Profile</span>
         <span *ngIf="!isUserOwnProfile">/Username/</span>
-        <fa-icon [icon]="faPenToSquare" *ngIf="isUserOwnProfile"></fa-icon>
+
       </div>
 
 
-      <ul class="user-data">
+      <ul class="user-data" >
         <li>
           <p class="bold">Name:</p>
-          <p>John Doe</p>
+          <p>{{user.username}}</p>
         </li>
         <li>
           <p class="bold">Email: </p>
-          <p>JohnDoe@mail.com</p>
+          <p>{{user.email}}</p>
         </li>
       </ul>
     </div>
@@ -29,8 +29,8 @@
         <label for="activity" >Activity history</label>
         <input type="radio" id="friends" name="user-data-cards" value="1" (click)="changeSelected(1)">
         <label for="friends">Friends</label>
-        <input type="radio" id="messages" name="user-data-cards" value="2" (click)="changeSelected(2)">
-        <label for="messages">Messages</label>
+        <input type="radio" id="comments" name="user-data-cards" value="2" (click)="changeSelected(2)">
+        <label for="comments">Comments</label>
         <div class="border"></div>
       </form>
 
