@@ -1,6 +1,6 @@
 <div class="limiter" *ngIf="currentUser$ | async; let user">
 
-  <public-user-card [publicUserModel]="getPublicUserModel(user)" [isProfilePage]="isUserOwnProfile" *ngIf="user">
+  <public-user-card [publicUserModel]="getPublicUserModel(user)" [isProfilePage]="true" *ngIf="user">
   </public-user-card>
   <div class="user-info-card">
     <div class="user-info">

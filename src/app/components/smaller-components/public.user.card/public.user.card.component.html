@@ -9,7 +9,7 @@
   <div class="profile-picture">
 
     <img [src]="'data:image/jpg;base64,' + this.publicUserModel.imageString" [height]="100" [width]="100">
-    <fa-icon [icon]="faPencil" class="edit-picture" *ngIf="isUserOwnProfile"></fa-icon>
+    <fa-icon [icon]="faPencil" class="edit-picture" *ngIf="isProfilePage" (click)="toggleEditPictureWindow(true)"></fa-icon>
   </div>
   <p class="join-date">
       Joined on:
@@ -20,4 +20,5 @@
     <p>Tasks completed: </p>
     <p>Active tasks: </p>
   </div>
+  <upload-picture *ngIf="isEditPictureViewOpen" (closeWindowEvent)="toggleEditPictureWindow(false)"></upload-picture>
 </div>

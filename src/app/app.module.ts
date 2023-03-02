@@ -53,6 +53,7 @@ import {userReducers} from "./ngrx-store/reducers/user.reducers";
 import { UserPageComponent } from './components/views/user.page/user.page.component';
 import { PublicUserCardComponent } from './components/smaller-components/public.user.card/public.user.card.component';
 import {MatRadioModule} from "@angular/material/radio";
+import { UploadPictureComponent } from './components/smaller-components/upload.picture/upload.picture.component';
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import {MatRadioModule} from "@angular/material/radio";
     AssignUserComponent,
     UserPageComponent,
     PublicUserCardComponent,
+    UploadPictureComponent,
   ],
     imports: [
 

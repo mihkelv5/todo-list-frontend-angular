@@ -17,9 +17,7 @@ export class PublicUserCardComponent{
   @Input("publicUserModel") publicUserModel!: PublicUserModel;
   @Input("isProfilePage") isProfilePage = false;
 
-  isUserOwnProfile: boolean = false;
-
-
+  isEditPictureViewOpen = false;
   faCheckCircle = faCheckCircle;
   faPencil = faPencil;
 
@@ -28,5 +26,7 @@ export class PublicUserCardComponent{
   }
 
 
-
+  toggleEditPictureWindow(boolean: boolean) {
+    this.isEditPictureViewOpen = boolean;
+  }
 }
