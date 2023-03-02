@@ -16,7 +16,7 @@
           <div class="search-results"> <!--search result-->
             <ul  class="result-list">
               <li *ngFor="let result of filteredResults$ | async" (click)="addToEvent(result)" class="result-entry" (mouseenter)="openUserData(result, $event)" (mouseleave)="openUserData(null, $event)">
-                <img [src]="'data:image/jpg;base64,' + this.result.imageString" class="profile-picture">
+                <img [src]="this.result.imageString" class="profile-picture">
                 <span >{{result.username}}</span>
               </li>
 
@@ -30,14 +30,14 @@
           </li>
             <li *ngFor="let user of event.invitedUsers" class="result-entry" (mouseenter)="openUserData(user, $event)" (mouseleave)="openUserData(null, $event)">
 
-              <img [src]="'data:image/jpg;base64,' + this.user.imageString" class="profile-picture">
+              <img [src]="this.user.imageString" class="profile-picture">
               <span >{{user.username}}</span>
                 <div class="remove-user" (click)="unInviteFromEvent(user)">
                     <fa-icon [icon]="faXmark"></fa-icon>
                 </div>
             </li>
           <li *ngFor="let user of event.waitingList" class="result-entry" (mouseenter)="openUserData(user, $event)" (mouseleave)="openUserData(null, $event)">
-            <img [src]="'data:image/jpg;base64,' + this.user.imageString" class="profile-picture">
+            <img [src]="this.user.imageString" class="profile-picture">
             <span >{{user.username}}</span>
             <div class="remove-user" (click)="removeFromInviteList(user)">
               <fa-icon [icon]="faXmark"></fa-icon>
@@ -50,7 +50,7 @@
           </li>
           <div class="already-invited" >Already in event:</div>
           <li *ngFor="let eventUser of event.eventUsers" class="result-entry" (mouseenter)="openUserData(eventUser, $event)" (mouseleave)="openUserData(null, $event)">
-            <img [src]="'data:image/jpg;base64,' + this.eventUser.imageString" class="profile-picture">
+            <img [src]="this.eventUser.imageString" class="profile-picture">
             <span>{{eventUser.username}}</span>
           </li>
         </ul>

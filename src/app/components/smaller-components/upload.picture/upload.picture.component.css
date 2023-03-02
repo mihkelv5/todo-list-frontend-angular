@@ -9,9 +9,21 @@
 
 }
 
+.header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 15px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #5e5e5e;
+  margin-right: auto;
+}
 
 .container {
-  background: #dee5e3;
+  padding: 30px;
+  background: #e3e3e3;
 
   border-radius: 10px;
   width: 600px;
@@ -21,4 +33,23 @@
   box-shadow: 0 3px 15px rgba(0,0,0,0.2);
   align-items: center;
   box-sizing: border-box;
+}
+
+#choose-img-btn {
+  display: none;
+}
+
+.preview {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+
+
+.upload-area {
+  width: 150px;
+  height: 150px;
+  border: 1px solid #b9b9b9;
 }

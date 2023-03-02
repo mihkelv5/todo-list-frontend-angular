@@ -1,22 +1,31 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {PictureUploadService} from "../../../service/picture.upload.service";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import {Store} from "@ngrx/store";
 import * as UserActions from "../../../ngrx-store/actions/user.actions";
+import {faCheck, faXmark} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'upload-picture',
   templateUrl: './upload.picture.component.html',
   styleUrls: ['./upload.picture.component.css']
 })
-export class UploadPictureComponent {
+export class UploadPictureComponent implements OnInit{
 
-  @Input("userImage") userImage: string = "";
+  faCheck = faCheck;
+  faXmark = faXmark;
+
+  @Input("preview") preview: string = "";
   @Output() closeWindowEvent = new EventEmitter<void>;
   selectedImage?: File;
-  preview = "";
+  chooseImgButton: HTMLElement | null = null;
 
   constructor(private pictureUploadService: PictureUploadService, private store: Store) {
+
+  }
+
+  ngOnInit(): void {
+    this.chooseImgButton = this.chooseImgButton = document.getElementById("choose-img-btn");
   }
 
   selectPicture(picture: any): void {
@@ -49,4 +58,5 @@ export class UploadPictureComponent {
       this.closeWindowEvent.emit();
     }
   }
+
 }

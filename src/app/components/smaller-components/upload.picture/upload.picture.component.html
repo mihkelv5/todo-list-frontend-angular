@@ -1,8 +1,13 @@
 <div class="background" (click)="closeWindowOutsideClick($event)">
   <div class="container">
-    <input type="file" (change)="selectPicture($event)">
-    <button (click)="uploadImage()">Upload</button>
-    <img [src]="preview" [height]="100" [width]="100" *ngIf="preview !== ''">
+    <p class="header">Choose a new profile picture...</p>
+    <input type="file" (change)="selectPicture($event)" id="choose-img-btn">
+
+    <div class="preview">
+      <img [src]="preview" [height]="200" [width]="200" *ngIf="preview !== ''">
+      <div class="upload-area"></div>
+    </div>
+    <button (click)="uploadImage()" >Upload</button>
 
   </div>
 </div>

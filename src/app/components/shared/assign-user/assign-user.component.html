@@ -10,7 +10,7 @@
           <span class="list-header">Available: </span>
         </li>
         <li *ngFor="let eventUser of availableUsers" (click)="assignUser(eventUser)" (mouseenter)="openUserData(eventUser, $event)" (mouseleave)="openUserData(null, $event)">
-          <img [src]="'data:image/jpg;base64,' + this.eventUser.imageString" class="profile-picture">
+          <img [src]="this.eventUser.imageString" class="profile-picture">
           {{eventUser.username}}
         </li>
       </ul>
@@ -19,7 +19,7 @@
           <span class="list-header">Assigned:</span>
         </li>
         <li *ngFor="let user of assignedUsers" (click)="removeUser(user)" (mouseenter)="openUserData(user, $event)" (mouseleave)="openUserData(null, $event)">
-          <img [src]="'data:image/jpg;base64,' + this.user.imageString" class="profile-picture">
+          <img [src]="this.user.imageString" class="profile-picture">
           {{user.username}}
         </li>
 

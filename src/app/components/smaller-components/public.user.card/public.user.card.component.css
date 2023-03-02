@@ -27,6 +27,7 @@
   font-size: 100px;
   margin-bottom: 10px;
   position: relative;
+  border: 1px solid #b9b9b9;
 }
 
 .edit-picture {
@@ -34,11 +35,14 @@
   height: 20px;
   width: 20px;
   padding: 3px;
+  color: #333333;
 
-
-  border-radius: 25%;
+  border-radius: 50%;
 
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   bottom: -15px;
   right: -15px;
 }
