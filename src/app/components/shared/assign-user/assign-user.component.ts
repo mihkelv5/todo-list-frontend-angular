@@ -18,24 +18,30 @@ import * as EventSelectors from "../../../ngrx-store/selectors/event.selector"
 
 export class AssignUserComponent implements OnInit{
   @Input("taskId") taskId !: string | null;
-    @Input("previouslyAssigned") previouslyAssigned !: PublicUserModel[];
+  @Input("previouslyAssigned") previouslyAssigned !: PublicUserModel[];
+  @Input("currentEvent") currentEvent: EventModel | null = null;
 
-    currentEvent$: Observable<EventModel | null>
-    assignedUsers: PublicUserModel[] = [];
+  assignedUsers: PublicUserModel[] = [];
+  availableUsers: PublicUserModel[] = [];
 
-    @Output("closeWindow") closeWindowEmitter: EventEmitter<boolean> = new EventEmitter()
+  @Output("closeWindow") closeWindowEmitter: EventEmitter<boolean> = new EventEmitter()
 
   faXmark = faXmark;
 
+  publicUser: PublicUserModel | null = null; // used for showing the info card when hovering username in invite list.
+  styles = {left : "-30px", top : "-20px"};
 
-    constructor(private store: Store<AppStateInterface>) {
+  constructor(private store: Store<AppStateInterface>) {
 
-        this.currentEvent$ = this.store.select(EventSelectors.getCurrentEventSelector)
 
+  }
+
+  ngOnInit(): void {
+    this.assignedUsers = this.assignedUsers.concat(this.previouslyAssigned);
+
+    if(this.currentEvent){
+      this.availableUsers = this.currentEvent.eventUsers.filter(user => !this.assignedUsers.find(assignedUser => assignedUser.username === user.username));
     }
-
-    ngOnInit(): void {
-        this.assignedUsers = this.assignedUsers.concat(this.previouslyAssigned);
   }
 
   closeWindow() {
@@ -47,11 +53,15 @@ export class AssignUserComponent implements OnInit{
         if(!this.assignedUsers.find(user => user.username == selected.username)){
           this.assignedUsers.push(selected);
         }
+        this.availableUsers = this.availableUsers.filter(user => user.username != selected.username);
+    this.publicUser = null;
   }
 
   removeUser(selected: PublicUserModel) {
         console.log(selected.username)
         this.assignedUsers = this.assignedUsers.filter(user => user.username != selected.username)
+        this.availableUsers.push(selected);
+        this.publicUser = null;
   }
 
   confirmAssign(users: PublicUserModel[], eventId: string) {
@@ -59,5 +69,10 @@ export class AssignUserComponent implements OnInit{
             this.store.dispatch(TasksActions.saveTaskUsers({taskId: this.taskId, assignedUsers: users, eventId: eventId}))
         }
         this.closeWindowEmitter.emit(true);
+  }
+
+  openUserData(user: PublicUserModel | null, event: MouseEvent) {
+
+    this.publicUser = user;
   }
 }

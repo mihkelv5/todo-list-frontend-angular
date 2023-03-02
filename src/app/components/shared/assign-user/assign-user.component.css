@@ -89,4 +89,16 @@
   border: none;
 }
 
+.profile-picture {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+}
+
+.additional-user-info {
+  position: fixed;
+  z-index: 9999;
+  font-size: 1rem;
+}
+
 

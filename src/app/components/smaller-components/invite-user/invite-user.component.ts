@@ -30,10 +30,8 @@ export class InviteUserComponent implements OnInit{
     canClose = false;
 
 
-    publicUser: PublicUserModel | null = null;
-    windowXLoc = 0;
-    windowYLoc = 0;
-    styles = {left : "10px", top : "0"};
+    publicUser: PublicUserModel | null = null; // used for showing the info card when hovering user name in invite list.
+    styles = {left : "0", top : "0"};
 
     @Input("event") event!: EventModel;
     @Output() closeWindowEvent = new EventEmitter<void>;
@@ -74,6 +72,7 @@ export class InviteUserComponent implements OnInit{
         setTimeout(() => {
             this.searchControl.setValue(this.searchValue);
         }, 0) //forces the invite list to update
+      this.publicUser = null;
     }
 
     removeFromInviteList(user: PublicUserModel) {
@@ -81,6 +80,7 @@ export class InviteUserComponent implements OnInit{
         setTimeout(() => {
             this.searchControl.setValue(this.searchValue);
         }, 0) //forces the invite list to update
+      this.publicUser = null;
 
     }
 
@@ -89,6 +89,7 @@ export class InviteUserComponent implements OnInit{
         setTimeout(() => {
             this.searchControl.setValue(this.searchValue);
         }, 50) //forces the invite list to update
+        this.publicUser = null;
     }
 
     closeWindow() {

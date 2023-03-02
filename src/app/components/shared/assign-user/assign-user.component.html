@@ -1,4 +1,5 @@
-<div class="wrapper"*ngIf="(currentEvent$ | async) as event" >
+<div class="wrapper"*ngIf="currentEvent" >
+  <public-user-card [publicUserModel]="publicUser" [isProfilePage]="false" *ngIf="publicUser != null" class="additional-user-info" [ngStyle]="styles"></public-user-card>
   <div class="container">
     <div class="header">
       <span>Assign users to task</span>
@@ -8,7 +9,8 @@
         <li>
           <span class="list-header">Available: </span>
         </li>
-        <li *ngFor="let eventUser of event.eventUsers" (click)="assignUser(eventUser)">
+        <li *ngFor="let eventUser of availableUsers" (click)="assignUser(eventUser)" (mouseenter)="openUserData(eventUser, $event)" (mouseleave)="openUserData(null, $event)">
+          <img [src]="'data:image/jpg;base64,' + this.eventUser.imageString" class="profile-picture">
           {{eventUser.username}}
         </li>
       </ul>
@@ -16,7 +18,8 @@
         <li class="">
           <span class="list-header">Assigned:</span>
         </li>
-        <li *ngFor="let user of assignedUsers" (click)="removeUser(user)">
+        <li *ngFor="let user of assignedUsers" (click)="removeUser(user)" (mouseenter)="openUserData(user, $event)" (mouseleave)="openUserData(null, $event)">
+          <img [src]="'data:image/jpg;base64,' + this.user.imageString" class="profile-picture">
           {{user.username}}
         </li>
 
@@ -27,7 +30,7 @@
     </div>
     <div class="assign-buttons">
       <button (click)="closeWindow()" class="cancel-button">Discard</button>
-      <button (click)="confirmAssign(assignedUsers, event.id)" class="accept-button">Assign</button>
+      <button (click)="confirmAssign(assignedUsers, currentEvent.id)" class="accept-button">Assign</button>
     </div>
   </div>
 </div>

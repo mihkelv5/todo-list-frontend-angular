@@ -15,7 +15,7 @@
         </div>
           <div class="search-results"> <!--search result-->
             <ul  class="result-list">
-              <li *ngFor="let result of filteredResults$ | async" (click)="addToEvent(result)" class="result-entry" (mouseover)="openUserData(result, $event)" (mouseleave)="openUserData(null, $event)">
+              <li *ngFor="let result of filteredResults$ | async" (click)="addToEvent(result)" class="result-entry" (mouseenter)="openUserData(result, $event)" (mouseleave)="openUserData(null, $event)">
                 <img [src]="'data:image/jpg;base64,' + this.result.imageString" class="profile-picture">
                 <span >{{result.username}}</span>
               </li>
@@ -28,7 +28,7 @@
           <li>
             <span>Currently invited: </span>
           </li>
-            <li *ngFor="let user of event.invitedUsers" class="result-entry" (mouseover)="openUserData(user, $event)" (mouseout)="openUserData(null, $event)">
+            <li *ngFor="let user of event.invitedUsers" class="result-entry" (mouseenter)="openUserData(user, $event)" (mouseleave)="openUserData(null, $event)">
 
               <img [src]="'data:image/jpg;base64,' + this.user.imageString" class="profile-picture">
               <span >{{user.username}}</span>
@@ -36,7 +36,7 @@
                     <fa-icon [icon]="faXmark"></fa-icon>
                 </div>
             </li>
-          <li *ngFor="let user of event.waitingList" class="result-entry" (mouseover)="openUserData(user, $event)" (mouseout)="openUserData(null, $event)">
+          <li *ngFor="let user of event.waitingList" class="result-entry" (mouseenter)="openUserData(user, $event)" (mouseleave)="openUserData(null, $event)">
             <img [src]="'data:image/jpg;base64,' + this.user.imageString" class="profile-picture">
             <span >{{user.username}}</span>
             <div class="remove-user" (click)="removeFromInviteList(user)">
@@ -49,7 +49,7 @@
             </span>
           </li>
           <div class="already-invited" >Already in event:</div>
-          <li *ngFor="let eventUser of event.eventUsers" class="result-entry" (mouseover)="openUserData(eventUser, $event)" (mouseout)="openUserData(null, $event)">
+          <li *ngFor="let eventUser of event.eventUsers" class="result-entry" (mouseenter)="openUserData(eventUser, $event)" (mouseleave)="openUserData(null, $event)">
             <img [src]="'data:image/jpg;base64,' + this.eventUser.imageString" class="profile-picture">
             <span>{{eventUser.username}}</span>
           </li>
