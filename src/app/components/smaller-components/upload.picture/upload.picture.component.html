@@ -1,5 +1,8 @@
 <div class="background" (click)="closeWindowOutsideClick($event)">
   <div class="container">
-    <input type="file">
+    <input type="file" (change)="selectPicture($event)">
+    <button (click)="uploadImage()">Upload</button>
+    <img [src]="preview" [height]="100" [width]="100" *ngIf="preview !== ''">
+
   </div>
 </div>

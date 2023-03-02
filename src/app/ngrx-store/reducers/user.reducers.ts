@@ -40,7 +40,14 @@ export const userReducers = createReducer(initialState,
         ...state,
         invites: [...state.invites.filter(invite => invite.id !== action.inviteId)]
     }
+  }),
+  on(UsersActions.updateUserPictureSuccess, (state, action) => {
+    return {
+      ...state,
+      privateUser: new PrivateUserModel(state.privateUser.id, state.privateUser.username, state.privateUser.email, action.imageString)
+    }
   })
+
   )
 
 

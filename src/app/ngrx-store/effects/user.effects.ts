@@ -2,15 +2,16 @@ import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {UserService} from "../../service/user.service";
 import * as UsersActions from "../actions/user.actions";
-import {concatMap, exhaustMap, map} from "rxjs";
+import {concatMap, exhaustMap, map, of} from "rxjs";
 import {InviteService} from "../../service/invite.service";
 import {AuthenticationService} from "../../service/authentication.service";
+import {PictureUploadService} from "../../service/picture.upload.service";
 
 @Injectable()
 export class UserEffects {
 
   constructor(private actions$: Actions, private userService: UserService, private inviteService: InviteService,
-              private authService: AuthenticationService) {}
+              private authService: AuthenticationService, private pictureUploadService: PictureUploadService) {}
 
     getUserData$ = createEffect(() =>
       this.actions$.pipe(ofType(UsersActions.getUserData),
@@ -48,6 +49,19 @@ export class UserEffects {
           () => UsersActions.logoutSuccess()
         ))
       })
+      )
+  )
+
+  uploadProfilePicture$ = createEffect(() =>
+    this.actions$.pipe(ofType(UsersActions.updateUserPicture),
+        concatMap( (action) => {
+          if(action.file){
+            return this.pictureUploadService.upload(action.file).pipe(map(
+              () => UsersActions.updateUserPictureSuccess({imageString: action.imageString})
+            ))
+          }
+          return of(); //issue with rxjs calling this updateUserPicture action twice. Quick fix;
+        })
       )
   )
 

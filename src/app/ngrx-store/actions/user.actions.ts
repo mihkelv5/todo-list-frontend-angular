@@ -28,3 +28,9 @@ export const respondToInviteSuccess = createAction('[Invite] Sending response to
 export const logout = createAction('[User] Logging out')
 
 export const logoutSuccess = createAction('[User] Logged out')
+
+export const updateUserPicture = createAction('[User] Uploading user Picture',
+  props<{file: File, imageString: string}>());
+
+export const updateUserPictureSuccess = createAction('[User] Uploading user Picture',
+  props<{imageString: string}>());

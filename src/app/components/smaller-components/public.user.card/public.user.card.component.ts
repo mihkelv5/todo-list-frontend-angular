@@ -3,6 +3,8 @@ import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {faCheckCircle, faPencil} from "@fortawesome/free-solid-svg-icons";
 import {PrivateUserModel} from "../../../model/user/privateUser.model";
 import {PublicUserModel} from "../../../model/user/publicUser.model";
+import {PictureUploadService} from "../../../service/picture.upload.service";
+import {FormControl} from "@angular/forms";
 
 
 
@@ -24,6 +26,8 @@ export class PublicUserCardComponent{
 
   constructor() {
   }
+
+
 
 
   toggleEditPictureWindow(boolean: boolean) {
