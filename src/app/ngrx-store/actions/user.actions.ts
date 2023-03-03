@@ -37,3 +37,6 @@ export const updateUserPictureSuccess = createAction('[User] Uploading user Pict
 
 export const updateUserPictureFailure = createAction('[User] Uploading user Picture Failure',
   props<{responseMessage: string}>());
+
+ export const changeResponseMessage = createAction('[User] Response message changed',
+   props<{responseMessage: string}>());

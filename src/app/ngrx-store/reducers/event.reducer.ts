@@ -3,6 +3,7 @@ import {createReducer, on} from "@ngrx/store";
 import * as EventActions from "../actions/event.actions";
 import {EventModel} from "../../model/event.model";
 import * as UserActions from "../actions/user.actions";
+import * as UsersActions from "../actions/user.actions";
 
 export const initialState: EventStateInterface = {
   events: [],
@@ -138,5 +139,10 @@ export const eventsReducers = createReducer(initialState,
     return {
       ...state
     }
-  })
+  }),
+  on(UsersActions.logoutSuccess, () => {
+    return {
+      ...initialState
+    }
+  }),
 )

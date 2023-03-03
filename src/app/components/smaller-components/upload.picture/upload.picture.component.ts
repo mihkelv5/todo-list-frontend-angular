@@ -22,10 +22,10 @@ export class UploadPictureComponent implements OnInit{
   selectedImage?: File;
   chooseImgButton: HTMLElement | null = null;
   preview: string = "";
-  errorMessage$: Observable<string>;
+  responseMessage$: Observable<string>;
 
   constructor(private pictureUploadService: PictureUploadService, private store: Store<AppStateInterface>) {
-    this.errorMessage$ = this.store.select(UserSelector.selectErrorMessage)
+    this.responseMessage$ = this.store.select(UserSelector.selectResponseMessage)
   }
 
   ngOnInit(): void {
@@ -49,9 +49,12 @@ export class UploadPictureComponent implements OnInit{
   uploadImage() {
     if(this.selectedImage){
       const file: File = this.selectedImage;
+
       this.store.dispatch(UserActions.updateUserPicture({file: file, imageString: this.preview}))
       setTimeout(() => {
+        this.store.dispatch(UserActions.changeResponseMessage({responseMessage: ""}))
         this.closeWindowEvent.emit();
+
       }, 2000)
     }
   }

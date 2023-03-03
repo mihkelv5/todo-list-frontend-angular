@@ -1,6 +1,6 @@
 <div class="background" (click)="closeWindowOutsideClick($event)">
   <div class="container">
-    <p class="header">Choose a new profile picture...</p>
+    <p class="header">Choose a new profile picture</p>
     <input type="file" (change)="selectPicture($event)" id="choose-img-btn">
 
     <div class="preview" *ngIf="chooseImgButton">
@@ -10,9 +10,13 @@
         <div class="camera-icon">
           <fa-icon  [icon]="faCamera"></fa-icon>
         </div>
+        <p>Click here to select an image</p>
       </div>
     </div>
-    <p>{{this.errorMessage$ | async}}</p>
-    <button (click)="uploadImage()" >Upload</button>
+    <p class="response-message">{{this.responseMessage$ | async}}</p>
+    <div class="assign-buttons">
+      <button (click)="closeWindowEvent.emit()" class="cancel-button">Cancel</button>
+      <button (click)="uploadImage()" class="accept-button">Upload</button>
+    </div>
   </div>
 </div>

@@ -12,6 +12,8 @@ import {CookieService} from "ngx-cookie-service";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import { Store} from "@ngrx/store";
 import * as UserActions from "../../../ngrx-store/actions/user.actions";
+import * as TaskActions from "../../../ngrx-store/actions/task.actions";
+
 
 @Component({
   selector: 'app-login',
@@ -62,6 +64,7 @@ export class LoginComponent implements OnInit{
                       this.authenticationService.saveToken(accessToken);
                       this.loginErrorMessage = "";
                       this.store.dispatch(UserActions.getUserData())
+                      this.store.dispatch(TaskActions.getUserTasks())
                       this.router.navigateByUrl("/home");
                       this.showLoading = false;
                             return;

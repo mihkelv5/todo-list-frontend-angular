@@ -40,6 +40,6 @@ export class UserPageComponent implements OnInit{
   }
 
   getPublicUserModel(user: PrivateUserModel): PublicUserModel {
-    return new PublicUserModel(user.username, user.imageString);
+    return new PublicUserModel(user.username, user.imageString, user.joinDate);
   }
 }

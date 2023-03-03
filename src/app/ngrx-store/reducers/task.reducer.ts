@@ -1,6 +1,8 @@
 import {createReducer, on} from "@ngrx/store";
 import {TaskStateInterface} from "../state/TaskStateInterface";
 import * as TasksActions from "../actions/task.actions";
+import * as UserActions from "../actions/user.actions";
+import * as UsersActions from "../actions/user.actions";
 
 
 export  const initialState: TaskStateInterface = {
@@ -105,7 +107,13 @@ export const tasksReducers = createReducer(initialState,
                     },
                     ...state.tasks.slice(id + 1)]
         }
-    })
+    }),
+
+  on(UsersActions.logoutSuccess, () => {
+    return {
+      ...initialState
+    }
+  }),
 
 
 )

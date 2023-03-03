@@ -6,7 +6,7 @@ import * as UsersActions from "../actions/user.actions";
 
 export  const initialState: UserStateInterface = {
   loggedIn: false,
-  privateUser: new PrivateUserModel("", "", "", ""),
+  privateUser: new PrivateUserModel("", "", "", "", ""),
   responseMessage: "",
   invites: [],
 
@@ -59,7 +59,13 @@ export const userReducers = createReducer(initialState,
       ...state,
       responseMessage: action.responseMessage
     }
-  })
+  }),
+  on(UsersActions.changeResponseMessage, (state, action) => {
+    return {
+      ...state,
+      responseMessage: action.responseMessage
+    }
+  }),
 
   )
 
