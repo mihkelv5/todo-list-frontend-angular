@@ -2,9 +2,9 @@
   <p class="name">
     {{publicUserModel.username}}
   </p>
-  <div class="active">
-    <fa-icon [icon]="faCheckCircle"></fa-icon>
-    <p>Online</p>
+  <div class="message" [class.active]="isUserLoggedIn">
+    <fa-icon [icon]="faCheckCircle" *ngIf="isUserLoggedIn"></fa-icon>
+    <p>{{userActivityMessage}}</p>
   </div>
   <div class="profile-picture">
 

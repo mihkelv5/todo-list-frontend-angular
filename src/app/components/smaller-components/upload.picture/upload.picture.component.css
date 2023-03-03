@@ -35,18 +35,30 @@
   box-sizing: border-box;
 }
 
-#choose-img-btn {
-  display: none;
-}
 
 .preview {
   display: flex;
   flex-direction: row;
   gap: 10px;
   align-items: center;
+  position: relative;
+  overflow-y: hidden;
 }
 
+#choose-img-btn {
+  position: absolute;
+  top: -30px;
+  left: 0;
+  height: calc(100% + 30px);
+  width: 100%;
 
+  cursor: pointer;
+}
+
+#choose-img-btn:hover{
+  background: rgba(0,0,0,0.05);
+  transition: 0.1s;
+}
 
 .upload-area {
   width: 400px;
@@ -59,10 +71,6 @@
   flex-direction: column;
 }
 
-.upload-area:hover {
-  background: rgba(0,0,0,0.05);
-  transition: 0.1s;
-}
 
 .camera-icon {
   padding: 20px;

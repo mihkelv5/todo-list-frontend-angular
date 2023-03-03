@@ -35,7 +35,7 @@ export const getTaskDetails = (taskId: string | null) => createSelector(selectFe
     if(tempTask){
         return tempTask
     }
-    return new TaskModel(null, new Date(), false, "", "", 0, 0, "", new PublicUserModel("", "", "", 0, 0, 0, 0), [] )
+    return new TaskModel(null, new Date(), false, "", "", 0, 0, "", new PublicUserModel("", "", "", new Date(),0, 0, 0, 0), [] )
 })
 
 

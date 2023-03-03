@@ -17,7 +17,10 @@ export class UserEffects {
       this.actions$.pipe(ofType(UsersActions.getUserData),
         exhaustMap(() =>{
           return this.userService.loadUserData().pipe(map(
-            userData => UsersActions.getUserDataSuccess({userData})
+            userData => {
+              return UsersActions.getUserDataSuccess({userData})
+            },
+
           ))
         }))
     )

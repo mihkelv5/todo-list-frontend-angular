@@ -44,16 +44,16 @@ export class AuthenticationService {
 
   }
 
+  public getAccessToken(username: string) : Observable<HttpResponse<string>> {
+    const headers = new HttpHeaders().set("username", username);
+    return this.http.get<string>(this.host + "/auth/get-access", {observe: "response", headers: headers, withCredentials: true})
+  }
 
   public register(user: UserModel) : Observable<HttpResponse<any>> {
     return this.http.post<HttpResponse<UserModel>>
     (this.host + "/auth/register", user);
   }
 
-  public getAccessToken(username: string) : Observable<HttpResponse<UserModel>> {
-    const headers = new HttpHeaders().set("username", username);
-    return this.http.get<UserModel>(this.host + "/auth/get-access", {observe: "response", headers: headers, withCredentials: true})
-  }
 
   public logout(): Observable<HttpResponse<string>> {
       this.cookieService.delete("Login-Cookie", "/")

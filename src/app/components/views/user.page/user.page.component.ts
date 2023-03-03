@@ -42,6 +42,6 @@ export class UserPageComponent implements OnInit{
   }
 
   getPublicUserModel(user: PrivateUserModel): PublicUserModel {
-    return new PublicUserModel(user.username, user.imageString, user.joinDate, user.groupsJoined, user.tasksCreated, user.tasksCompleted, user.activeTasks);
+    return user.publicUser;
   }
 }

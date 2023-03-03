@@ -57,17 +57,17 @@ export class LoginComponent implements OnInit{
                 //after receiving refresh token make another call to backend to receive access token.
 
                   this.authenticationService.getAccessToken(user.username).pipe(take(1)).subscribe(
-                  (response2: HttpResponse<UserModel>) => {
-                          const accessToken = response2.headers.get(HeaderType.JWT_TOKEN);
+                    (response2: HttpResponse<string>) => {
+                      const accessToken = response2.headers.get(HeaderType.JWT_TOKEN);
 
-                    if (accessToken != null && response2.body) {
-                      this.authenticationService.saveToken(accessToken);
-                      this.loginErrorMessage = "";
-                      this.store.dispatch(UserActions.getUserData())
-                      this.store.dispatch(TaskActions.getUserTasks())
-                      this.router.navigateByUrl("/home");
-                      this.showLoading = false;
-                            return;
+                      if (accessToken != null && response2.body) {
+                        this.authenticationService.saveToken(accessToken);
+                        this.loginErrorMessage = "";
+                        this.store.dispatch(UserActions.getUserData())
+                        this.store.dispatch(TaskActions.getUserTasks())
+                        this.router.navigateByUrl("/home");
+                        this.showLoading = false;
+                          return;
                         }});
               } else {
                 this.loginErrorMessage = "Something went wrong, please try again"
@@ -95,7 +95,7 @@ export class LoginComponent implements OnInit{
       "Login-Cookie",
       username,
       expiryDate,
-      "",
+      "/",
       "",
       false,
       "Lax"

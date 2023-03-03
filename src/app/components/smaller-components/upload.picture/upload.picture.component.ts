@@ -12,7 +12,7 @@ import * as UserSelector from "../../../ngrx-store/selectors/user.selector";
   templateUrl: './upload.picture.component.html',
   styleUrls: ['./upload.picture.component.css']
 })
-export class UploadPictureComponent implements OnInit{
+export class UploadPictureComponent{
 
   faCheck = faCheck;
   faXmark = faXmark;
@@ -20,7 +20,6 @@ export class UploadPictureComponent implements OnInit{
 
   @Output() closeWindowEvent = new EventEmitter<void>;
   selectedImage?: File;
-  chooseImgButton: HTMLElement | null = null;
   preview: string = "";
   responseMessage$: Observable<string>;
 
@@ -28,9 +27,7 @@ export class UploadPictureComponent implements OnInit{
     this.responseMessage$ = this.store.select(UserSelector.selectResponseMessage)
   }
 
-  ngOnInit(): void {
-    this.chooseImgButton = this.chooseImgButton = document.getElementById("choose-img-btn");
-  }
+
 
   selectPicture(picture: any): void {
     const file: File = picture.target.files[0];

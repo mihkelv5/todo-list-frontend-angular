@@ -14,12 +14,17 @@
   align-self: flex-start;
 }
 
-.active {
+.message {
   display: flex;
   gap: 5px;
-  color: #56a256;
+
   align-self: flex-start;
 }
+
+.active {
+  color: #56a256;
+}
+
 
 .profile-picture {
   height: 100px;
