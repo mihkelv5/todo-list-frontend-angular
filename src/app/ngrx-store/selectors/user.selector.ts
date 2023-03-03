@@ -8,3 +8,5 @@ export const getUserDataSelector = createSelector(userSelectFeature, (state) => 
 export const isUserLoggedIn = createSelector(userSelectFeature, state => state.loggedIn);
 
 export const getUserInvites = createSelector(userSelectFeature, state => state.invites);
+
+export const selectErrorMessage = createSelector(userSelectFeature, state => state.errorMessage)

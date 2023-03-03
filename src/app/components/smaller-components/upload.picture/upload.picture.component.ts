@@ -3,7 +3,9 @@ import {PictureUploadService} from "../../../service/picture.upload.service";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import {Store} from "@ngrx/store";
 import * as UserActions from "../../../ngrx-store/actions/user.actions";
-import {faCheck, faXmark} from "@fortawesome/free-solid-svg-icons";
+import {faCheck, faXmark, faCamera} from "@fortawesome/free-solid-svg-icons";
+import {Observable} from "rxjs";
+import * as UserSelector from "../../../ngrx-store/selectors/user.selector";
 
 @Component({
   selector: 'upload-picture',
@@ -14,14 +16,16 @@ export class UploadPictureComponent implements OnInit{
 
   faCheck = faCheck;
   faXmark = faXmark;
+  faCamera = faCamera;
 
-  @Input("preview") preview: string = "";
   @Output() closeWindowEvent = new EventEmitter<void>;
   selectedImage?: File;
   chooseImgButton: HTMLElement | null = null;
+  preview: string = "";
+  errorMessage$: Observable<string>;
 
-  constructor(private pictureUploadService: PictureUploadService, private store: Store) {
-
+  constructor(private pictureUploadService: PictureUploadService, private store: Store<AppStateInterface>) {
+    this.errorMessage$ = this.store.select(UserSelector.selectErrorMessage)
   }
 
   ngOnInit(): void {
@@ -48,7 +52,7 @@ export class UploadPictureComponent implements OnInit{
       this.store.dispatch(UserActions.updateUserPicture({file: file, imageString: this.preview}))
       setTimeout(() => {
         this.closeWindowEvent.emit();
-      }, 1000)
+      }, 2000)
     }
   }
 

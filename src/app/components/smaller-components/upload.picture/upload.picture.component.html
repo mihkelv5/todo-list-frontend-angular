@@ -3,11 +3,16 @@
     <p class="header">Choose a new profile picture...</p>
     <input type="file" (change)="selectPicture($event)" id="choose-img-btn">
 
-    <div class="preview">
-      <img [src]="preview" [height]="200" [width]="200" *ngIf="preview !== ''">
-      <div class="upload-area"></div>
+    <div class="preview" *ngIf="chooseImgButton">
+      <img [src]="preview" class="upload-area" *ngIf="preview !== ''" (click)="chooseImgButton.click()">
+
+      <div class="upload-area" (click)="chooseImgButton.click()" *ngIf="preview == ''">
+        <div class="camera-icon">
+          <fa-icon  [icon]="faCamera"></fa-icon>
+        </div>
+      </div>
     </div>
     <button (click)="uploadImage()" >Upload</button>
-
+    <p>{{this.errorMessage$ | async}}</p>
   </div>
 </div>

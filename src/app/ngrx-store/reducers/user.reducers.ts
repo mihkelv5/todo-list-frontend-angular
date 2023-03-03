@@ -5,9 +5,10 @@ import {createReducer, on} from "@ngrx/store";
 import * as UsersActions from "../actions/user.actions";
 
 export  const initialState: UserStateInterface = {
-    loggedIn: false,
-    privateUser: new PrivateUserModel("", "", "", ""),
-    invites: [],
+  loggedIn: false,
+  privateUser: new PrivateUserModel("", "", "", ""),
+  errorMessage: "",
+  invites: [],
 
 
 }
@@ -45,6 +46,13 @@ export const userReducers = createReducer(initialState,
     return {
       ...state,
       privateUser: new PrivateUserModel(state.privateUser.id, state.privateUser.username, state.privateUser.email, action.imageString)
+    }
+  }),
+
+  on(UsersActions.updateUserPictureFailure, (state, action) => {
+    return {
+      ...state,
+      errorMessage: action.responseMessage
     }
   })
 

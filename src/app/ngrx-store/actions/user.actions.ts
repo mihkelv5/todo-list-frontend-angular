@@ -32,5 +32,8 @@ export const logoutSuccess = createAction('[User] Logged out')
 export const updateUserPicture = createAction('[User] Uploading user Picture',
   props<{file: File, imageString: string}>());
 
-export const updateUserPictureSuccess = createAction('[User] Uploading user Picture',
+export const updateUserPictureSuccess = createAction('[User] Uploading user Picture Success',
   props<{imageString: string}>());
+
+export const updateUserPictureFailure = createAction('[User] Uploading user Picture Success',
+  props<{responseMessage: string}>());
