@@ -17,10 +17,10 @@
       Joined on: {{publicUserModel.joinDate}}
   </p>
   <div class="other-data">
-    <p>Groups Joined: </p>
-    <p>Tasks created: </p>
-    <p>Tasks completed: </p>
-    <p>Active tasks: </p>
+    <p>Groups Joined: {{publicUserModel.groupsJoined}}</p>
+    <p>Tasks created: {{publicUserModel.tasksCreated}}</p>
+    <p>Tasks completed: {{publicUserModel.tasksCompleted}}</p>
+    <p>Active tasks: {{publicUserModel.activeTasks}}</p>
   </div>
   <upload-picture *ngIf="isEditPictureViewOpen" (closeWindowEvent)="toggleEditPictureWindow(false)"></upload-picture>
 </div>

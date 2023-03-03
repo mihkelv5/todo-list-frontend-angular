@@ -7,6 +7,7 @@ import {Observable} from "rxjs";
 import {PrivateUserModel} from "../../../model/user/privateUser.model";
 import * as UserSelector from "../../../ngrx-store/selectors/user.selector";
 import {PublicUserModel} from "../../../model/user/publicUser.model";
+import * as UserActions from "../../../ngrx-store/actions/user.actions";
 
 @Component({
   selector: 'app-user.page',
@@ -23,6 +24,7 @@ export class UserPageComponent implements OnInit{
 
   constructor(private router: Router, private store: Store<AppStateInterface>) {
     this.currentUser$ = this.store.select(UserSelector.getUserDataSelector)
+    this.store.dispatch(UserActions.getUserData());
   }
 
   ngOnInit(): void {
@@ -40,6 +42,6 @@ export class UserPageComponent implements OnInit{
   }
 
   getPublicUserModel(user: PrivateUserModel): PublicUserModel {
-    return new PublicUserModel(user.username, user.imageString, user.joinDate);
+    return new PublicUserModel(user.username, user.imageString, user.joinDate, user.groupsJoined, user.tasksCreated, user.tasksCompleted, user.activeTasks);
   }
 }
