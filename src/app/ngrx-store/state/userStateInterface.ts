@@ -5,6 +5,6 @@ import {EventInvitationModel} from "../../model/eventInvitation.model";
 export interface UserStateInterface {
   loggedIn: boolean;
   privateUser: PrivateUserModel;
-  errorMessage: string;
+  responseMessage: string;
   invites: EventInvitationModel[];
 }

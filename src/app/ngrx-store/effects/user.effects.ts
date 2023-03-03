@@ -56,10 +56,13 @@ export class UserEffects {
     this.actions$.pipe(ofType(UsersActions.updateUserPicture),
         concatMap( (action) => {
             return this.pictureUploadService.upload(action.file).pipe(map(
-              () => UsersActions.updateUserPictureSuccess({imageString: action.imageString})
+
+              (response) => {
+                return UsersActions.updateUserPictureSuccess({imageString: action.imageString, responseMessage: response.response})
+              }
 
             ), catchError(error =>
-              of(UsersActions.updateUserPictureFailure({responseMessage: error.error}))
+              of(UsersActions.updateUserPictureFailure({responseMessage: "Error uploading image: " + error.error}))
             ))
         })
       )

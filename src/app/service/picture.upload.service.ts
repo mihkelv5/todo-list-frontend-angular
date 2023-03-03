@@ -12,12 +12,12 @@ export class PictureUploadService {
 
   constructor(private http: HttpClient) {
   }
-    upload(image: File): Observable<string> {
+    upload(image: File): Observable<any> {
       const formData = new FormData();
       formData.set("image", image);
       const headers = new HttpHeaders();
       headers.append('Content-Type', 'multipart/form-data')
       headers.append('Content-Type', 'application/json')
-      return this.http.post<string>(this.host, formData, {headers: headers})
+      return this.http.post<any>(this.host, formData, {headers: headers})
     }
 }

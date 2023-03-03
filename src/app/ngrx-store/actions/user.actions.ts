@@ -33,7 +33,7 @@ export const updateUserPicture = createAction('[User] Uploading user Picture',
   props<{file: File, imageString: string}>());
 
 export const updateUserPictureSuccess = createAction('[User] Uploading user Picture Success',
-  props<{imageString: string}>());
+  props<{imageString: string, responseMessage: string }>());
 
-export const updateUserPictureFailure = createAction('[User] Uploading user Picture Success',
+export const updateUserPictureFailure = createAction('[User] Uploading user Picture Failure',
   props<{responseMessage: string}>());

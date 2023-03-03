@@ -7,7 +7,7 @@ import * as UsersActions from "../actions/user.actions";
 export  const initialState: UserStateInterface = {
   loggedIn: false,
   privateUser: new PrivateUserModel("", "", "", ""),
-  errorMessage: "",
+  responseMessage: "",
   invites: [],
 
 
@@ -43,16 +43,21 @@ export const userReducers = createReducer(initialState,
     }
   }),
   on(UsersActions.updateUserPictureSuccess, (state, action) => {
+
     return {
       ...state,
-      privateUser: new PrivateUserModel(state.privateUser.id, state.privateUser.username, state.privateUser.email, action.imageString)
+      responseMessage: action.responseMessage,
+      privateUser: {
+        ...state.privateUser,
+        imageString: action.imageString
+      }
     }
   }),
 
   on(UsersActions.updateUserPictureFailure, (state, action) => {
     return {
       ...state,
-      errorMessage: action.responseMessage
+      responseMessage: action.responseMessage
     }
   })
 
