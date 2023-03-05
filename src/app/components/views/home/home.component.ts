@@ -36,10 +36,11 @@ import {
 
 export class HomeComponent implements AfterViewInit{
 
-    faImage=faImage;
-    faPlus = faPlus;
-    events$: Observable<EventModel[]>
-    currentUser$!: Observable<PrivateUserModel>
+  faImage=faImage;
+  faPlus = faPlus;
+
+  events$: Observable<EventModel[]>
+  currentUser$!: Observable<PrivateUserModel>
 
   selectedDateRange: DateRange<Date>
 
@@ -78,7 +79,7 @@ export class HomeComponent implements AfterViewInit{
       this.router.navigateByUrl("/event/edit/new")
   }
 
-  //date stuff
+  //date selectors
 
   customDatesSelected(date: Date): void {
 
@@ -87,17 +88,17 @@ export class HomeComponent implements AfterViewInit{
       this.selectedDateRange = new DateRange(this.selectedDateRange.start, date);
     } else {
       this.selectedDateRange = new DateRange(date, null);
-
     }
   }
 
   buttonDatesSelected(dateCase: number): void {
       switch (dateCase) {
-        case 0: {
+        case 0: { //today
           this.selectedDateRange = new DateRange<Date>(new Date(), null);
           return
         }
-        case 1: {
+
+        case 1: { //this week
           const date = new Date()
           let dayOfTheWeek = date.getDay();
           if(dayOfTheWeek == 0){
@@ -108,7 +109,8 @@ export class HomeComponent implements AfterViewInit{
           this.selectedDateRange = new DateRange<Date>(weekStart, weekEnd);
           return;
         }
-        case 2: {
+
+        case 2: { //this month
           const date = new Date();
           const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
           const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
@@ -121,4 +123,10 @@ export class HomeComponent implements AfterViewInit{
       }
   }
 
+  setOneDate() {
+    //if user moves their cursor out of the calendar having selected only one date, the date range will be set for only one day
+    if(this.selectedDateRange.start && !this.selectedDateRange.end){
+      this.selectedDateRange = new DateRange<Date>(this.selectedDateRange.start, this.selectedDateRange.start);
+    }
+  }
 }
