@@ -11,7 +11,7 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { MatFormFieldModule} from "@angular/material/form-field";
 import { MatInputModule} from "@angular/material/input";
 import { MatDatepickerModule} from "@angular/material/datepicker";
-import { MatNativeDateModule} from "@angular/material/core";
+import {DateAdapter, MatNativeDateModule} from "@angular/material/core";
 
 //services
 import {TaskService} from "./service/task.service";
@@ -54,6 +54,7 @@ import { UserPageComponent } from './components/views/user.page/user.page.compon
 import { PublicUserCardComponent } from './components/smaller-components/public.user.card/public.user.card.component';
 import {MatRadioModule} from "@angular/material/radio";
 import { UploadPictureComponent } from './components/smaller-components/upload.picture/upload.picture.component';
+import {CustomDateAdapter} from "./util/CustomDateAdapter";
 
 
 @NgModule({
@@ -101,7 +102,9 @@ import { UploadPictureComponent } from './components/smaller-components/upload.p
 
     ],
   providers: [AuthenticationGuard, TaskService, AuthenticationService,
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: DateAdapter, useClass: CustomDateAdapter}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

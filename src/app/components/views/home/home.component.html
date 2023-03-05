@@ -1,6 +1,30 @@
+<div class="home">
+
+    <div class="sidebar">
+      <div class="date-selector">
+        <div class="predefined-dates">
+          <p (click)="buttonDatesSelected(0)">Today</p>
+          <p (click)="buttonDatesSelected(1)">This Week</p>
+          <p (click)="buttonDatesSelected(2)">This Month</p>
+        </div>
+          <mat-calendar
+            (selectedChange)="customDatesSelected($event)"
+            [selected]="selectedDateRange">
+          </mat-calendar>
+      </div>
+      <div class="task-tags"></div>
+      <div class="groups"></div>
+    </div>
+    <div class="tasks-view">
+
+    </div>
+
+</div>
 
 
-  <div class="home-page">
+
+
+<!--  <div class="home-page">
     <div class="limiter">
       <div class="my-item">
         <div class="header">
@@ -40,6 +64,6 @@
         <app-user-tasks class="board"></app-user-tasks>
       </div>
     </div>
-  </div>
+  </div>-->
 
 

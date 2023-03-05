@@ -14,11 +14,23 @@ import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import * as UserSelector from "../../../ngrx-store/selectors/user.selector";
 import * as EventsSelector from "../../../ngrx-store/selectors/event.selector";
 import * as TaskSelector from "../../../ngrx-store/selectors/task.selector";
+import {FormControl, FormGroup} from "@angular/forms";
+import {
+  DateRange,
+  DefaultMatCalendarRangeStrategy,
+  MAT_DATE_RANGE_SELECTION_STRATEGY
+} from "@angular/material/datepicker";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  providers: [
+    {
+      provide: MAT_DATE_RANGE_SELECTION_STRATEGY,
+      useClass: DefaultMatCalendarRangeStrategy,
+    },
+  ],
 })
 
 
@@ -29,6 +41,7 @@ export class HomeComponent implements AfterViewInit{
     events$: Observable<EventModel[]>
     currentUser$!: Observable<PrivateUserModel>
 
+  selectedDateRange: DateRange<Date>
 
 
   constructor(private authService: AuthenticationService, private eventService: EventService, private router: Router, private store: Store<AppStateInterface>) {
@@ -37,18 +50,16 @@ export class HomeComponent implements AfterViewInit{
             if(!bool){
                 this.store.dispatch(TasksActions.getUserTasks());
             }
-        }
-
-    )
-
-
-
+        })
     this.store.dispatch(EventActions.getCurrentEvent({eventId: ""}));
     this.store.dispatch(EventActions.getAllEvents());
 
-
     this.events$ = this.store.pipe(select(EventsSelector.getEventsSelector));
+
+    this.selectedDateRange = new DateRange<Date>(null, null)
   }
+
+
 
   ngAfterViewInit() {
       this.currentUser$ = this.store.pipe(select(UserSelector.getUserDataSelector));
@@ -65,6 +76,49 @@ export class HomeComponent implements AfterViewInit{
 
   createNewEvent() {
       this.router.navigateByUrl("/event/edit/new")
+  }
+
+  //date stuff
+
+  customDatesSelected(date: Date): void {
+
+
+    if (this.selectedDateRange && this.selectedDateRange.start && date > this.selectedDateRange.start && !this.selectedDateRange.end) {
+      this.selectedDateRange = new DateRange(this.selectedDateRange.start, date);
+    } else {
+      this.selectedDateRange = new DateRange(date, null);
+
+    }
+  }
+
+  buttonDatesSelected(dateCase: number): void {
+      switch (dateCase) {
+        case 0: {
+          this.selectedDateRange = new DateRange<Date>(new Date(), null);
+          return
+        }
+        case 1: {
+          const date = new Date()
+          let dayOfTheWeek = date.getDay();
+          if(dayOfTheWeek == 0){
+            dayOfTheWeek = 7;
+          }
+          const weekStart = new Date(date.setDate((date.getDate()) - (dayOfTheWeek)+ 1 ) );
+          const weekEnd = new Date(date.setDate(date.getDate() + 6));
+          this.selectedDateRange = new DateRange<Date>(weekStart, weekEnd);
+          return;
+        }
+        case 2: {
+          const date = new Date();
+          const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+          const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+          this.selectedDateRange = new DateRange<Date>(firstDay, lastDay);
+          return;
+        }
+        default: {
+          this.selectedDateRange = new DateRange<Date>(null, null);
+        }
+      }
   }
 
 }

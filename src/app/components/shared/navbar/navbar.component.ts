@@ -81,6 +81,7 @@ export class NavbarComponent{
 
 
     openSettings() {
-        this.router.navigateByUrl("/profile/private")
+      this.closeUserAndNotificationMenu();
+      this.router.navigateByUrl("/profile/private")
     }
 }

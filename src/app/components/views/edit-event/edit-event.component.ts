@@ -27,7 +27,7 @@ export class EditEventComponent {
     if(eventId && eventId != "new"){
         this.currentEvent$ = this.store.select(EventSelectors.getCurrentEventSelector)
     } else {
-        this.currentEvent$ = of(new EventModel("", "", ""));
+        this.currentEvent$ = of(new EventModel("", "", "", ""));
     }
   }
 

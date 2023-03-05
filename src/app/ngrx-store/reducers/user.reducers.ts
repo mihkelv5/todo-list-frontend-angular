@@ -7,7 +7,7 @@ import {PublicUserModel} from "../../model/user/publicUser.model";
 
 export  const initialState: UserStateInterface = {
   loggedIn: false,
-  privateUser: new PrivateUserModel("", "", new PublicUserModel("", "", "", new Date(), 0, 0, 0,0)),
+  privateUser: new PrivateUserModel("", "", "", new PublicUserModel("", "", "", new Date(), 0, 0, 0,0)),
   responseMessage: "",
   invites: [],
 
