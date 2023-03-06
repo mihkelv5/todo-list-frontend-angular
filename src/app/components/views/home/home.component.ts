@@ -1,4 +1,4 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {Router} from "@angular/router";
 import {EventModel} from "../../../model/event.model";
@@ -9,6 +9,7 @@ import {faImage} from "@fortawesome/free-regular-svg-icons";
 import {select, Store} from "@ngrx/store";
 import * as TasksActions from "../../../ngrx-store/actions/task.actions";
 import * as EventActions from "../../../ngrx-store/actions/event.actions";
+import * as UserActions from "../../../ngrx-store/actions/user.actions";
 import {PrivateUserModel} from "../../../model/user/privateUser.model";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import * as UserSelector from "../../../ngrx-store/selectors/user.selector";
@@ -20,6 +21,7 @@ import {
   DefaultMatCalendarRangeStrategy,
   MAT_DATE_RANGE_SELECTION_STRATEGY
 } from "@angular/material/datepicker";
+
 
 @Component({
   selector: 'app-home',
@@ -34,16 +36,17 @@ import {
 })
 
 
-export class HomeComponent implements AfterViewInit{
+export class HomeComponent{
 
   faImage=faImage;
   faPlus = faPlus;
 
-  events$: Observable<EventModel[]>
+  groups$: Observable<EventModel[]>
   currentUser$!: Observable<PrivateUserModel>
 
   selectedDateRange: DateRange<Date>
-
+  activeTags: string[] = [];
+  creatingNewTag: boolean = false;
 
   constructor(private authService: AuthenticationService, private eventService: EventService, private router: Router, private store: Store<AppStateInterface>) {
     this.store.select(TaskSelector.getAreTasksLoaded).pipe(take(1)).subscribe(
@@ -54,17 +57,14 @@ export class HomeComponent implements AfterViewInit{
         })
     this.store.dispatch(EventActions.getCurrentEvent({eventId: ""}));
     this.store.dispatch(EventActions.getAllEvents());
+    this.currentUser$ = this.store.pipe(select(UserSelector.getUserDataSelector));
+    this.groups$ = this.store.pipe(select(EventsSelector.getEventsSelector));
 
-    this.events$ = this.store.pipe(select(EventsSelector.getEventsSelector));
-
-    this.selectedDateRange = new DateRange<Date>(null, null)
+    this.selectedDateRange = new DateRange<Date>(null, null);
   }
 
 
 
-  ngAfterViewInit() {
-      this.currentUser$ = this.store.pipe(select(UserSelector.getUserDataSelector));
-  }
 
     clickedOnEvent(eventId: string) {
     this.router.navigateByUrl("/event/" + eventId); //TODO: add guard that checks if event exists.
@@ -94,7 +94,8 @@ export class HomeComponent implements AfterViewInit{
   buttonDatesSelected(dateCase: number): void {
       switch (dateCase) {
         case 0: { //today
-          this.selectedDateRange = new DateRange<Date>(new Date(), null);
+          const today = new Date();
+          this.selectedDateRange = new DateRange<Date>(today, today);
           return
         }
 
@@ -129,4 +130,19 @@ export class HomeComponent implements AfterViewInit{
       this.selectedDateRange = new DateRange<Date>(this.selectedDateRange.start, this.selectedDateRange.start);
     }
   }
+
+  OnCheckBoxSelect(tag: string, event:any ) {
+    if(event.target.checked){
+      this.activeTags.push(tag);
+    } else {
+      this.activeTags = this.activeTags.filter(addedTag => addedTag != tag)
+    }
+  }
+
+  addNewTag($event: any){
+    this.store.dispatch(UserActions.addNewTag({newTag: $event.target.value}))
+    this.creatingNewTag = false;
+  }
+
+
 }

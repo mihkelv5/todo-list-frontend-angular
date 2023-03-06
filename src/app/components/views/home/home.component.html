@@ -15,25 +15,42 @@
         </div>
       </div>
       <div class="task-tags">
-        <div class="tags-header">
+        <div class="sidebar-header">
           <p>Tags</p>
-          <p class="add-tag-button">+</p>
+          <label class="sidebar-add-button" (click)="creatingNewTag = true" for="tagInputField">+</label>
         </div>
-        <ul class="tags-list" *ngIf="currentUser$ | async; let user">
-          <li *ngIf="user.taskTags.length == 0">
+
+        <ul class="sidebar-list" *ngIf="(currentUser$ | async); let user">
+          <li *ngIf="user.taskTags.length == 0 && creatingNewTag == false" >
             <p>You have no custom tags, press the + button to create one</p>
           </li>
-          <li *ngFor="let tag of user.taskTags">
-
+          <li *ngIf="creatingNewTag" class="sidebar-list-item">
+            <input type="text" class="item tag-input" id="tagInputField" (keydown.enter)="addNewTag($event)">
           </li>
+          <label *ngFor="let tag of user.taskTags" class="sidebar-list-item">
+            <input type="checkbox"  (change)="OnCheckBoxSelect(tag, $event)" class="checkbox">
+            <p class="item">{{tag}}</p>
+          </label>
         </ul>
       </div>
-      <div class="groups"></div>
+      <div class="groups">
+        <div class="sidebar-header">
+          <p>Groups</p>
+          <p class="sidebar-add-button">+</p>
+        </div>
+        <ul class="sidebar-list" *ngIf="groups$ | async; let groups">
+          <li *ngIf="groups.length == 0">
+            <p>You have no groups, press the + button to create one</p>
+          </li>
+          <li *ngFor="let group of groups" class="sidebar-list-item">
+            <p class="item">{{group.title}}</p>
+          </li>
+
+        </ul>
+      </div>
     </div>
     <div class="tasks-view">
-
     </div>
-
 </div>
 
 

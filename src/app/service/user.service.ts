@@ -18,4 +18,8 @@ export class UserService {
   public loadUserData(): Observable<PrivateUserModel> {
     return this.http.get<PrivateUserModel>(this.host + "/me");
   }
+
+  public addNewTag(tag: string) : Observable<any> {
+    return this.http.post<any>(this.host + "/tags/add", tag)
+  }
 }

@@ -40,3 +40,9 @@ export const updateUserPictureFailure = createAction('[User] Uploading user Pict
 
  export const changeResponseMessage = createAction('[User] Response message changed',
    props<{responseMessage: string}>());
+
+ export const addNewTag = createAction('[User] add new tag',
+   props<{newTag: string}>());
+
+export const addNewTagSuccess = createAction('[User] add new tag Success',
+  props<{newTag: string}>());

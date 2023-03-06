@@ -71,5 +71,15 @@ export class UserEffects {
       )
   )
 
+  addNewTag$ = createEffect(() =>
+    this.actions$.pipe(ofType(UsersActions.addNewTag),
+        concatMap((action) => {
+          return this.userService.addNewTag(action.newTag).pipe(map(
+            (response) => UsersActions.addNewTagSuccess({newTag: response.response})
+          ))
+        })
+      )
+  )
+
 
 }

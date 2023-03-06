@@ -7,7 +7,7 @@ import {PublicUserModel} from "../../model/user/publicUser.model";
 
 export  const initialState: UserStateInterface = {
   loggedIn: false,
-  privateUser: new PrivateUserModel("", "", "", new PublicUserModel("", "", "", new Date(), 0, 0, 0,0)),
+  privateUser: new PrivateUserModel("", "", [], new PublicUserModel("", "", "", new Date(), 0, 0, 0,0)),
   responseMessage: "",
   invites: [],
 
@@ -70,6 +70,16 @@ export const userReducers = createReducer(initialState,
       responseMessage: action.responseMessage
     }
   }),
+
+  on(UsersActions.addNewTagSuccess, (state, action) => {
+    return {
+      ...state,
+      privateUser: {
+        ...state.privateUser,
+        taskTags: state.privateUser.taskTags.concat(action.newTag)
+      }
+    }
+  })
 
   )
 
