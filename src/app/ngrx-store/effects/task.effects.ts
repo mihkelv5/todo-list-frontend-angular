@@ -40,7 +40,15 @@ export class TaskEffects {
         )
     )
 
-
+  updateTask$ = createEffect(() =>
+    this.actions$.pipe(ofType(TasksActions.updateTask),
+        concatMap( (action) => {
+          return this.taskService.updateTask(action.task).pipe(map(
+            task => TasksActions.updateTaskSuccess({task})
+          ))
+        })
+      )
+  )
 
   completeTask$ = createEffect(() =>
   this.actions$.pipe(ofType(TasksActions.completeTask),

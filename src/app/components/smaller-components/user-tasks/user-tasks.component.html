@@ -1,11 +1,11 @@
 
 
 
-<div id="board">
-
-
-  <div *ngFor="let task of tasks$ | async">
-        <task-component [task]="task"></task-component>
+<div id="board" *ngIf="dateRange$ | async as dateRange">
+  <div *ngIf="tags$ | async as tags">
+    <div *ngFor="let task of tasks$ | async">
+          <task-component [task]="task" *ngIf="isVisible(task, dateRange, tags)"></task-component>
+    </div>
   </div>
 </div>
 

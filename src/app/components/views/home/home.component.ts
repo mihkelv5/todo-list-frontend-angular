@@ -86,8 +86,11 @@ export class HomeComponent{
 
     if (this.selectedDateRange && this.selectedDateRange.start && date > this.selectedDateRange.start && !this.selectedDateRange.end) {
       this.selectedDateRange = new DateRange(this.selectedDateRange.start, date);
+      this.store.dispatch(TasksActions.filterTaskDates({dateRange: this.selectedDateRange}))
     } else {
       this.selectedDateRange = new DateRange(date, null);
+      this.store.dispatch(TasksActions.filterTaskDates({dateRange: new DateRange<Date>(date, date)}))
+      //user has possibility to select 2nd date, but tasks only on currently selected date are shown in case user does not select second date
     }
   }
 
@@ -121,6 +124,7 @@ export class HomeComponent{
         default: {
           this.selectedDateRange = new DateRange<Date>(null, null);
         }
+        this.store.dispatch(TasksActions.filterTaskDates({dateRange: this.selectedDateRange}))
       }
   }
 
@@ -133,10 +137,11 @@ export class HomeComponent{
 
   OnCheckBoxSelect(tag: string, event:any ) {
     if(event.target.checked){
-      this.activeTags.push(tag);
+      this.activeTags = this.activeTags.concat(tag)
     } else {
       this.activeTags = this.activeTags.filter(addedTag => addedTag != tag)
     }
+    this.store.dispatch(TasksActions.filterTaskTags({tags: this.activeTags}))
   }
 
   addNewTag($event: any){

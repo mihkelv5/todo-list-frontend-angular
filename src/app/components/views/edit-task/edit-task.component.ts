@@ -38,11 +38,13 @@ export class EditTaskComponent{
 
 
   onSubmit(formTask: TaskModel, oldTask: TaskModel) {
+
     if(!oldTask.id){
       if(!formTask.color){
         formTask.color = this.getRandomColor();
       }
       formTask.eventId = this.eventId;
+      console.log("add task")
       this.store.dispatch(TaskActions.addTask({task: formTask}));
       this.location.back();
 
@@ -56,7 +58,7 @@ export class EditTaskComponent{
         updatedTask.description = formTask.description;
       }
       if(formTask.date){
-        updatedTask.date = formTask.date;
+        updatedTask.date = new Date(formTask.date);
       }
       if(formTask.color) {
         if(formTask.color.toLowerCase() === "random"){
@@ -65,7 +67,9 @@ export class EditTaskComponent{
           updatedTask.color = formTask.color;
         }
       }
-        this.store.dispatch(TaskActions.addTask({task: updatedTask}));
+        updatedTask.tags = "all, private"
+      console.log(updatedTask)
+        this.store.dispatch(TaskActions.updateTask({task: updatedTask}));
         this.location.back();
     }
   }

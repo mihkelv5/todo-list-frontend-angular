@@ -12,6 +12,7 @@
           <button (click)="buttonDatesSelected(0)">Today</button>
           <button (click)="buttonDatesSelected(1)">This Week</button>
           <button (click)="buttonDatesSelected(2)">This Month</button>
+          <button (click)="buttonDatesSelected(999)">Clear</button>
         </div>
       </div>
       <div class="task-tags">
@@ -49,8 +50,8 @@
         </ul>
       </div>
     </div>
-    <div class="tasks-view">
-    </div>
+    <app-user-tasks class="tasks-view">
+    </app-user-tasks>
 </div>
 
 

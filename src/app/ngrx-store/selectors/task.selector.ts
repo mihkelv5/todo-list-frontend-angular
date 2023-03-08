@@ -40,4 +40,8 @@ export const getTaskDetails = (taskId: string | null) => createSelector(selectFe
       [], "")
 })
 
+export const getTaskTags = createSelector(selectFeature, (state) => state.activeTags);
+
+export const getTaskDates = createSelector(selectFeature, (state) => state.dateFilter)
+
 

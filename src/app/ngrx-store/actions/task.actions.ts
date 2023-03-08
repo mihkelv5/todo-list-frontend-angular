@@ -1,6 +1,7 @@
 import {createAction, props} from "@ngrx/store";
 import {TaskModel} from "../../model/task.model";
 import {PublicUserModel} from "../../model/user/publicUser.model";
+import {DateRange} from "@angular/material/datepicker";
 
 export class TaskActions {
 
@@ -28,6 +29,14 @@ export const addTask = createAction('[Tasks] Add task',
 );
 
 export const addTaskSuccess = createAction('[Tasks] Add Task Success',
+  props<{task: TaskModel}>()
+);
+
+export const updateTask = createAction('[Tasks] Update task',
+  props<{task: TaskModel}>()
+);
+
+export const updateTaskSuccess = createAction('[Tasks] Update task Success',
   props<{task: TaskModel}>()
 );
 
@@ -62,4 +71,12 @@ export const saveTaskUsers = createAction('[Tasks] Saving assigned users',
 
 export const saveTaskUsersSuccess = createAction('[Tasks] Save assigned users SUCCESS',
     props<{task: TaskModel}>()
+);
+
+export const filterTaskTags = createAction('[Tasks] Active Task tags changed',
+  props<{tags: string[]}>()
+);
+
+export const filterTaskDates = createAction('[Tasks] Active Task dates changed',
+  props<{dateRange: DateRange<Date>}>()
 );

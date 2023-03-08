@@ -3,12 +3,15 @@ import {TaskStateInterface} from "../state/TaskStateInterface";
 import * as TasksActions from "../actions/task.actions";
 import * as UserActions from "../actions/user.actions";
 import * as UsersActions from "../actions/user.actions";
+import {DateRange} from "@angular/material/datepicker";
 
 
 export  const initialState: TaskStateInterface = {
   tasks: [],
-    userTasksLoaded: false,
-    eventIdsThatHaveTasksLoaded: []
+  userTasksLoaded: false,
+  eventIdsThatHaveTasksLoaded: [],
+  dateFilter: new DateRange<Date>(null, null),
+  activeTags: [],
 
 
 }
@@ -38,8 +41,16 @@ export const tasksReducers = createReducer(initialState,
         ...state,
         tasks: state.tasks.concat(action.task)
       }
+  }),
 
-
+  on(TasksActions.updateTaskSuccess, (state, action) => {
+    const id = state.tasks.findIndex(task => task.id === action.task.id);
+    return {
+      ...state,
+      tasks: [...state.tasks.slice(0, id), //every task until the task we change
+        action.task,
+        ...state.tasks.slice(id + 1)] //every task after the task we change
+    }
   }),
 
   on(TasksActions.completeTaskSuccess, (state, action) => {
@@ -109,11 +120,27 @@ export const tasksReducers = createReducer(initialState,
         }
     }),
 
+  on(TasksActions.filterTaskTags, (state, action) => {
+    return {
+      ...state,
+      activeTags: action.tags
+    }
+  }),
+
+  on(TasksActions.filterTaskDates, (state, action) => {
+    return {
+      ...state,
+      dateFilter: action.dateRange
+    }
+  }),
+
   on(UsersActions.logoutSuccess, () => {
     return {
       ...initialState
     }
   }),
+
+
 
 
 )

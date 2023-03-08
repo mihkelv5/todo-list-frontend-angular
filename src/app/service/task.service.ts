@@ -50,6 +50,7 @@ export class TaskService {
   }
 
   public updateTask(task: TaskModel): Observable<TaskModel> {
+
     return this.http.put<TaskModel>(this.host + "/update/" + task.id, task);
   }
 
