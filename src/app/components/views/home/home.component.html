@@ -28,10 +28,13 @@
           <li *ngIf="creatingNewTag" class="sidebar-list-item">
             <input type="text" class="item tag-input" id="tagInputField" (keydown.enter)="addNewTag($event)">
           </li>
-          <label *ngFor="let tag of user.taskTags" class="sidebar-list-item">
-            <input type="checkbox"  (change)="OnCheckBoxSelect(tag, $event)" class="checkbox">
-            <p class="item">{{tag}}</p>
-          </label>
+          <li *ngFor="let tag of user.taskTags" class="sidebar-list-item">
+            <label class="item-label">
+              <input type="checkbox"  (change)="OnCheckBoxSelect(tag, $event)" class="checkbox">
+              <p class="item">{{tag}}</p>
+            </label>
+            <fa-icon [icon]="faTrashCan" (click)="deleteTag(tag)" class="tag-delete-button" id="tag-delete-button"></fa-icon>
+          </li>
         </ul>
       </div>
       <div class="groups">
@@ -54,49 +57,5 @@
     </app-user-tasks>
 </div>
 
-
-
-
-<!--  <div class="home-page">
-    <div class="limiter">
-      <div class="my-item">
-        <div class="header">
-          <span class="headline">My Events</span>
-          <div class="header-buttons">
-            <div class="add-task-btn pointer-cursor" (click)="createNewEvent()">
-              <fa-icon [icon]="faPlus"></fa-icon>
-            </div>
-          </div>
-        </div>
-        <div class="event-board user-events">
-          <div *ngFor="let event of events$ | async ">
-            <div class="event" (click)="clickedOnEvent(event.id)">
-              <fa-icon [icon]="faImage" class="event-image"></fa-icon>
-
-              <div class="event-title">
-                {{event.title}}
-              </div>
-              <div class="event-description">
-                <span>{{event.description}}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="my-item">
-        <div class="header">
-          <span class="headline">My tasks</span>
-          <ul class="header-buttons">
-            <li class="add-task-btn pointer-cursor" (click)="createNewTask()">
-              <fa-icon [icon]="faPlus"></fa-icon>
-            </li>
-          </ul>
-        </div>
-        <app-user-tasks class="board"></app-user-tasks>
-      </div>
-    </div>
-  </div>-->
 
 

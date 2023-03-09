@@ -14,7 +14,7 @@
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
-      <span>TaskItem description:</span>
+      <span>Task description:</span>
       <textarea type="text" class="task-data-wrapper task-textarea" maxlength="255" name="description" placeholder="description"
       ngModel #descriptionInput="ngModel" [ngModel]="task.description"  required
       ></textarea>
@@ -22,10 +22,17 @@
       <span>Pick a color:</span>
       <input type="text" class="task-data-wrapper" name="color" placeholder="#dadada"
       ngModel #colorInput="ngModel">
+        <span>Select tags:</span>
+      <ul class="tags" *ngIf="userTags$ | async as userTags"   >
+        <label *ngFor="let tag of userTags" class="available-tags">
+          <input type="checkbox"  (change)="OnCheckBoxSelect(tag, $event)" class="checkbox" name="tags" [checked]="task.tags.includes(tag)">
+          <p class="item">{{tag}}</p>
+        </label>
+      </ul>
 
-      <div class="task-form-buttons">
+      <div class="task-form-buttons" *ngIf="userTags$ | async as userTags">
         <button type="submit"
-        [disabled]="taskForm.invalid && task == null" (click)="onSubmit(taskForm.value, task); taskForm.resetForm()">Save</button>
+        [disabled]="taskForm.invalid && task == null" (click)="onSubmit(taskForm.value, task, userTags); taskForm.resetForm()">Save</button>
         <button (click)="taskForm.resetForm(); onCancel()" >cancel</button>
       </div>
       </form>

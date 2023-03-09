@@ -1,13 +1,15 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {TaskModel} from "../../../model/task.model";
-import {Observable} from "rxjs";
+import {Observable, take} from "rxjs";
 import { Location } from '@angular/common'
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import {Store} from "@ngrx/store";
 import * as TaskSelectors from "../../../ngrx-store/selectors/task.selector"
+import * as UserSelectors from "../../../ngrx-store/selectors/user.selector"
 import * as TaskActions from "../../../ngrx-store/actions/task.actions"
 import {DateAdapter} from "@angular/material/core";
+import * as TasksActions from "../../../ngrx-store/actions/task.actions";
 
 
 @Component({
@@ -20,31 +22,40 @@ export class EditTaskComponent{
 
 
   task$: Observable<TaskModel>
-    eventId: string = "";
+  eventId: string = "";
+  userTags$: Observable<string[]>
+  activeTags: string[] = [];
 
   constructor(private dateAdapter: DateAdapter<Date>, private route: ActivatedRoute, private location: Location, private store: Store<AppStateInterface>) {
 
-      this.dateAdapter.setLocale('en-GB')
-      const taskId = this.route.snapshot.paramMap.get("taskId");
-      this.task$ = this.store.select(TaskSelectors.getTaskDetails(taskId))
+    this.dateAdapter.setLocale('en-GB')
+    const taskId = this.route.snapshot.paramMap.get("taskId");
+    this.task$ = this.store.select(TaskSelectors.getTaskDetails(taskId))
 
-      const eventId = this.route.snapshot.paramMap.get("eventId");
-        if(eventId && eventId != "new"){
+    this.userTags$ = this.store.select(UserSelectors.getUserTags)
+    this.task$.pipe(take(1)).subscribe(task => {
+      this.activeTags = task.tags
+    })
+
+    const eventId = this.route.snapshot.paramMap.get("eventId");
+        if(eventId && eventId != "nan"){
             this.eventId = eventId;
         }
+
   }
 
 
 
 
-  onSubmit(formTask: TaskModel, oldTask: TaskModel) {
+  onSubmit(formTask: TaskModel, oldTask: TaskModel, userTags: string[]) {
 
     if(!oldTask.id){
       if(!formTask.color){
         formTask.color = this.getRandomColor();
       }
+      formTask.id = null;
       formTask.eventId = this.eventId;
-      console.log("add task")
+
       this.store.dispatch(TaskActions.addTask({task: formTask}));
       this.location.back();
 
@@ -67,8 +78,13 @@ export class EditTaskComponent{
           updatedTask.color = formTask.color;
         }
       }
-        updatedTask.tags = "all, private"
-      console.log(updatedTask)
+      if(this.activeTags.length > 0){
+        this.activeTags = this.activeTags.filter(tag => userTags.includes(tag)); //deletes tags that user has deleted
+        updatedTask.tags = this.activeTags.join(", ")
+      } else {
+        updatedTask.tags = null;
+      }
+
         this.store.dispatch(TaskActions.updateTask({task: updatedTask}));
         this.location.back();
     }
@@ -76,6 +92,14 @@ export class EditTaskComponent{
 
   onCancel() {
     this.location.back();
+  }
+
+  OnCheckBoxSelect(tag: string, event:any ) {
+    if(event.target.checked){
+      this.activeTags = this.activeTags.concat(tag)
+    } else {
+      this.activeTags = this.activeTags.filter(addedTag => addedTag != tag)
+    }
   }
 
 

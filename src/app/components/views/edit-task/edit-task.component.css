@@ -57,3 +57,28 @@ input:-webkit-autofill:active{
   flex-direction: row-reverse;
   justify-content: space-around;
 }
+.tags {
+  display: flex;
+  margin: 0;
+  padding: 10px 0;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.item {
+  min-width: 4rem;
+  flex-grow: 1;
+  padding: 3px;
+  border: 1px solid #8d8d8d;
+  border-radius: 5px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.available-tags  .checkbox{
+  display: none;
+}
+
+.available-tags .checkbox:checked ~ .item {
+  background: rgba(65, 159, 69, 0.51);
+  transition: all 0.2s ease-out;
+}

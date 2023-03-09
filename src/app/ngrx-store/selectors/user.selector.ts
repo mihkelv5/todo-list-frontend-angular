@@ -11,3 +11,4 @@ export const getUserInvites = createSelector(userSelectFeature, state => state.i
 
 export const selectResponseMessage = createSelector(userSelectFeature, state => state.responseMessage)
 
+export const getUserTags = createSelector(userSelectFeature, state => state.privateUser.taskTags)

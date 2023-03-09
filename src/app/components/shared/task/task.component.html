@@ -55,7 +55,7 @@
 
         <!--task details-->
       <ul class="task-details">
-        <li class="task-details-element">
+        <li class="task-details-element task-details-list">
           <fa-icon [icon]="faSquare" [ngStyle]="{'color' : task.color, 'font-size' : '1.2rem'}"></fa-icon>
           <div>
               <!--title and description-->
@@ -64,22 +64,26 @@
           </div>
         </li>
           <!--task creator, shown if task is created in an event-->
-        <li *ngIf="task.eventId">
+        <li *ngIf="task.eventId" class="task-details-list">
           <fa-icon [icon]="faUserLock"></fa-icon>
           <span>Owner: {{task.owner.username}}</span>
         </li>
           <!--users who have been assigned to task, shown if task is created in an event-->
-        <li *ngIf="task.eventId" >
+        <li *ngIf="task.eventId" class="task-details-list" >
           <fa-icon [icon]="faUsers"></fa-icon>
           <span>Assigned to:</span>
           <div class="assigned-users">
             <span *ngFor="let assignedUser of task.assignedUsers">{{assignedUser.username}}</span>
           </div>
         </li>
-          <!--shown if task is made in user own task window-->
-        <li *ngIf="!task.eventId">
-          <span>This is your own task</span>
+          <!--task tags-->
+        <li class="task-tags">
+          <span *ngIf="task.tags.length == 0">this task has no tags</span>
+          <span *ngFor="let tag of task.tags" class="tag">
+            {{tag}}
+          </span>
         </li>
+
       </ul>
         <!--complete task button-->
       <div class="complete-button" >

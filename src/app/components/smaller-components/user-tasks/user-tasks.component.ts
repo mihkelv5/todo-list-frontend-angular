@@ -39,7 +39,7 @@ export class UserTasksComponent implements OnInit {
   }
 
   isVisible(task: TaskModel, dateRange: DateRange<Date>, tags: string[]): boolean {
-    const date = new Date(task.date+ ", 00:00.00") //added hours so timezones would not affect.
+    const date = new Date(task.date+ ", 00:00.00") //added hours so timezones would not affect filtering.
 
     if(dateRange.start == null || dateRange.start.getTime() <= date.getTime()) {
       if(dateRange.end == null || dateRange.end.getTime() >= date.getTime()){

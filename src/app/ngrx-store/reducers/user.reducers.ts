@@ -4,6 +4,7 @@ import {PrivateUserModel} from "../../model/user/privateUser.model";
 import {createReducer, on} from "@ngrx/store";
 import * as UsersActions from "../actions/user.actions";
 import {PublicUserModel} from "../../model/user/publicUser.model";
+import {act} from "@ngrx/effects";
 
 export  const initialState: UserStateInterface = {
   loggedIn: false,
@@ -77,6 +78,16 @@ export const userReducers = createReducer(initialState,
       privateUser: {
         ...state.privateUser,
         taskTags: state.privateUser.taskTags.concat(action.newTag)
+      }
+    }
+  }),
+
+  on(UsersActions.deleteTagSuccess, (state, action) => {
+    return {
+      ...state,
+      privateUser: {
+        ...state.privateUser,
+        taskTags: state.privateUser.taskTags.filter(tag => tag != action.tag)
       }
     }
   })

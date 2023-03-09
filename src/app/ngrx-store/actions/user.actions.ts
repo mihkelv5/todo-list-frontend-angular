@@ -38,11 +38,17 @@ export const updateUserPictureSuccess = createAction('[User] Uploading user Pict
 export const updateUserPictureFailure = createAction('[User] Uploading user Picture Failure',
   props<{responseMessage: string}>());
 
- export const changeResponseMessage = createAction('[User] Response message changed',
+export const changeResponseMessage = createAction('[User] Response message changed',
    props<{responseMessage: string}>());
 
- export const addNewTag = createAction('[User] add new tag',
+export const addNewTag = createAction('[User] add new tag',
    props<{newTag: string}>());
 
 export const addNewTagSuccess = createAction('[User] add new tag Success',
   props<{newTag: string}>());
+
+export const deleteTag = createAction('[User] delete Tag',
+  props<{tag: string}>());
+
+export const deleteTagSuccess = createAction('[User] delete Tag Success',
+  props<{tag: string}>());

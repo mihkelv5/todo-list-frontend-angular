@@ -5,7 +5,7 @@ import {EventModel} from "../../../model/event.model";
 import {EventService} from "../../../service/event.service";
 import {Observable, take} from "rxjs";
 import {AuthenticationService} from "../../../service/authentication.service";
-import {faImage} from "@fortawesome/free-regular-svg-icons";
+import {faImage, faTrashCan} from "@fortawesome/free-regular-svg-icons";
 import {select, Store} from "@ngrx/store";
 import * as TasksActions from "../../../ngrx-store/actions/task.actions";
 import * as EventActions from "../../../ngrx-store/actions/event.actions";
@@ -16,11 +16,7 @@ import * as UserSelector from "../../../ngrx-store/selectors/user.selector";
 import * as EventsSelector from "../../../ngrx-store/selectors/event.selector";
 import * as TaskSelector from "../../../ngrx-store/selectors/task.selector";
 import {FormControl, FormGroup} from "@angular/forms";
-import {
-  DateRange,
-  DefaultMatCalendarRangeStrategy,
-  MAT_DATE_RANGE_SELECTION_STRATEGY
-} from "@angular/material/datepicker";
+import {DateRange,  DefaultMatCalendarRangeStrategy,  MAT_DATE_RANGE_SELECTION_STRATEGY} from "@angular/material/datepicker";
 
 
 @Component({
@@ -40,6 +36,7 @@ export class HomeComponent{
 
   faImage=faImage;
   faPlus = faPlus;
+  faTrashCan = faTrashCan;
 
   groups$: Observable<EventModel[]>
   currentUser$!: Observable<PrivateUserModel>
@@ -99,7 +96,8 @@ export class HomeComponent{
         case 0: { //today
           const today = new Date();
           this.selectedDateRange = new DateRange<Date>(today, today);
-          return
+          this.store.dispatch(TasksActions.filterTaskDates({dateRange: this.selectedDateRange}))
+          return;
         }
 
         case 1: { //this week
@@ -111,6 +109,7 @@ export class HomeComponent{
           const weekStart = new Date(date.setDate((date.getDate()) - (dayOfTheWeek)+ 1 ) );
           const weekEnd = new Date(date.setDate(date.getDate() + 6));
           this.selectedDateRange = new DateRange<Date>(weekStart, weekEnd);
+          this.store.dispatch(TasksActions.filterTaskDates({dateRange: this.selectedDateRange}))
           return;
         }
 
@@ -119,12 +118,13 @@ export class HomeComponent{
           const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
           const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
           this.selectedDateRange = new DateRange<Date>(firstDay, lastDay);
+          this.store.dispatch(TasksActions.filterTaskDates({dateRange: this.selectedDateRange}))
           return;
         }
         default: {
           this.selectedDateRange = new DateRange<Date>(null, null);
+          this.store.dispatch(TasksActions.filterTaskDates({dateRange: this.selectedDateRange}))
         }
-        this.store.dispatch(TasksActions.filterTaskDates({dateRange: this.selectedDateRange}))
       }
   }
 
@@ -136,7 +136,7 @@ export class HomeComponent{
   }
 
   OnCheckBoxSelect(tag: string, event:any ) {
-    if(event.target.checked){
+    if(event.target.checked && event.target.id != "#tag-delete-button"){
       this.activeTags = this.activeTags.concat(tag)
     } else {
       this.activeTags = this.activeTags.filter(addedTag => addedTag != tag)
@@ -150,4 +150,7 @@ export class HomeComponent{
   }
 
 
+  deleteTag(tag: string) {
+    this.store.dispatch(UserActions.deleteTag({tag: tag}))
+  }
 }

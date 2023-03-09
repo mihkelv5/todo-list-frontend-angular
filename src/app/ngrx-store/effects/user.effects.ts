@@ -81,5 +81,14 @@ export class UserEffects {
       )
   )
 
+  deleteTag$ = createEffect(() =>
+    this.actions$.pipe(ofType(UsersActions.deleteTag),
+      exhaustMap((action) => {
+        return this.userService.deleteUserTag(action.tag).pipe(map(
+          (response) => UsersActions.deleteTagSuccess({tag: action.tag})
+        ))
+      }))
+  )
+
 
 }

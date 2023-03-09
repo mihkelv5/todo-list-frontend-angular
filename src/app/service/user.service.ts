@@ -22,4 +22,8 @@ export class UserService {
   public addNewTag(tag: string) : Observable<any> {
     return this.http.post<any>(this.host + "/tags/add", tag)
   }
+
+  deleteUserTag(tag: string) {
+    return this.http.delete(this.host + "/tags/delete/"+ tag)
+  }
 }
