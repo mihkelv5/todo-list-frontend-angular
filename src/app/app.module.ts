@@ -100,6 +100,7 @@ import {CustomDateAdapter} from "./util/CustomDateAdapter";
         EffectsModule.forRoot([TaskEffects, EventEffects, UserEffects]),
         MatRadioModule,
 
+
     ],
   providers: [AuthenticationGuard, TaskService, AuthenticationService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
