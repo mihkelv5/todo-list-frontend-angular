@@ -53,7 +53,7 @@ export class UserTasksComponent implements OnInit {
   }
 
 
-
-
-
+  createNewTask() {
+    this.router.navigateByUrl("/task/new/nan/nan")
+  }
 }

@@ -1,6 +1,11 @@
 <div class="home">
+    <div class="sidebar-toggle" (click)="toggleSidebar()">
+      <fa-icon [icon]="faBars" *ngIf="!isSideBarVisible"></fa-icon>
+      <fa-icon [icon]="faAngleLeft" *ngIf="isSideBarVisible"></fa-icon>
+    </div>
 
-    <div class="sidebar">
+
+    <div class="sidebar" *ngIf="isSideBarVisible">
       <div class="date-selector">
 
           <mat-calendar
@@ -46,7 +51,7 @@
           <li *ngIf="groups.length == 0">
             <p>You have no groups, press the + button to create one</p>
           </li>
-          <li *ngFor="let group of groups" class="sidebar-list-item">
+          <li *ngFor="let group of groups" class="sidebar-list-item" (click)="openGroup(group)">
             <p class="item">{{group.title}}</p>
           </li>
 

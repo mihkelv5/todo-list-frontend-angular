@@ -1,11 +1,11 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {Router} from "@angular/router";
 import {EventModel} from "../../../model/event.model";
 import {EventService} from "../../../service/event.service";
 import {Observable, take} from "rxjs";
 import {AuthenticationService} from "../../../service/authentication.service";
-import {faImage, faTrashCan} from "@fortawesome/free-regular-svg-icons";
+import {faPlus, faBars, faAngleLeft} from "@fortawesome/free-solid-svg-icons";
+import {faImage, faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import {select, Store} from "@ngrx/store";
 import * as TasksActions from "../../../ngrx-store/actions/task.actions";
 import * as EventActions from "../../../ngrx-store/actions/event.actions";
@@ -37,6 +37,8 @@ export class HomeComponent{
   faImage=faImage;
   faPlus = faPlus;
   faTrashCan = faTrashCan;
+  faBars = faBars;
+  faAngleLeft = faAngleLeft;
 
   groups$: Observable<EventModel[]>
   currentUser$!: Observable<PrivateUserModel>
@@ -44,6 +46,8 @@ export class HomeComponent{
   selectedDateRange: DateRange<Date>
   activeTags: string[] = [];
   creatingNewTag: boolean = false;
+
+  isSideBarVisible = true;
 
   constructor(private authService: AuthenticationService, private eventService: EventService, private router: Router, private store: Store<AppStateInterface>) {
     this.store.select(TaskSelector.getAreTasksLoaded).pipe(take(1)).subscribe(
@@ -152,5 +156,13 @@ export class HomeComponent{
 
   deleteTag(tag: string) {
     this.store.dispatch(UserActions.deleteTag({tag: tag}))
+  }
+
+  openGroup(group: EventModel) {
+    this.store.dispatch(EventActions.getCurrentEvent({eventId: group.id}))
+  }
+
+  toggleSidebar() {
+    this.isSideBarVisible = !this.isSideBarVisible;
   }
 }

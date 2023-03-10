@@ -1,10 +1,15 @@
 
-
-
-<div id="board" *ngIf="dateRange$ | async as dateRange">
-  <div *ngIf="tags$ | async as tags">
-    <div *ngFor="let task of tasks$ | async">
-          <task-component [task]="task" *ngIf="isVisible(task, dateRange, tags)"></task-component>
+<div class="tasks-view">
+  <div class="tasks-view-header" >
+    <p *ngIf="event == null">Your Tasks</p>
+    <p *ngIf="event != null">{{event.title}}</p>
+    <button class="create-task" (click)="createNewTask()">Add Task</button>
+  </div>
+  <div id="board" *ngIf="dateRange$ | async as dateRange">
+    <div *ngIf="tags$ | async as tags">
+      <div *ngFor="let task of tasks$ | async">
+            <task-component [task]="task" *ngIf="isVisible(task, dateRange, tags)"></task-component>
+      </div>
     </div>
   </div>
 </div>

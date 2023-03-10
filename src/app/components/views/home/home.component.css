@@ -11,13 +11,33 @@
 
 .home {
   margin: 40px;
-
+  position: relative;
   width: calc(100% - 80px);
   display: flex;
   flex-direction: row;
   gap: 40px;
+}
 
 
+.sidebar-toggle {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0px;
+  left: -30px;
+
+  font-size: 1.5rem;
+
+  padding: 7px;
+  background: rgba(255, 255, 255, 0.46);
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+}
+.sidebar-toggle:hover{
+  background: rgba(176, 176, 176, 0.54);
+  cursor: pointer;
 }
 
 .sidebar {
