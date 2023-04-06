@@ -15,7 +15,6 @@ import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import * as UserSelector from "../../../ngrx-store/selectors/user.selector";
 import * as EventsSelector from "../../../ngrx-store/selectors/event.selector";
 import * as TaskSelector from "../../../ngrx-store/selectors/task.selector";
-import {FormControl, FormGroup} from "@angular/forms";
 import {DateRange,  DefaultMatCalendarRangeStrategy,  MAT_DATE_RANGE_SELECTION_STRATEGY} from "@angular/material/datepicker";
 
 
@@ -63,8 +62,6 @@ export class HomeComponent{
 
     this.selectedDateRange = new DateRange<Date>(null, null);
   }
-
-
 
 
     clickedOnEvent(eventId: string) {
@@ -139,8 +136,8 @@ export class HomeComponent{
     }
   }
 
-  OnCheckBoxSelect(tag: string, event:any ) {
-    if(event.target.checked && event.target.id != "#tag-delete-button"){
+  onCheckBoxSelect(tag: string, event:any) {
+    if(event.target.checked){
       this.activeTags = this.activeTags.concat(tag)
     } else {
       this.activeTags = this.activeTags.filter(addedTag => addedTag != tag)
@@ -155,11 +152,17 @@ export class HomeComponent{
 
 
   deleteTag(tag: string) {
+    const change = this.activeTags.length;
+    this.activeTags = this.activeTags.filter(addedTag => addedTag != tag)
+    if(this.activeTags.length != change){
+      this.store.dispatch(TasksActions.filterTaskTags({tags: this.activeTags}))
+    }
     this.store.dispatch(UserActions.deleteTag({tag: tag}))
   }
 
   openGroup(group: EventModel) {
     this.store.dispatch(EventActions.getCurrentEvent({eventId: group.id}))
+    this.router.navigateByUrl("/event/" + group.id);
   }
 
   toggleSidebar() {

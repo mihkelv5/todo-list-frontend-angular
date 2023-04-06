@@ -2,7 +2,12 @@
 <div class="tasks-view">
   <div class="tasks-view-header" >
     <p *ngIf="event == null">Your Tasks</p>
-    <p *ngIf="event != null">{{event.title}}</p>
+    <p *ngIf="event != null">Tasks</p>
+    <div class="completed-toggle-btn">
+      <label for="is-task-complete" *ngIf="hideCompletedTasks">Show completed tasks</label>
+      <label for="is-task-complete" *ngIf="!hideCompletedTasks">Hide completed tasks</label>
+      <input type="checkbox" id="is-task-complete" [checked]="!hideCompletedTasks" (change)="toggleCompletedTasks()">
+    </div>
     <button class="create-task" (click)="createNewTask()">Add Task</button>
   </div>
   <div id="board" *ngIf="dateRange$ | async as dateRange">

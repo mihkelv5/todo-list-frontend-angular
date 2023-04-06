@@ -55,6 +55,7 @@ import { PublicUserCardComponent } from './components/smaller-components/public.
 import {MatRadioModule} from "@angular/material/radio";
 import { UploadPictureComponent } from './components/smaller-components/upload.picture/upload.picture.component';
 import {CustomDateAdapter} from "./util/CustomDateAdapter";
+import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
 
 
 @NgModule({
@@ -76,6 +77,7 @@ import {CustomDateAdapter} from "./util/CustomDateAdapter";
     UserPageComponent,
     PublicUserCardComponent,
     UploadPictureComponent,
+    SidebarComponent,
   ],
     imports: [
 

@@ -1,13 +1,22 @@
-
-
-
-
-.background-image {
-  background-image: linear-gradient(to bottom right, #a5dbe0, #528846);
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
+.event {
+  margin: 40px;
   position: relative;
+  width: calc(100% - 80px);
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  height: calc(100% - 140px);
+}
+
+.event-sidebar {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 15px 15px 20px;
+  width: 300px;
+  background: #faffff;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+
 }
 
 .limiter {
@@ -19,7 +28,7 @@
   box-sizing: border-box;
   width: 100%;
   margin: 0 auto;
-  max-width: 1000px;
+
   padding: 30px;
 }
 
@@ -27,7 +36,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100px;
-  width: 50%;
+
   align-items: center;
   gap: 15px;
 
@@ -36,6 +45,7 @@
 .headline {
   font-size: 2.5rem;
   line-height: 35px;
+  width: 300px;
 }
 
 .description {
@@ -46,56 +56,20 @@
 
 .event-board {
   position: relative;
-  margin-top: 20px;
-  height: calc(50% - 56px);
+  border-radius: 10px;
+  height: 100%;
   width: 100%;
   background: rgba(255,255,255,0.25);
+  background: #faffff;
+  flex-grow: 1;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
-.add-task-btn {
-  display: flex;
-  font-size: 1.2rem;
-  position: absolute;
-  top: -50px;
-  right: 10px;
-  background: #88de73;
-  padding: 10px;
-  border-radius: 25px;
-  box-shadow: 1px 1px 3px 1px #56a256;
-}
 
 .add-task-btn:hover {
   cursor: pointer;
 }
 
-.edit-event-buttons {
-  display: flex;
-  width: 100%;
-  gap: 10px;
-  margin: 10px 0 ;
-  justify-content: right;
-
-}
-.edit-event-buttons > *{
-  cursor: pointer;
-
-  border-radius: 25px;
-  padding: 10px;
-  box-shadow: 1px 1px 3px 1px #2c592c;
-}
-
-.delete-event{
-  background: #b34643;
-  margin-right: auto;
-}
-
-.edit-event {
-  background: #dadada;
-}
-
-.edit-event-buttons fa-icon {
-  margin-right: 10px;
-}
 
 .delete-event-confirmation {
   top: 0;

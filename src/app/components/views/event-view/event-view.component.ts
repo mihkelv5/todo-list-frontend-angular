@@ -82,5 +82,13 @@ export class EventViewComponent implements OnInit {
     this.openParticipatorsWindow = bool;
   }
 
+  openWindowByEmitter(name: string){
+    if (name === 'deleteEventWindow'){
+      this.toggleDeleteEventConfirmation(true);
+    }
+    else if(name === 'participatorWindow') {
+      this.toggleParticipatorWindow(true);
+    }
+  }
 
 }

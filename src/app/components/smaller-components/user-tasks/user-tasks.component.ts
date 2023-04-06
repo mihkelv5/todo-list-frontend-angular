@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {TaskModel} from "../../../model/task.model";
 import {Observable, of} from "rxjs";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
@@ -19,9 +19,13 @@ export class UserTasksComponent implements OnInit {
   faPlus = faPlus;
 
   @Input("event") event!: EventModel | null;
+
+
   tags$: Observable<string[]>;
   dateRange$: Observable<DateRange<Date>>;
   tasks$: Observable<TaskModel[]>
+
+  hideCompletedTasks = true;
 
 
   constructor(private router: Router, private store: Store<AppStateInterface>) {
@@ -41,6 +45,10 @@ export class UserTasksComponent implements OnInit {
   isVisible(task: TaskModel, dateRange: DateRange<Date>, tags: string[]): boolean {
     const date = new Date(task.date+ ", 00:00.00") //added hours so timezones would not affect filtering.
 
+    if(this.hideCompletedTasks && task.complete) {
+      return false;
+    }
+
     if(dateRange.start == null || dateRange.start.getTime() <= date.getTime()) {
       if(dateRange.end == null || dateRange.end.getTime() >= date.getTime()){
         if (tags.length == 0) {
@@ -54,6 +62,14 @@ export class UserTasksComponent implements OnInit {
 
 
   createNewTask() {
-    this.router.navigateByUrl("/task/new/nan/nan")
+    if(this.event){
+      this.router.navigateByUrl("/task/new/" + this.event.id + "/" + this.event.title)
+    } else {
+      this.router.navigateByUrl("/task/new/nan/nan")
+    }
+  }
+
+  toggleCompletedTasks() {
+    this.hideCompletedTasks  = !this.hideCompletedTasks;
   }
 }

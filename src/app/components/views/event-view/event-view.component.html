@@ -1,37 +1,19 @@
-<div *ngIf="currentEvent$ | async; let event">
-  <div  class="limiter">
+<div *ngIf="currentEvent$ | async; let event" class="event">
 
-    <div  class="event-details">
+    <app-sidebar [group]="event" (windowOpenerEmitter)="openWindowByEmitter($event)" class="event-sidebar"></app-sidebar>
+<!--    <div  class="event-details">
       <span class="headline">{{event.title}}</span>
       <span class="description">{{event.description}}</span>
 
     </div>
 
+
+    </div>-->
+
+
     <div class="event-board">
       <app-user-tasks [event]="currentEvent$ | async" ></app-user-tasks>
-      <div class="add-task-btn" (click)="createTask(event.id, event.title)">
-        <fa-icon [icon]="faPenToSquare" ></fa-icon>
-        <span>Create new task</span>
-      </div>
     </div>
-
-
-    <div class="edit-event-buttons">
-      <div class="delete-event" (click)="toggleDeleteEventConfirmation(true)">
-        <fa-icon [icon]="faTrashCan"></fa-icon>
-        <span>Delete event</span>
-      </div>
-      <div class="edit-event" (click)="editEvent(event.id)">
-        <fa-icon  [icon]="faPencil"></fa-icon>
-        <span>Edit event</span>
-      </div>
-      <div class="edit-event" (click)="toggleParticipatorWindow(true)">
-        <fa-icon [icon]="faUsers"></fa-icon>
-        <span>Participators</span>
-
-      </div>
-    </div>
-  </div>
 
   <div class="delete-event-confirmation" *ngIf="deleteEventConfirmation">
     <div class="delete-event-confirmation-window" >

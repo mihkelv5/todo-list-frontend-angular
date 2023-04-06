@@ -20,6 +20,20 @@
   margin: 5px 10px;
 }
 
+.completed-toggle-btn {
+  margin-top: auto;
+  margin-left: 10px;
+
+}
+
+.completed-toggle-btn > label{
+  cursor: pointer;
+}
+
+.completed-toggle-btn > input{
+  display: none;
+}
+
 .create-task {
   border-radius: 10px;
   border: 1px solid #8d8d8d;
@@ -28,8 +42,7 @@
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   cursor: pointer;
   font-size: 1rem;
-  margin-left: auto;
-  margin-right: 10px;
+  margin: auto 10px 5px auto;
 }
 
 #board {

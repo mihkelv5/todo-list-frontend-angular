@@ -9,14 +9,7 @@
   background: #757575;
 }
 
-.home {
-  margin: 40px;
-  position: relative;
-  width: calc(100% - 80px);
-  display: flex;
-  flex-direction: row;
-  gap: 40px;
-}
+
 
 .sidebar-title {
   font-size: 2rem;
@@ -46,13 +39,10 @@
 }
 
 .sidebar {
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  padding: 0px 15px 15px 20px;
   width: 300px;
-  background: #faffff;
-  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
 
 }
 
@@ -185,4 +175,33 @@
   display: block;
 }
 
+.edit-event-buttons {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
 
+  justify-content: right;
+
+}
+.edit-event-buttons > *{
+  cursor: pointer;
+
+  border-radius: 25px;
+  padding: 10px;
+  box-shadow: 1px 1px 3px 1px rgba(149, 157, 165, 0.2);
+
+}
+
+.delete-event{
+  background: #b34643;
+}
+
+.edit-event {
+  background: #dadada;
+}
+
+.edit-event-buttons fa-icon {
+  margin-right: 10px;
+}
