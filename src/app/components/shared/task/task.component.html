@@ -86,7 +86,7 @@
 
       </ul>
         <!--complete task button-->
-      <div class="complete-button" >
+      <div class="complete-button" *ngIf="!assignUsersWindow"> <!--ngif is a quick fix for visibility issues-->
         <div *ngIf="task.complete && canUserCompleteTask(user.publicUser.username)" class="complete-button-red">
           <fa-icon [icon]="faCircleXmark"></fa-icon>
           <span (click)="completeTask(false)">Mark not done</span>
