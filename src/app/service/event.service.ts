@@ -37,7 +37,6 @@ export class EventService {
     return this.http.get<EventModel[]>(this.host + "/all");
   }
 
-
   public findUsersByEvent(eventId: string): Observable<UserModel[]> {
     return this.http.get<UserModel[]>(this.host + "/" + eventId + "/users");
   }
