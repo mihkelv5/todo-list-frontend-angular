@@ -42,6 +42,17 @@ export const editEvent = createAction('[Event] Editing Event...',
 export const editEventSuccess = createAction('[Event] Edited Event Success',
     props<{event: EventModel}>());
 
+export const addNewTag = createAction('[Event] Adding new task tag...',
+  props<{newTag: string, eventId: string}>());
+
+export const addNewTagSuccess = createAction('[Event] Adding new task tag Success',
+  props<{newTag: string, eventId: string}>());
+
+export const deleteTag = createAction('[Event] Deleting task tag...',
+  props<{tag: string, eventId: string}>());
+
+export const deleteTagSuccess = createAction('[Event] Deleting task tag Success',
+  props<{tag: string, eventId: string}>());
 
 //TODO: create new actions for Invites
 
@@ -67,3 +78,5 @@ export const removeUserFromWaitingList = createAction('[Invite] Removed user fro
     props<{removedUser: PublicUserModel}>());
 
 export const cancelInvite = createAction('[Invite] Canceled inviting users')
+
+

@@ -23,14 +23,14 @@
       <input type="text" class="task-data-wrapper" name="color" placeholder="#dadada"
       ngModel #colorInput="ngModel">
         <span>Select tags:</span>
-      <ul class="tags" *ngIf="userTags$ | async as userTags"   >
+      <ul class="tags" *ngIf="availableTags$ | async as userTags"   >
         <label *ngFor="let tag of userTags" class="available-tags">
           <input type="checkbox"  (change)="OnCheckBoxSelect(tag, $event)" class="checkbox" name="tags" [checked]="task.tags.includes(tag)">
           <p class="item">{{tag}}</p>
         </label>
       </ul>
 
-      <div class="task-form-buttons" *ngIf="userTags$ | async as userTags">
+      <div class="task-form-buttons" *ngIf="availableTags$ | async as userTags">
         <button type="submit"
         [disabled]="taskForm.invalid && task == null" (click)="onSubmit(taskForm.value, task, userTags); taskForm.resetForm()">Save</button>
         <button (click)="taskForm.resetForm(); onCancel()" >cancel</button>

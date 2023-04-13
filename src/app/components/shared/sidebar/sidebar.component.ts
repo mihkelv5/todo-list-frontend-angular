@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Observable, take} from "rxjs";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Observable, of, take} from "rxjs";
 import {EventModel} from "../../../model/event.model";
 import {PrivateUserModel} from "../../../model/user/privateUser.model";
 import {DateRange} from "@angular/material/datepicker";
@@ -8,10 +8,10 @@ import {EventService} from "../../../service/event.service";
 import {Router} from "@angular/router";
 import {select, Store} from "@ngrx/store";
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
-import * as TaskSelector from "../../../ngrx-store/selectors/task.selector";
 import * as TasksActions from "../../../ngrx-store/actions/task.actions";
 import * as UserSelector from "../../../ngrx-store/selectors/user.selector";
 import * as EventsSelector from "../../../ngrx-store/selectors/event.selector";
+import * as TagsSelector from "../../../ngrx-store/selectors/tag.selector";
 import * as EventActions from "../../../ngrx-store/actions/event.actions";
 import * as UserActions from "../../../ngrx-store/actions/user.actions";
 import {faPlus, faBars, faAngleLeft, faPencil, faUsers} from "@fortawesome/free-solid-svg-icons";
@@ -23,7 +23,7 @@ import {faImage, faTrashCan,faPenToSquare } from "@fortawesome/free-regular-svg-
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit{
   faImage=faImage;
   faPlus = faPlus;
   faTrashCan = faTrashCan;
@@ -38,6 +38,7 @@ export class SidebarComponent {
 
   groups$?: Observable<EventModel[]>
   currentUser$!: Observable<PrivateUserModel>
+  tags$: Observable<string[] | undefined>
 
   selectedDateRange: DateRange<Date>
   activeTags: string[] = [];
@@ -49,26 +50,29 @@ export class SidebarComponent {
 
     this.currentUser$ = this.store.pipe(select(UserSelector.getUserDataSelector));
     this.selectedDateRange = new DateRange<Date>(null, null);
-
+    this.tags$ = of([])
     if(!this.group){
-      this.store.dispatch(EventActions.getAllEvents());
       this.groups$ = this.store.pipe(select(EventsSelector.getEventsSelector));
     }
-
   }
 
+  ngOnInit() {
+    if(this.group){
+      this.tags$ = this.store.select(TagsSelector.getUserOrEventTags(this.group.id));
+    } else {
+      this.tags$ = this.store.select(TagsSelector.getUserOrEventTags(null));
+    }
+  }
 
   clickedOnEvent(eventId: string) {
     this.router.navigateByUrl("/event/" + eventId); //TODO: add guard that checks if event exists.
   }
 
-
-  createNewTask() {
-    this.router.navigateByUrl("/task/new/nan/nan")
-  }
-
-  createNewEvent() {
-    this.router.navigateByUrl("/event/edit/new")
+  public getUserOrEventTags(user: PrivateUserModel): string[]{
+    if(this.group){
+      return this.group.taskTags;
+    }
+    return user.taskTags;
   }
 
   //date selectors
@@ -140,7 +144,11 @@ export class SidebarComponent {
   }
 
   addNewTag($event: any){
-    this.store.dispatch(UserActions.addNewTag({newTag: $event.target.value}))
+    if(this.group){
+      this.store.dispatch(EventActions.addNewTag({newTag: $event.target.value, eventId: this.group.id}))
+    } else {
+      this.store.dispatch(UserActions.addNewTag({newTag: $event.target.value}))
+    }
     this.creatingNewTag = false;
   }
 
@@ -151,7 +159,11 @@ export class SidebarComponent {
     if(this.activeTags.length != change){
       this.store.dispatch(TasksActions.filterTaskTags({tags: this.activeTags}))
     }
-    this.store.dispatch(UserActions.deleteTag({tag: tag}))
+    if(this.group){
+      this.store.dispatch(EventActions.deleteTag({tag: tag, eventId: this.group.id}))
+    } else {
+      this.store.dispatch(UserActions.deleteTag({tag: tag}))
+    }
   }
 
   openGroup(group: EventModel) {
@@ -169,5 +181,9 @@ export class SidebarComponent {
 
   toggleParentWindow(participatorWindow: string) {
     this.windowOpenerEmitter.emit(participatorWindow);
+  }
+
+  createNewGroup() {
+    this.router.navigateByUrl("/event/edit/new")
   }
 }

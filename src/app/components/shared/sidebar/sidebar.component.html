@@ -27,13 +27,13 @@
     </div>
 
     <ul class="sidebar-list" *ngIf="(currentUser$ | async); let user">
-      <li *ngIf="user.taskTags.length == 0 && creatingNewTag == false" >
+      <li *ngIf="(tags$ | async)?.length == 0 && creatingNewTag == false" >
         <p>You have no custom tags, press the + button to create one</p>
       </li>
       <li *ngIf="creatingNewTag" class="sidebar-list-item">
         <input type="text" class="item tag-input" id="tagInputField" (keydown.enter)="addNewTag($event)">
       </li>
-      <li *ngFor="let tag of user.taskTags" class="sidebar-list-item">
+      <li *ngFor="let tag of tags$ | async" class="sidebar-list-item">
         <label class="item-label">
           <input type="checkbox" (change)="onCheckBoxSelect(tag, $event)" class="checkbox">
           <p class="item">{{tag}}</p>
@@ -45,7 +45,7 @@
   <div class="groups" *ngIf="!group">
     <div class="sidebar-header">
       <p>Groups</p>
-      <p class="sidebar-add-button">+</p>
+      <p class="sidebar-add-button" (click)="createNewGroup()">+</p>
     </div>
     <ul class="sidebar-list" *ngIf="groups$ | async; let groups">
       <li *ngIf="groups.length == 0">
@@ -72,4 +72,5 @@
       <fa-icon [icon]="faTrashCan"></fa-icon>
       <span>Delete event</span>
     </div>
+</div>
 </div>

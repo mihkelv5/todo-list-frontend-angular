@@ -6,11 +6,9 @@ import { Location } from '@angular/common'
 import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import {Store} from "@ngrx/store";
 import * as TaskSelectors from "../../../ngrx-store/selectors/task.selector"
-import * as UserSelectors from "../../../ngrx-store/selectors/user.selector"
 import * as TaskActions from "../../../ngrx-store/actions/task.actions"
 import {DateAdapter} from "@angular/material/core";
-import * as TasksActions from "../../../ngrx-store/actions/task.actions";
-
+import * as TagsSelector from "../../../ngrx-store/selectors/tag.selector";
 
 @Component({
   selector: 'app-edit-task',
@@ -22,8 +20,8 @@ export class EditTaskComponent{
 
 
   task$: Observable<TaskModel>
-  eventId: string = "";
-  userTags$: Observable<string[]>
+  eventId: string | undefined = undefined;
+  availableTags$: Observable<string[] | undefined>
   activeTags: string[] = [];
 
   constructor(private dateAdapter: DateAdapter<Date>, private route: ActivatedRoute, private location: Location, private store: Store<AppStateInterface>) {
@@ -32,16 +30,16 @@ export class EditTaskComponent{
     const taskId = this.route.snapshot.paramMap.get("taskId");
     this.task$ = this.store.select(TaskSelectors.getTaskDetails(taskId))
 
-    this.userTags$ = this.store.select(UserSelectors.getUserTags)
-    this.task$.pipe(take(1)).subscribe(task => {
-      this.activeTags = task.tags
-    })
+
 
     const eventId = this.route.snapshot.paramMap.get("eventId");
         if(eventId && eventId != "nan"){
             this.eventId = eventId;
         }
-
+    this.availableTags$ = this.store.select(TagsSelector.getUserOrEventTags(this.eventId))
+    this.task$.pipe(take(1)).subscribe(task => {
+      this.activeTags = task.tags
+    })
   }
 
 

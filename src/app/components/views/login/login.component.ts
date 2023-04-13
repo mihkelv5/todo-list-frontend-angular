@@ -52,12 +52,13 @@ export class LoginComponent implements OnInit{
               const username = response.headers.get("username");
               const validDays  = response.headers.get("Valid-Days"); //server sets a header that tells how many days the refresh token is valid
               if(username && validDays && response.body){
-                this.setCookie(username, +validDays) //local cookie to check if user is logged in, as browser cant read server side cookies with httponly
+
 
                 //after receiving refresh token make another call to backend to receive access token.
 
                   this.authenticationService.getAccessToken(user.username).pipe(take(1)).subscribe(
                     (response2: HttpResponse<string>) => {
+                      this.setCookie(username, +validDays) //local cookie to check if user is logged in, as browser cant read server side cookies with httponly
                       const accessToken = response2.headers.get(HeaderType.JWT_TOKEN);
 
                       if (accessToken != null && response2.body) {

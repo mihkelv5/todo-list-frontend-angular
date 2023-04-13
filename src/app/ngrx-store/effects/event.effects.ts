@@ -97,4 +97,20 @@ export class EventEffects {
                 ))
             }))
     );
+
+    addNewEventTag$ = createEffect(() =>
+      this.actions$.pipe(ofType(EventActions.addNewTag),
+        switchMap((action) => {
+          return this.eventService.addNewTag(action.newTag, action.eventId).pipe(map(
+            newTag => EventActions.addNewTagSuccess({newTag: action.newTag, eventId: action.eventId})
+          ))
+        })));
+
+    deleteEventTag$ = createEffect( () =>
+      this.actions$.pipe(ofType(EventActions.deleteTag),
+        mergeMap((action) => {
+          return this.eventService.deleteTag(action.tag, action.eventId).pipe(map(
+            () => EventActions.deleteTagSuccess({tag: action.tag, eventId: action.eventId})
+          ))
+        })));
 }

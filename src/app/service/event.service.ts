@@ -43,6 +43,14 @@ export class EventService {
   }
 
 
+  public addNewTag(newTag: string, eventId: string): Observable<string> {
+    return this.http.post<string>(this.host + "/" + eventId + "/tags/add", newTag);
+  }
+
+  public deleteTag(tag: string, eventId: string) {
+    return this.http.delete(this.host + "/" + eventId + "/tags/delete/" + tag);
+  }
+
 
 
 }

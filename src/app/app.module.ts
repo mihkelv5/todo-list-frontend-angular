@@ -98,7 +98,7 @@ import { SidebarComponent } from './components/shared/sidebar/sidebar.component'
         StoreModule.forFeature('userTasks', tasksReducers),
         StoreModule.forFeature('userEvents', eventsReducers),
         StoreModule.forFeature('currentUser', userReducers),
-        StoreDevtoolsModule.instrument({maxAge: 15}),
+        //StoreDevtoolsModule.instrument({maxAge: 15}),
         EffectsModule.forRoot([TaskEffects, EventEffects, UserEffects]),
         MatRadioModule,
 

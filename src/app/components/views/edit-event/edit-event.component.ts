@@ -8,6 +8,7 @@ import {AppStateInterface} from "../../../ngrx-store/state/appState.interface";
 import {Store} from "@ngrx/store";
 import * as EventSelectors from "../../../ngrx-store/selectors/event.selector"
 import * as EventActions from "../../../ngrx-store/actions/event.actions";
+import {PublicUserModel} from "../../../model/user/publicUser.model";
 
 
 @Component({
@@ -35,13 +36,20 @@ export class EditEventComponent {
 
   submitData(event: EventModel, currentEvent: EventModel) {
         let updatedEvent = JSON.parse(JSON.stringify(currentEvent))
+    //temporary quickfix
+        updatedEvent.taskTags = null;
+        updatedEvent.eventUsers = null;
+        updatedEvent.invitedUsers = null;
+        updatedEvent.canBeInvited = null;
+        updatedEvent.waitingList = null;
+
     if(event.title){
         updatedEvent.title = event.title;
     }
     if(event.description){
         updatedEvent.description = event.description;
     }
-
+    console.log(updatedEvent);
 
     if(currentEvent.id == ""){
         this.store.dispatch(EventActions.addEvent({event: updatedEvent}))

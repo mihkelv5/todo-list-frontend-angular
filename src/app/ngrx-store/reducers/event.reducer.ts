@@ -4,6 +4,7 @@ import * as EventActions from "../actions/event.actions";
 import {EventModel} from "../../model/event.model";
 import * as UserActions from "../actions/user.actions";
 import * as UsersActions from "../actions/user.actions";
+import {state} from "@angular/animations";
 
 export const initialState: EventStateInterface = {
   events: [],
@@ -129,6 +130,34 @@ export const eventsReducers = createReducer(initialState,
         }
     }),
 
+  on(EventActions.addNewTagSuccess, (state, action) => {
+    if(state.currentEvent){
+      return {
+        ...state,
+        currentEvent: {
+          ...state.currentEvent,
+          taskTags: state.currentEvent.taskTags.concat(action.newTag)
+        }
+      }
+    } else {
+      return state;
+    }
+  }),
+
+  on(EventActions.deleteTagSuccess, (state, action) =>{
+    if(state.currentEvent) {
+      return {
+        ...state,
+        currentEvent: {
+          ...state.currentEvent,
+          taskTags: state.currentEvent.taskTags.filter(tag => tag !== action.tag)
+        }
+      }
+    }  else {
+      return state;
+    }
+  }),
+
   on(UserActions.respondToInviteSuccess, (state, action) => {
     if(action.eventModel){
       return {
@@ -145,4 +174,5 @@ export const eventsReducers = createReducer(initialState,
       ...initialState
     }
   }),
+
 )
