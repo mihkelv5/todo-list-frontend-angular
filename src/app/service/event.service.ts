@@ -50,6 +50,4 @@ export class EventService {
     return this.http.delete(this.host + "/" + eventId + "/tags/delete/" + tag);
   }
 
-
-
 }
